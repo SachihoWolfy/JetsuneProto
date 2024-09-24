@@ -4,7 +4,21 @@ Prototype flight "Chaser"
 
 Changlog:
 
-- Added Flight
+- Added Boss
+
+- Added Win
+
+- Added Basic UI
+
+- Adjusted Flight Speed
+
+- 2 new animations
+
+- Game Loop is ok
+
+- Original MUSIC
+
+- Added line as a visual guide to enemy
 
 W/S Pitch
 
