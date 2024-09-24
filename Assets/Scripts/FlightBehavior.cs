@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class FlightBehavior : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class FlightBehavior : MonoBehaviour
     public float rollSpeed = 120f;
     public float yawSpeed = 40f;
     public float thrustSpeed;
+    private float MINSPEED = 3f;
 
     public float maxSpeed = 100f;
     public float lookSens = 20f;
@@ -32,6 +35,28 @@ public class FlightBehavior : MonoBehaviour
 
     float oldSpeed;
 
+    public Slider speedGauge;
+    public Image fillImage;
+    LineRenderer lineRenderer;
+    public Color c1 = Color.yellow;
+    public Color c2 = Color.red;
+
+    private void Start()
+    {
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer.widthMultiplier = 0.2f;
+        lineRenderer.positionCount = 2;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        // A simple 2 color gradient with a fixed alpha of 1.0f.
+        float alpha = 1.0f;
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(c1, 0.0f), new GradientColorKey(c2, 1.0f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(0.2f, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
+        );
+        lineRenderer.colorGradient = gradient;
+    }
+
     void Update()
     {
         // get input movement
@@ -48,8 +73,12 @@ public class FlightBehavior : MonoBehaviour
         oldYaw = yaw;
 
         thrust = Input.GetAxis("Thrust") * (Time.deltaTime * thrustSpeed);
-        thrust = blendThrust * thrust + (1 - blendThrust) * oldThrust - 0.001f * thrustSpeed * 2f;
+        thrust = blendThrust * thrust + (1 - blendThrust) * oldThrust - 0.0004f * thrustSpeed * 2f;
         oldThrust = thrust;
+
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, FindAnyObjectByType<BossMovement>().transform.position);
+        
     }
 
     void FixedUpdate()
@@ -64,14 +93,20 @@ public class FlightBehavior : MonoBehaviour
         curSpeed = rb.velocity.magnitude;
         if(curSpeed < 2f) { curSpeed = 3f; }
         oldSpeed = curSpeed;
-        curSpeed = Mathf.Clamp(curSpeed + (thrust * thrustSpeed)/(curSpeed), 0, maxSpeed);
+        curSpeed = Mathf.Clamp(curSpeed + (thrust * thrustSpeed)/(curSpeed), MINSPEED, maxSpeed);
 
         if(oldSpeed > curSpeed)
         {
-            curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed/5f, 0, maxSpeed);
+            curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed/5f, MINSPEED, maxSpeed);
+        }
+        else if (curSpeed > 40 && curSpeed < 60)
+        {
+            curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed * 2, MINSPEED, maxSpeed);
         }
 
         rb.velocity = transform.forward * curSpeed;
+
+        anim.SetFloat("CurSpeed", curSpeed);
 
         if(curSpeed < 10)
         {
@@ -83,8 +118,24 @@ public class FlightBehavior : MonoBehaviour
             anim.ResetTrigger("Hover");
             anim.SetTrigger("Fly");
         }
+        updateUI();
     }
-
+    public void updateUI()
+    {
+        speedGauge.value = curSpeed;
+        if (curSpeed > 60)
+        {
+            fillImage.color = Color.yellow;
+        }
+        else if(curSpeed > 40)
+        {
+            fillImage.color = Color.cyan;
+        }
+        else
+        {
+            fillImage.color = Color.red;
+        }
+    }
     void CalculateState(float dt)
     {
         //var invRotation = Quaternion.Inverse(Rigidbody.rotation);
