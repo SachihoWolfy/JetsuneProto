@@ -34,14 +34,4 @@ Changlog:
 
 - ADDED PAIN
 
-- Game restarts itself now.
-
-W/S Pitch
-
-A/D Roll (Yaw in simple controls)
-
-Q/E Yaw
-
-
-
-SHIFT/CTRL or M1/M2 Thrust
+- Game restarts itself now when finished.
