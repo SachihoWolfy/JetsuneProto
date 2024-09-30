@@ -1,28 +1,30 @@
 https://sachihowolfy.github.io/JetsuneProto/
 
-Prototype flight "Chaser"
+Prototype flight "Chaser" bullet hell.
 
 Changlog:
 
-- Added Boss
+- Improved Boss Rubberbanding
 
-- Added Win
+- Added Simplified Controls Button
 
-- Added Basic UI
+- Added Invert Pitch Button
 
-- Adjusted Flight Speed
+- Added BOSS BULLETS
 
-- 2 new animations
+- Hit animation
 
-- Game Loop is ok
+- Game Loop is there!
 
-- Original MUSIC
+- Preparibg soundeffects (not in game yet)
 
-- Added line as a visual guide to enemy
+- Various minor improvements
+
+- ADDED PAIN
 
 W/S Pitch
 
-A/D Roll
+A/D Roll (Yaw in simple controls)
 
 Q/E Yaw
 
