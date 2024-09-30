@@ -16,11 +16,13 @@ Changlog:
 
 - Game Loop is there!
 
-- Preparibg soundeffects (not in game yet)
+- Preparing soundeffects (not in game yet)
 
 - Various minor improvements
 
 - ADDED PAIN
+
+- Game restarts itself now.
 
 W/S Pitch
 
