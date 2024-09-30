@@ -28,10 +28,10 @@ Changlog:
 
 - Game Loop is there!
 
-- Preparing soundeffects (not in game yet)
-
-- Various minor improvements
+- SOUNDS
 
 - ADDED PAIN
 
 - Game restarts itself now when finished.
+
+- Various minor improvements
