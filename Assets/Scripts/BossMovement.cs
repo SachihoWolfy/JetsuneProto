@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class BossMovement : MonoBehaviour
@@ -10,11 +11,18 @@ public class BossMovement : MonoBehaviour
     public int hp = 5;
     public float speed;
     public float engageSpeed = 60f;
+    public float engageFlightSpeed = 60f;
     public float warningDistance;
     public float pursuitMod;
     public FlightBehavior player;
     public CinemachineDollyCart cart;
     public TextMeshProUGUI winText;
+    public Transform playerOffset;
+
+    public bool attackSequence = false;
+    public bool wonGame = false;
+
+    public ProjectileSpawner[] spawners;
 
     public bool engaging = false;
 
@@ -25,6 +33,14 @@ public class BossMovement : MonoBehaviour
         winText.text = "Engage Boss - Boss HP: " + hp;
     }
 
+    private void Update()
+    {
+        if (attackSequence)
+        {
+            player.transform.position = playerOffset.position;
+            player.transform.LookAt(transform.position);
+        }
+    }
     private void FixedUpdate()
     {
         engaging = player.curSpeed >= engageSpeed;
@@ -44,7 +60,7 @@ public class BossMovement : MonoBehaviour
 
         if (engaging)
         {
-            speed = engageSpeed - 5f;
+            speed = engageFlightSpeed;
             distanceToMaintain = Mathf.Clamp(distanceToMaintain - 0.1f, 50f, distanceToMaintain);
         }
         cart.m_Speed = speed;
@@ -54,15 +70,66 @@ public class BossMovement : MonoBehaviour
     {
         if (other.CompareTag("Player") && hp > 0)
         {
-            player.rb.velocity = new Vector3(0, 0, 0);
-            player.curSpeed = 3f;
+            player.transform.position = playerOffset.position;
             player.anim.SetTrigger("Attack");
+            StartCoroutine(SlowPlayer());
             hp += -1;
+            winText.text = "Boss HP: " + hp.ToString();
         }
-        winText.text = "Boss HP: " + hp.ToString();
-        if(hp == 0)
+        if(hp == 0 && !wonGame)
         {
-            winText.text = "-[Insert Win Here]-";
+            wonGame = true;
+            StartCoroutine(RestartGame());
+        }
+    }
+
+    IEnumerator SlowPlayer()
+    {
+        attackSequence = true;
+        yield return new WaitForSeconds(0.3f);
+        attackSequence = false;
+        player.rb.velocity = new Vector3(0, 0, 0);
+        player.curSpeed = 3f;
+    }
+
+    IEnumerator RestartGame()
+    {
+        int i = 5;
+        winText.text = "Restarting in: " + i;
+        i--;
+        yield return new WaitForSeconds(1f);
+        winText.text = "Restarting in: " + i;
+        i--;
+        yield return new WaitForSeconds(1f);
+        winText.text = "Restarting in: " + i;
+        i--;
+        yield return new WaitForSeconds(1f);
+        winText.text = "Restarting in: " + i;
+        i--;
+        yield return new WaitForSeconds(1f);
+        winText.text = "Restarting in: " + i;
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(0);
+    }
+
+    public void SpawnBullet(int index = 0)
+    {
+        spawners[index].SpawnBullet();
+    }
+    public void SpawnMissile(int index = 0)
+    {
+        spawners[index].SpawnMissile();
+    }
+
+    public void ToggleLookAtPlayer(int index = 0)
+    {
+        spawners[index].lookAtPlayer = !spawners[index].lookAtPlayer;
+    }
+    public void FireAllBullets()
+    {
+        foreach(ProjectileSpawner spawner in spawners)
+        {
+            spawner.SpawnBullet();
         }
     }
 }

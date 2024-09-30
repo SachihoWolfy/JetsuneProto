@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 using TMPro;
 
 public class FlightBehavior : MonoBehaviour
 {
     public Animator anim;
+    public bool simpleControls = false;
+    public bool pitchInvert = false;
 
     public float blend = 0.9f;
     public float blendThrust = 0.9f;
@@ -41,8 +44,17 @@ public class FlightBehavior : MonoBehaviour
     public Color c1 = Color.yellow;
     public Color c2 = Color.red;
 
+    public TextMeshProUGUI hpText;
+
+    private bool isDie;
+    private bool isDead;
+
+    CinemachineVirtualCamera virtualCamera;
+
+    public int hp = 1;
     private void Start()
     {
+        virtualCamera = FindAnyObjectByType<CinemachineVirtualCamera>();
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.widthMultiplier = 0.2f;
         lineRenderer.positionCount = 2;
@@ -60,17 +72,29 @@ public class FlightBehavior : MonoBehaviour
     void Update()
     {
         // get input movement
-        roll = Input.GetAxis("Horizontal") * (Time.fixedDeltaTime * rollSpeed);
-        roll = blend * roll + (1 - blend) * oldRoll;
-        oldRoll = roll;
+        if (!simpleControls)
+        {
+            roll = Input.GetAxis("Horizontal") * (Time.fixedDeltaTime * rollSpeed);
+            roll = blend * roll + (1 - blend) * oldRoll;
+            oldRoll = roll;
+
+            yaw = Input.GetAxis("Yaw") * (Time.fixedDeltaTime * yawSpeed);
+            yaw = blend * yaw + (1 - blend) * oldYaw;
+            oldYaw = yaw;
+        }
+        else
+        {
+            roll = 0;
+
+            yaw = Input.GetAxis("Horizontal") * (Time.fixedDeltaTime * yawSpeed);
+            yaw = blend * yaw + (1 - blend) * oldYaw;
+            oldYaw = yaw;
+        }
 
         pitch = Input.GetAxis("Vertical") * (Time.fixedDeltaTime * pitchSpeed);
+        if (pitchInvert) pitch = -pitch;
         pitch = blend * pitch + (1 - blend) * oldPitch;
         oldPitch = pitch;
-
-        yaw = Input.GetAxis("Yaw") * (Time.fixedDeltaTime * yawSpeed);
-        yaw = blend * yaw + (1 - blend) * oldYaw;
-        oldYaw = yaw;
 
         thrust = Input.GetAxis("Thrust") * (Time.deltaTime * thrustSpeed);
         thrust = blendThrust * thrust + (1 - blendThrust) * oldThrust - 0.0004f * thrustSpeed * 2f;
@@ -83,42 +107,65 @@ public class FlightBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
-        Quaternion AddRot = Quaternion.identity;
-
-        AddRot.eulerAngles = new Vector3(pitch, yaw, -roll);
-        transform.rotation *= AddRot;
-
-        targetLook.localPosition = new Vector3(yaw * lookSens + roll * lookSens/2, -pitch * lookSens, 5f);
-
-        curSpeed = rb.velocity.magnitude;
-        if(curSpeed < 2f) { curSpeed = 3f; }
-        oldSpeed = curSpeed;
-        curSpeed = Mathf.Clamp(curSpeed + (thrust * thrustSpeed)/(curSpeed), MINSPEED, maxSpeed);
-
-        if(oldSpeed > curSpeed)
+        if(hp <= 0 && !isDie)
         {
-            curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed/5f, MINSPEED, maxSpeed);
+            isDie = true;
         }
-        else if (curSpeed > 40 && curSpeed < 60)
+        if (!isDie)
         {
-            curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed * 2, MINSPEED, maxSpeed);
+            Quaternion AddRot = Quaternion.identity;
+
+            AddRot.eulerAngles = new Vector3(pitch, yaw, -roll);
+            transform.rotation *= AddRot;
+
+            if (simpleControls)
+            {
+                transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
+            }
+
+            targetLook.localPosition = new Vector3(yaw * lookSens + roll * lookSens / 2, -pitch * lookSens, 5f);
+
+            curSpeed = rb.velocity.magnitude;
+            if (curSpeed < 2f) { curSpeed = 3f; }
+            oldSpeed = curSpeed;
+            curSpeed = Mathf.Clamp(curSpeed + (thrust * thrustSpeed) / (curSpeed), MINSPEED, maxSpeed);
+
+            if (oldSpeed > curSpeed)
+            {
+                curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed / 5f, MINSPEED, maxSpeed);
+            }
+            else if (curSpeed > 40 && curSpeed < 60)
+            {
+                curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed * 2, MINSPEED, maxSpeed);
+            }
+
+            rb.velocity = transform.forward * curSpeed;
+
+            anim.SetFloat("CurSpeed", curSpeed);
+
+            if (curSpeed < 10)
+            {
+                anim.ResetTrigger("Fly");
+                anim.SetTrigger("Hover");
+            }
+            else
+            {
+                anim.ResetTrigger("Hover");
+                anim.SetTrigger("Fly");
+            }
         }
-
-        rb.velocity = transform.forward * curSpeed;
-
-        anim.SetFloat("CurSpeed", curSpeed);
-
-        if(curSpeed < 10)
+        else if(!isDead)
         {
-            anim.ResetTrigger("Fly");
-            anim.SetTrigger("Hover");
-        }
-        else
-        {
-            anim.ResetTrigger("Hover");
-            anim.SetTrigger("Fly");
+            Die();
+            isDead = true;
+            Restart();
         }
         updateUI();
+    }
+
+    void Restart()
+    {
+        FindAnyObjectByType<BossMovement>().StartCoroutine("RestartGame");
     }
     public void updateUI()
     {
@@ -135,9 +182,51 @@ public class FlightBehavior : MonoBehaviour
         {
             fillImage.color = Color.red;
         }
+        hpText.text = "HP: " + hp;
+    }
+
+    void Die()
+    {
+        GameObject thing = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Cube));
+        thing.transform.position = transform.position;
+        thing.GetComponent<MeshRenderer>().enabled = false;
+        virtualCamera.Follow = null;
+        virtualCamera.LookAt = gameObject.transform;
+        virtualCamera.transform.LookAt(gameObject.transform);
+        virtualCamera.ForceCameraPosition(thing.transform.position, transform.rotation);
+        rb.useGravity = true;
+        rb.freezeRotation = false;
+        rb.AddExplosionForce(160f, targetLook.position, 20f);
+        Vector3 spin = new Vector3(-50f, 0f, 0f);
+        rb.AddRelativeTorque(spin,ForceMode.Impulse);
     }
     void CalculateState(float dt)
     {
         //var invRotation = Quaternion.Inverse(Rigidbody.rotation);
+    }
+
+    void ToggleSimpleControls()
+    {
+        simpleControls = !simpleControls;
+    }
+
+    void TogglePitchInvert()
+    {
+        pitchInvert = !pitchInvert;
+    }
+
+    private void OnGUI()
+    {
+        if (GUILayout.Button("Toggle Simple Controls")) ToggleSimpleControls();
+        if (GUILayout.Button("Toggle Pitch Invert")) TogglePitchInvert();
+    }
+
+    public void TakeDamage(int dmg, float spdDamage)
+    {
+        hp -= dmg;
+        curSpeed = Mathf.Clamp(curSpeed - spdDamage,MINSPEED,maxSpeed);
+        rb.velocity = transform.forward * curSpeed;
+        Debug.Log("Damaged");
+        anim.SetTrigger("Damage");
     }
 }
