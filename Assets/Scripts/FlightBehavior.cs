@@ -8,6 +8,8 @@ using TMPro;
 public class FlightBehavior : MonoBehaviour
 {
     public Animator anim;
+    public AudioSource audio;
+    public AudioClip[] audioClips;
     public bool simpleControls = false;
     public bool pitchInvert = false;
 
@@ -48,6 +50,8 @@ public class FlightBehavior : MonoBehaviour
 
     private bool isDie;
     private bool isDead;
+
+    private bool sonicBoomHappened = false;
 
     CinemachineVirtualCamera virtualCamera;
 
@@ -136,6 +140,7 @@ public class FlightBehavior : MonoBehaviour
             }
             else if (curSpeed > 40 && curSpeed < 60)
             {
+                if (!sonicBoomHappened) PlaySound(0);
                 curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed * 2, MINSPEED, maxSpeed);
             }
 
@@ -187,6 +192,7 @@ public class FlightBehavior : MonoBehaviour
 
     void Die()
     {
+        PlaySound(3);
         GameObject thing = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Cube));
         thing.transform.position = transform.position;
         thing.GetComponent<MeshRenderer>().enabled = false;
@@ -228,5 +234,12 @@ public class FlightBehavior : MonoBehaviour
         rb.velocity = transform.forward * curSpeed;
         Debug.Log("Damaged");
         anim.SetTrigger("Damage");
+        PlaySound(2);
+    }
+
+    public void PlaySound(int index = 0)
+    {
+        audio.clip = audioClips[index];
+        audio.Play();
     }
 }

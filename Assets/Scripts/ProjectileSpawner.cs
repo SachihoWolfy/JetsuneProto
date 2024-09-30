@@ -10,6 +10,7 @@ public class ProjectileSpawner : MonoBehaviour
     public Animator anim;
     private FlightBehavior player;
     private BossMovement boss;
+    public AudioSource[] shootSound;
 
     public float distanceSpawnMissile = 100f;
     public bool toggleProjectileAtDistance = false;
@@ -64,5 +65,7 @@ public class ProjectileSpawner : MonoBehaviour
         // initialize it and set the velocity
         bulletScript.Initialize(dmg, speedDmg);
         bulletScript.rb.velocity = dir * bulletSpeed;
+        int rando = Random.Range(0, shootSound.Length);
+        shootSound[rando].Play();
     }
 }

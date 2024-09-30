@@ -18,6 +18,8 @@ public class BossMovement : MonoBehaviour
     public CinemachineDollyCart cart;
     public TextMeshProUGUI winText;
     public Transform playerOffset;
+    public AudioClip[] clips;
+    public AudioSource audio;
 
     public bool attackSequence = false;
     public bool wonGame = false;
@@ -68,7 +70,7 @@ public class BossMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && hp > 0)
+        if (other.CompareTag("Player") && hp > 0 && !wonGame)
         {
             player.transform.position = playerOffset.position;
             player.anim.SetTrigger("Attack");
@@ -79,6 +81,7 @@ public class BossMovement : MonoBehaviour
         if(hp == 0 && !wonGame)
         {
             wonGame = true;
+            PlaySound(4);
             StartCoroutine(RestartGame());
         }
     }
@@ -87,6 +90,7 @@ public class BossMovement : MonoBehaviour
     {
         attackSequence = true;
         yield return new WaitForSeconds(0.3f);
+        player.PlaySound(1);
         attackSequence = false;
         player.rb.velocity = new Vector3(0, 0, 0);
         player.curSpeed = 3f;
@@ -97,17 +101,22 @@ public class BossMovement : MonoBehaviour
         int i = 5;
         winText.text = "Restarting in: " + i;
         i--;
+        PlaySound(5);
         yield return new WaitForSeconds(1f);
         winText.text = "Restarting in: " + i;
         i--;
+        PlaySound(5);
         yield return new WaitForSeconds(1f);
         winText.text = "Restarting in: " + i;
         i--;
+        PlaySound(5);
         yield return new WaitForSeconds(1f);
         winText.text = "Restarting in: " + i;
         i--;
+        PlaySound(5);
         yield return new WaitForSeconds(1f);
         winText.text = "Restarting in: " + i;
+        PlaySound(6);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(0);
     }
@@ -131,5 +140,11 @@ public class BossMovement : MonoBehaviour
         {
             spawner.SpawnBullet();
         }
+    }
+
+    public void PlaySound(int index = 0)
+    {
+        audio.clip = clips[index];
+        audio.Play();
     }
 }
