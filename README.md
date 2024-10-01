@@ -22,6 +22,8 @@ Changlog:
 
 - Added Invert Pitch Button
 
+- Improved Flight Handling
+
 - Added BOSS BULLETS
 
 - Hit animation
