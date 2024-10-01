@@ -10,12 +10,13 @@ public class FlightBehavior : MonoBehaviour
     public Animator anim;
     public AudioSource audio;
     public AudioClip[] audioClips;
-    public bool simpleControls = false;
+    public bool simpleControls = true;
     public bool pitchInvert = false;
 
     public float blend = 0.9f;
     public float blendThrust = 0.9f;
     public float pitchSpeed = 120f;
+    public float pitchSpeedMach = 80f;
     public float rollSpeed = 120f;
     public float yawSpeed = 40f;
     public float thrustSpeed;
@@ -95,7 +96,14 @@ public class FlightBehavior : MonoBehaviour
             oldYaw = yaw;
         }
 
-        pitch = Input.GetAxis("Vertical") * (Time.fixedDeltaTime * pitchSpeed);
+        if (curSpeed > 40)
+        {
+            pitch = Input.GetAxis("Vertical") * (Time.fixedDeltaTime * pitchSpeedMach);
+        }
+        else
+        {
+            pitch = Input.GetAxis("Vertical") * (Time.fixedDeltaTime * pitchSpeed);
+        }
         if (pitchInvert) pitch = -pitch;
         pitch = blend * pitch + (1 - blend) * oldPitch;
         oldPitch = pitch;
@@ -223,7 +231,7 @@ public class FlightBehavior : MonoBehaviour
 
     private void OnGUI()
     {
-        if (GUILayout.Button("Toggle Simple Controls")) ToggleSimpleControls();
+        if (GUILayout.Button("Toggle Advanced Controls")) ToggleSimpleControls();
         if (GUILayout.Button("Toggle Pitch Invert")) TogglePitchInvert();
     }
 

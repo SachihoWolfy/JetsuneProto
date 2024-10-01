@@ -1781,9 +1781,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 113101109}
     - target: {fileID: 1518469181121792559, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
+      propertyPath: pitchSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518469181121792559, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
       propertyPath: speedGauge
       value: 
       objectReference: {fileID: 1348169037}
+    - target: {fileID: 1518469181121792559, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
+      propertyPath: pitchSpeedMach
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518469181121792559, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
+      propertyPath: simpleControls
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1595803403800808869, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
       propertyPath: m_UseGravity
       value: 0
