@@ -20,6 +20,7 @@ public class BossMovement : MonoBehaviour
     public Transform playerOffset;
     public AudioClip[] clips;
     public AudioSource audio;
+    public Animator anim;
 
     public bool attackSequence = false;
     public bool wonGame = false;
@@ -81,6 +82,7 @@ public class BossMovement : MonoBehaviour
         if(hp == 0 && !wonGame)
         {
             wonGame = true;
+            anim.SetBool("Died", wonGame);
             PlaySound(4);
             StartCoroutine(RestartGame());
         }
