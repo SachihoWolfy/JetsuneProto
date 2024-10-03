@@ -13,14 +13,20 @@ public class BossMovement : MonoBehaviour
     public float engageSpeed = 60f;
     public float engageFlightSpeed = 60f;
     public float warningDistance;
-    public float pursuitMod;
+    public float pursuitMod = 1f;
     public FlightBehavior player;
     public CinemachineDollyCart cart;
     public TextMeshProUGUI winText;
     public Transform playerOffset;
     public AudioClip[] clips;
-    public AudioSource audio;
+    public AudioSource audioSource;
     public Animator anim;
+    public Animator visualAnim;
+    private bool isMach;
+    public GameObject enemyVisual;
+    private float defaultScale = 11.26f;
+    public float awayScale = 20f;
+    public float enemyScale;
 
     public bool attackSequence = false;
     public bool wonGame = false;
@@ -50,7 +56,8 @@ public class BossMovement : MonoBehaviour
 
         if(!engaging) { 
             speed = player.curSpeed;
-        } 
+            if (isMach) { isMach = false; }
+        }
 
         if (Vector3.Distance(player.transform.position, transform.position) < distanceToMaintain && !engaging)
         {
@@ -61,11 +68,15 @@ public class BossMovement : MonoBehaviour
             speed = player.curSpeed * distanceToMaintain / Vector3.Distance(player.transform.position, transform.position);
         }
 
+        enemyScale = Mathf.Clamp(Vector3.Distance(player.transform.position, transform.position) + pursuitMod, defaultScale, awayScale);
+        enemyVisual.transform.localScale = new Vector3(enemyScale, enemyScale, enemyScale);
         if (engaging)
         {
             speed = engageFlightSpeed;
             distanceToMaintain = Mathf.Clamp(distanceToMaintain - 0.1f, 50f, distanceToMaintain);
+            if (!isMach) { isMach = true; }
         }
+        visualAnim.SetBool("IsMach", isMach);
         cart.m_Speed = speed;
     }
 
@@ -146,7 +157,7 @@ public class BossMovement : MonoBehaviour
 
     public void PlaySound(int index = 0)
     {
-        audio.clip = clips[index];
-        audio.Play();
+        audioSource.clip = clips[index];
+        audioSource.Play();
     }
 }

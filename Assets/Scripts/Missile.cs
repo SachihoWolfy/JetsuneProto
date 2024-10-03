@@ -10,6 +10,7 @@ public class Missile : MonoBehaviour
     private FlightBehavior player;
 
     private float speed = 15f;
+    public float speedMod = 1f;
     public float rotateSpeed = 95f;
 
     public float maxDistancePredict = 100f;
@@ -40,7 +41,7 @@ public class Missile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        speed = Mathf.Clamp(player.curSpeed + Time.deltaTime, 20, player.curSpeed + 5);
+        speed = Mathf.Clamp((player.curSpeed/speed)*speedMod + Time.deltaTime, 20, player.curSpeed + 7);
         rb.velocity = transform.forward * speed;
         var leadTimePercentage = Mathf.InverseLerp(minDistancePredict, maxDistancePredict, Vector3.Distance(transform.position, player.transform.position));
         PredictMovement(leadTimePercentage);

@@ -8,7 +8,7 @@ using TMPro;
 public class FlightBehavior : MonoBehaviour
 {
     public Animator anim;
-    public AudioSource audio;
+    public AudioSource audioSource;
     public AudioClip[] audioClips;
     public bool simpleControls = true;
     public bool pitchInvert = false;
@@ -247,7 +247,7 @@ public class FlightBehavior : MonoBehaviour
 
     public void PlaySound(int index = 0)
     {
-        audio.clip = audioClips[index];
-        audio.Play();
+        audioSource.clip = audioClips[index];
+        audioSource.Play();
     }
 }
