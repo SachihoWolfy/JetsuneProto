@@ -133,6 +133,7 @@ public class FlightBehavior : MonoBehaviour
             if (simpleControls)
             {
                 transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
+
             }
 
             targetLook.localPosition = new Vector3(yaw * lookSens + roll * lookSens / 2, -pitch * lookSens, 5f);

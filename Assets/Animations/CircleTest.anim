@@ -3217,6 +3217,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 3
     messageOptions: 0
+  - time: 2.0666666
+    functionName: PlaySound
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 7
+    messageOptions: 0
   - time: 5.0666666
     functionName: SpawnProjectilesInCircle
     data: 

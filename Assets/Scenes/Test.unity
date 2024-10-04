@@ -1981,6 +1981,14 @@ PrefabInstance:
       propertyPath: enemyVisual
       value: 
       objectReference: {fileID: 854827687}
+    - target: {fileID: 337095111194961675, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      propertyPath: clips.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 337095111194961675, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      propertyPath: clips.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: 60406b881104a2e4e9928510120a6649, type: 3}
     - target: {fileID: 1319189441689803350, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       propertyPath: m_Name
       value: Enemy
