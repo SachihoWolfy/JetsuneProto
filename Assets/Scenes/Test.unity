@@ -1989,6 +1989,14 @@ PrefabInstance:
       propertyPath: speed
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 1367829379861689725, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      propertyPath: inwardSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1367829379861689725, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      propertyPath: hemisphereProjectileCount
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 2394961566773453648, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       propertyPath: m_Path
       value: 
@@ -2032,6 +2040,18 @@ PrefabInstance:
     - target: {fileID: 4358330386311490261, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362739520786126834, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      propertyPath: inwardSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362739520786126834, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      propertyPath: hemisphereRadius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362739520786126834, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      propertyPath: hemisphereProjectileCount
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5597771481856812248, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       propertyPath: m_LocalRotation.w

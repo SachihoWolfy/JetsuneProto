@@ -22,6 +22,14 @@ public class ProjectileSpawner : MonoBehaviour
     private float missileSpeed = 10f;
     public float speed = 10f;
 
+    public float radius = 5f;
+    public int numberOfProjectiles = 10;
+    public float inwardSpeed = 5f;
+
+    public float hemisphereRadius = 5f;
+    public float explosionForce = 10f;
+    public int hemisphereProjectileCount = 30;
+
     private void Start()
     {
         player = FindAnyObjectByType<FlightBehavior>();
@@ -65,6 +73,82 @@ public class ProjectileSpawner : MonoBehaviour
         // initialize it and set the velocity
         bulletScript.Initialize(dmg, speedDmg);
         bulletScript.rb.velocity = dir * bulletSpeed;
+        int rando = Random.Range(0, shootSound.Length);
+        shootSound[rando].Play();
+    }
+
+
+
+    public void SpawnProjectilesInCircle()
+    {
+
+        for (int i = 0; i < numberOfProjectiles; i++)
+        {
+
+            float angle = (2 * Mathf.PI * i) / numberOfProjectiles;
+            float x = radius * Mathf.Cos(angle);
+            float y = radius * Mathf.Sin(angle);
+            Vector3 localPosition = new Vector3(x, y, 0);
+            Vector3 pos = spawnLocation.position + spawnLocation.TransformDirection(localPosition);
+            Vector3 dir = spawnLocation.forward;
+            Vector3 inwardDir = -(spawnLocation.position - pos).normalized;
+            Vector3 combinedDir = dir + (inwardDir * inwardSpeed);
+            combinedDir.Normalize();
+            //spawn and orientate it
+            GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            bulletObj.transform.forward = dir;
+            // get bullet script
+            Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+            // initialize it and set the velocity
+            bulletScript.Initialize(dmg, speedDmg);
+            bulletScript.rb.velocity = combinedDir * bulletSpeed;
+        }
+        int rando = Random.Range(0, shootSound.Length);
+        shootSound[rando].Play();
+    }
+
+    public void SpawnProjectilesInHemisphere()
+    {
+        int numLayers = Mathf.CeilToInt(Mathf.Sqrt(hemisphereProjectileCount)); // Determine the number of layers
+    int projectilesPerLayer = hemisphereProjectileCount / numLayers; // Projectiles per layer
+
+    for (int layer = 0; layer < numLayers; layer++)
+    {
+        float theta = Mathf.Acos(1 - (layer + 1) / (float)(numLayers + 1)); // Polar angle
+
+        for (int j = 0; j < projectilesPerLayer; j++)
+        {
+            // Calculate the azimuthal angle (phi)
+            float phi = (j * (2 * Mathf.PI)) / projectilesPerLayer; // Azimuthal angle
+
+            // Calculate the position using spherical coordinates
+            float x = hemisphereRadius * Mathf.Sin(theta) * Mathf.Cos(phi);
+            float y = hemisphereRadius * Mathf.Sin(theta) * Mathf.Sin(phi);
+            float z = hemisphereRadius * Mathf.Cos(theta); // Assuming z is up
+
+            Vector3 localPosition = new Vector3(x, y, z);
+
+            // Transform the local position into world space based on spawnLocation's orientation
+            Vector3 pos = spawnLocation.position + spawnLocation.TransformDirection(localPosition);
+
+            // Instantiate the bullet at the calculated position
+            GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+
+            // Calculate the direction from the spawn location to the bullet's position
+            Vector3 direction = (pos - spawnLocation.position).normalized;
+            Vector3 dir = spawnLocation.forward;
+            Vector3 inwardDir = -(spawnLocation.position - pos).normalized;
+            Vector3 combinedDir = dir + (inwardDir * inwardSpeed);
+
+            // Get bullet script and initialize it
+            Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+            // initialize it and set the velocity
+            bulletScript.Initialize(dmg, speedDmg);
+            bulletScript.rb.velocity = combinedDir * bulletSpeed;
+            }
+    }
+
+        // Play random shooting sound
         int rando = Random.Range(0, shootSound.Length);
         shootSound[rando].Play();
     }

@@ -3763,6 +3763,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 15.083333
+    functionName: FireAllCircles
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 15.183333
     functionName: FireAllBullets
     data: 
@@ -3826,6 +3833,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 16
+    functionName: FireAllCircles
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 16.083334
     functionName: FireAllBullets
     data: 
@@ -3870,6 +3884,13 @@ AnimationClip:
     messageOptions: 0
   - time: 16.883333
     functionName: FireAllBullets
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 16.966667
+    functionName: FireAllCircles
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -3926,6 +3947,13 @@ AnimationClip:
     messageOptions: 0
   - time: 17.916666
     functionName: FireAllBullets
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 18
+    functionName: FireAllCircles
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -4001,6 +4029,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 19.316668
+    functionName: FireAllCircles
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 19.383333
     functionName: FireAllBullets
     data: 
@@ -4010,6 +4045,13 @@ AnimationClip:
     messageOptions: 0
   - time: 19.5
     functionName: FireAllBullets
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 19.566668
+    functionName: FireAllCircles
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -4029,8 +4071,22 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 19.8
+    functionName: FireAllCircles
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 19.866667
     functionName: FireAllBullets
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 19.966667
+    functionName: FireAllCircles
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

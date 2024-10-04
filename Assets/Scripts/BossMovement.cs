@@ -142,6 +142,10 @@ public class BossMovement : MonoBehaviour
     {
         spawners[index].SpawnMissile();
     }
+    void SpawnProjectilesInCircle(int index = 0)
+    {
+        spawners[index].SpawnProjectilesInCircle();
+    }
 
     public void ToggleLookAtPlayer(int index = 0)
     {
@@ -153,6 +157,18 @@ public class BossMovement : MonoBehaviour
         {
             spawner.SpawnBullet();
         }
+    }
+    public void FireAllCircles()
+    {
+        foreach (ProjectileSpawner spawner in spawners)
+        {
+            spawner.SpawnProjectilesInCircle();
+        }
+    }
+
+    public void SpawnProjectilesInHemisphere(int index = 0)
+    {
+        spawners[index].SpawnProjectilesInHemisphere();
     }
 
     public void PlaySound(int index = 0)
