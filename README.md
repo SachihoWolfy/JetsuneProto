@@ -16,24 +16,10 @@ Dodge bullets and chase down the enemy! Build up speed and hit Mach to gain on t
 
 Changlog:
 
-- Improved Boss Rubberbanding
+- Added Polaris
 
-- Added Simplified Controls Button
+![Polaris](https://cdn.discordapp.com/attachments/1112104087752822874/1288932169586049024/IMG_4173.jpg?ex=66fb9860&is=66fa46e0&hm=9d6278295ce06726532bd2cc31f5301bcabfd79e2ae3f78e02845f71ca4a1424&)
 
-- Added Invert Pitch Button
-
-- Improved Flight Handling
-
-- Added BOSS BULLETS
-
-- Hit animation
-
-- Game Loop is there!
-
-- SOUNDS
-
-- ADDED PAIN
-
-- Game restarts itself now when finished.
+- Added New Attacks
 
 - Various minor improvements
