@@ -12,9 +12,17 @@ Dodge bullets and chase down the enemy! Build up speed and hit Mach to gain on t
 
 - SHIFT/CTRL or M1/M2 Thrust
 
+- Space to Change Camera
+
 ![Jetsune](https://cdn.discordapp.com/attachments/1112104087752822874/1288932169586049024/IMG_4173.jpg?ex=66fb9860&is=66fa46e0&hm=9d6278295ce06726532bd2cc31f5301bcabfd79e2ae3f78e02845f71ca4a1424&)
 
 Changlog:
+
+- Added Camera to look at enemy
+
+- Added invincibility frames
+
+- Fixed common bugs to do with hitting the enemy at the same time as taking damage
 
 - Added Polaris
 
