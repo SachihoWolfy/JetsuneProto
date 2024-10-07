@@ -12,6 +12,10 @@ public class ProjectileSpawner : MonoBehaviour
     private BossMovement boss;
     public AudioSource[] shootSound;
 
+    public Material material1;
+    public Material material2;
+    private bool useMaterial1 = true;
+
     public float distanceSpawnMissile = 100f;
     public bool toggleProjectileAtDistance = false;
     public bool lookAtPlayer = false;
@@ -29,6 +33,9 @@ public class ProjectileSpawner : MonoBehaviour
     public float hemisphereRadius = 5f;
     public float explosionForce = 10f;
     public int hemisphereProjectileCount = 30;
+
+    public int numberSphereProjectiles = 100;
+    public float radiusSphere = 2f;
 
     private void Start()
     {
@@ -97,6 +104,11 @@ public class ProjectileSpawner : MonoBehaviour
             //spawn and orientate it
             GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
             bulletObj.transform.forward = dir;
+
+            //alternate mats
+            MeshRenderer bulletRenderer = bulletObj.GetComponentInChildren<MeshRenderer>();
+            bulletRenderer.material = material2;
+
             // get bullet script
             Bullet bulletScript = bulletObj.GetComponent<Bullet>();
             // initialize it and set the velocity
@@ -152,4 +164,52 @@ public class ProjectileSpawner : MonoBehaviour
         int rando = Random.Range(0, shootSound.Length);
         shootSound[rando].Play();
     }
+    public void SpawnProjectilesInSphere()
+    {
+        float phiIncrement = Mathf.PI * (3 - Mathf.Sqrt(5)); 
+
+        for (int i = 0; i < numberSphereProjectiles; i++)
+        {
+            float y = 1 - (i / (float)(numberSphereProjectiles - 1)) * 2; 
+            float radiusAtY = Mathf.Sqrt(1 - y * y); 
+            float theta = phiIncrement * i; 
+
+            float x = radiusAtY * Mathf.Cos(theta);
+            float z = radiusAtY * Mathf.Sin(theta);
+
+            Vector3 localPosition = new Vector3(x, y, z) * radiusSphere; 
+            Vector3 pos = spawnLocation.position + spawnLocation.TransformDirection(localPosition);
+            Vector3 dir = spawnLocation.forward;
+            Vector3 inwardDir = -(spawnLocation.position - pos).normalized;
+            Vector3 combinedDir = dir + (inwardDir * inwardSpeed);
+            combinedDir.Normalize();
+
+            // Spawn and orientate it
+            GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            bulletObj.transform.forward = dir;
+
+            //alternate mats
+            MeshRenderer bulletRenderer = bulletObj.GetComponentInChildren<MeshRenderer>();
+            if (bulletRenderer != null)
+            {
+                // Alternate materials
+                bulletRenderer.material = useMaterial1 ? material1 : material2;
+                useMaterial1 = !useMaterial1; // Toggle the material for the next bullet
+            }
+            else
+            {
+                Debug.LogWarning("MeshRenderer not found in bullet prefab's children!");
+            }
+
+            // Get bullet script
+            Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+            // Initialize it and set the velocity
+            bulletScript.Initialize(dmg, speedDmg);
+            bulletScript.rb.velocity = combinedDir * bulletSpeed;
+        }
+
+        int rando = Random.Range(0, shootSound.Length);
+        shootSound[rando].Play();
+    }
+
 }

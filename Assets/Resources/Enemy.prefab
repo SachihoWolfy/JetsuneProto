@@ -404,6 +404,7 @@ MonoBehaviour:
   cart: {fileID: 0}
   winText: {fileID: 0}
   playerOffset: {fileID: 5667744418513438628}
+  targetLook: {fileID: 9162792921040887748}
   clips:
   - {fileID: 8300000, guid: bd68d75b0bbfe2948813192f5c43e378, type: 3}
   - {fileID: 8300000, guid: 4a172904536bf984998dbc203c746c14, type: 3}
@@ -412,6 +413,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6a56ffda3600d9846a1ee2e6a02586d2, type: 3}
   - {fileID: 8300000, guid: f91f3a02b0deb7141a276d145f809f1e, type: 3}
   - {fileID: 8300000, guid: 692f23f304175544e96404f423ead455, type: 3}
+  - {fileID: 8300000, guid: e8437279ae0351248b75e3e97e184732, type: 3}
   audioSource: {fileID: 629755670410742982}
   anim: {fileID: 4283209396633010025}
   visualAnim: {fileID: 8403560840428967079}
@@ -1012,12 +1014,22 @@ MonoBehaviour:
   shootSound:
   - {fileID: 6126461376910618488}
   - {fileID: 2302763801566652708}
+  material1: {fileID: 0}
+  material2: {fileID: 0}
   distanceSpawnMissile: 100
   toggleProjectileAtDistance: 0
   lookAtPlayer: 0
   dmg: 1
   speedDmg: 40
   speed: 10
+  radius: 5
+  numberOfProjectiles: 10
+  inwardSpeed: 5
+  hemisphereRadius: 5
+  explosionForce: 10
+  hemisphereProjectileCount: 30
+  numberSphereProjectiles: 100
+  radiusSphere: 2
 --- !u!1 &4121835346514483642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,12 +1600,22 @@ MonoBehaviour:
   - {fileID: 1654809437301728902}
   - {fileID: 7581879852988445075}
   - {fileID: 7581879852988445075}
+  material1: {fileID: 0}
+  material2: {fileID: 0}
   distanceSpawnMissile: 100
   toggleProjectileAtDistance: 0
   lookAtPlayer: 0
   dmg: 1
   speedDmg: 40
   speed: 10
+  radius: 5
+  numberOfProjectiles: 10
+  inwardSpeed: 5
+  hemisphereRadius: 5
+  explosionForce: 10
+  hemisphereProjectileCount: 30
+  numberSphereProjectiles: 100
+  radiusSphere: 2
 --- !u!1 &6729173234276337661
 GameObject:
   m_ObjectHideFlags: 0
@@ -2062,6 +2084,11 @@ Transform:
 --- !u!95 &8403560840428967079 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6760585444140535199, guid: 1994442cbe8fbfd449f709b37377baaa, type: 3}
+  m_PrefabInstance: {fileID: 2976068648978520376}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9162792921040887748 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6225620887481190140, guid: 1994442cbe8fbfd449f709b37377baaa, type: 3}
   m_PrefabInstance: {fileID: 2976068648978520376}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7210804065004463376

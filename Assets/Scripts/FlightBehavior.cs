@@ -10,8 +10,10 @@ public class FlightBehavior : MonoBehaviour
     public Animator anim;
     public AudioSource audioSource;
     public AudioClip[] audioClips;
+    public CinemachineVirtualCamera[] cameras;
     public bool simpleControls = true;
     public bool pitchInvert = false;
+    public bool lookAtEnemy = false;
 
     public float blend = 0.9f;
     public float blendThrust = 0.9f;
@@ -57,6 +59,7 @@ public class FlightBehavior : MonoBehaviour
     CinemachineVirtualCamera virtualCamera;
 
     public int hp = 1;
+    public bool immunity = false;
     private void Start()
     {
         virtualCamera = FindAnyObjectByType<CinemachineVirtualCamera>();
@@ -104,6 +107,20 @@ public class FlightBehavior : MonoBehaviour
         {
             pitch = Input.GetAxis("Vertical") * (Time.fixedDeltaTime * pitchSpeed);
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            lookAtEnemy = !lookAtEnemy;
+            if (lookAtEnemy)
+            {
+                cameras[1].Priority = 20;
+                cameras[0].Priority = 10;
+            }
+            else
+            {
+                cameras[1].Priority = 10;
+                cameras[0].Priority = 20;
+            }
+        }
         if (pitchInvert) pitch = -pitch;
         pitch = blend * pitch + (1 - blend) * oldPitch;
         oldPitch = pitch;
@@ -114,6 +131,16 @@ public class FlightBehavior : MonoBehaviour
 
         lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(1, FindAnyObjectByType<BossMovement>().transform.position);
+
+        if (FindAnyObjectByType<BossMovement>().wonGame)
+        {
+            lineRenderer.enabled = false;
+        }
+        else
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, FindAnyObjectByType<BossMovement>().transform.position);
+        }
         
     }
 
@@ -135,8 +162,14 @@ public class FlightBehavior : MonoBehaviour
                 transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
 
             }
-
-            targetLook.localPosition = new Vector3(yaw * lookSens + roll * lookSens / 2, -pitch * lookSens, 5f);
+            if (lookAtEnemy)
+            {
+                targetLook.position = FindObjectOfType<BossMovement>().gameObject.transform.position;
+            }
+            else
+            {
+                targetLook.localPosition = new Vector3(yaw * lookSens + roll * lookSens / 2, -pitch * lookSens, 5f);
+            }
 
             curSpeed = rb.velocity.magnitude;
             if (curSpeed < 2f) { curSpeed = 3f; }
@@ -201,14 +234,9 @@ public class FlightBehavior : MonoBehaviour
 
     void Die()
     {
+        cameras[2].Priority = 100;
+        FindObjectOfType<HitStop>().Stop(0.5f);
         PlaySound(3);
-        GameObject thing = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Cube));
-        thing.transform.position = transform.position;
-        thing.GetComponent<MeshRenderer>().enabled = false;
-        virtualCamera.Follow = null;
-        virtualCamera.LookAt = gameObject.transform;
-        virtualCamera.transform.LookAt(gameObject.transform);
-        virtualCamera.ForceCameraPosition(thing.transform.position, transform.rotation);
         rb.useGravity = true;
         rb.freezeRotation = false;
         rb.AddExplosionForce(160f, targetLook.position, 20f);
@@ -238,12 +266,21 @@ public class FlightBehavior : MonoBehaviour
 
     public void TakeDamage(int dmg, float spdDamage)
     {
+        if (immunity) { return; }
+        immunity = true;
+        StartCoroutine(ImmunityReset());
         hp -= dmg;
         curSpeed = Mathf.Clamp(curSpeed - spdDamage,MINSPEED,maxSpeed);
         rb.velocity = transform.forward * curSpeed;
         Debug.Log("Damaged");
         anim.SetTrigger("Damage");
         PlaySound(2);
+    }
+
+    public IEnumerator ImmunityReset(float duration = 1f)
+    {
+        yield return new WaitForSeconds(duration);
+        immunity = false;
     }
 
     public void PlaySound(int index = 0)

@@ -18,6 +18,7 @@ public class BossMovement : MonoBehaviour
     public CinemachineDollyCart cart;
     public TextMeshProUGUI winText;
     public Transform playerOffset;
+    public GameObject targetLook;
     public AudioClip[] clips;
     public AudioSource audioSource;
     public Animator anim;
@@ -34,6 +35,7 @@ public class BossMovement : MonoBehaviour
     public ProjectileSpawner[] spawners;
 
     public bool engaging = false;
+    private bool preventAttack = false;
 
     private void Start()
     {
@@ -78,35 +80,53 @@ public class BossMovement : MonoBehaviour
         }
         visualAnim.SetBool("IsMach", isMach);
         cart.m_Speed = speed;
+        targetLook.transform.position = player.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && hp > 0 && !wonGame)
+        if (other.CompareTag("Player") && hp > 0 && !wonGame && !preventAttack)
         {
+            preventAttack = true;
             player.transform.position = playerOffset.position;
             player.anim.SetTrigger("Attack");
             StartCoroutine(SlowPlayer());
+            StartCoroutine(ResetAttack());
             hp += -1;
             winText.text = "Boss HP: " + hp.ToString();
         }
         if(hp == 0 && !wonGame)
         {
             wonGame = true;
+            player.cameras[0].Priority = 100;
             anim.SetBool("Died", wonGame);
             PlaySound(4);
             StartCoroutine(RestartGame());
         }
     }
-
+    IEnumerator ResetAttack()
+    {
+        yield return new WaitForSeconds(2f);
+        preventAttack = false;
+    }
     IEnumerator SlowPlayer()
     {
         attackSequence = true;
+        player.immunity = true;
+        StartCoroutine(player.ImmunityReset(3f));
+        player.cameras[1].Priority = 30;
         yield return new WaitForSeconds(0.3f);
         player.PlaySound(1);
         attackSequence = false;
         player.rb.velocity = new Vector3(0, 0, 0);
         player.curSpeed = 3f;
+        yield return new WaitForSeconds(2f);
+        FindObjectOfType<CinemachineBrain>().m_DefaultBlend.m_Time = 0.7f;
+        player.cameras[1].Priority = 10;
+        player.cameras[0].Priority = 20;
+        player.lookAtEnemy = false;
+        yield return new WaitForSeconds(1f);
+        FindObjectOfType<CinemachineBrain>().m_DefaultBlend.m_Time = 0.2f;
     }
 
     IEnumerator RestartGame()
@@ -169,6 +189,11 @@ public class BossMovement : MonoBehaviour
     public void SpawnProjectilesInHemisphere(int index = 0)
     {
         spawners[index].SpawnProjectilesInHemisphere();
+    }
+
+    public void SpawnProjectilesInSphere(int index = 0)
+    {
+        spawners[index].SpawnProjectilesInSphere();
     }
 
     public void PlaySound(int index = 0)
