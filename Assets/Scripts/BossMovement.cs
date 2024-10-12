@@ -7,6 +7,8 @@ using TMPro;
 
 public class BossMovement : MonoBehaviour
 {
+    public bool isCutscene = false;
+    public int cutsceneID = 0;
     public float distanceToMaintain = 300f;
     public int hp = 5;
     public float speed;
@@ -42,6 +44,8 @@ public class BossMovement : MonoBehaviour
         cart = GetComponent<CinemachineDollyCart>();
         player = FindAnyObjectByType<FlightBehavior>();
         winText.text = "Engage Boss - Boss HP: " + hp;
+        anim.SetInteger("Cutscene", cutsceneID);
+        anim.SetBool("IsCutscene", isCutscene);
     }
 
     private void Update()
@@ -54,9 +58,18 @@ public class BossMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        enemyScale = Mathf.Clamp(Vector3.Distance(player.transform.position, transform.position) + pursuitMod, defaultScale, awayScale);
+        enemyVisual.transform.localScale = new Vector3(enemyScale, enemyScale, enemyScale);
+        targetLook.transform.position = player.transform.position;
+        if (isCutscene)
+        {
+            speed = cart.m_Speed - 5f;
+            return;
+        }
         engaging = player.curSpeed >= engageSpeed;
 
-        if(!engaging) { 
+        if (!engaging)
+        {
             speed = player.curSpeed;
             if (isMach) { isMach = false; }
         }
@@ -69,9 +82,6 @@ public class BossMovement : MonoBehaviour
         {
             speed = player.curSpeed * distanceToMaintain / Vector3.Distance(player.transform.position, transform.position);
         }
-
-        enemyScale = Mathf.Clamp(Vector3.Distance(player.transform.position, transform.position) + pursuitMod, defaultScale, awayScale);
-        enemyVisual.transform.localScale = new Vector3(enemyScale, enemyScale, enemyScale);
         if (engaging)
         {
             speed = engageFlightSpeed;
@@ -80,11 +90,14 @@ public class BossMovement : MonoBehaviour
         }
         visualAnim.SetBool("IsMach", isMach);
         cart.m_Speed = speed;
-        targetLook.transform.position = player.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (isCutscene)
+        {
+            return;
+        }
         if (other.CompareTag("Player") && hp > 0 && !wonGame && !preventAttack)
         {
             preventAttack = true;
@@ -101,7 +114,7 @@ public class BossMovement : MonoBehaviour
             player.cameras[0].Priority = 100;
             anim.SetBool("Died", wonGame);
             PlaySound(4);
-            StartCoroutine(RestartGame());
+            StartCoroutine(EndGame());
         }
     }
     IEnumerator ResetAttack()
@@ -151,7 +164,31 @@ public class BossMovement : MonoBehaviour
         winText.text = "Restarting in: " + i;
         PlaySound(6);
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    IEnumerator EndGame()
+    {
+        int i = 5;
+        winText.text = "Returning to menu in: " + i;
+        i--;
+        PlaySound(5);
+        yield return new WaitForSeconds(1f);
+        winText.text = "Returning to menu in: " + i;
+        i--;
+        PlaySound(5);
+        yield return new WaitForSeconds(1f);
+        winText.text = "Returning to menu in: " + i;
+        i--;
+        PlaySound(5);
+        yield return new WaitForSeconds(1f);
+        winText.text = "Returning to menu in: " + i;
+        i--;
+        PlaySound(5);
+        yield return new WaitForSeconds(1f);
+        winText.text = "Returning to menu in: " + i;
+        PlaySound(6);
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(1);
     }
 
     public void SpawnBullet(int index = 0)

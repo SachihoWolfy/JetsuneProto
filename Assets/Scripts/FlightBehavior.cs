@@ -7,13 +7,16 @@ using TMPro;
 
 public class FlightBehavior : MonoBehaviour
 {
+    public bool isCutscene = false;
+    public int cutsceneID = 0;
+    public Animator cutsceneAnim;
     public Animator anim;
     public AudioSource audioSource;
     public AudioClip[] audioClips;
     public CinemachineVirtualCamera[] cameras;
     public bool simpleControls = true;
     public bool pitchInvert = false;
-    public bool lookAtEnemy = false;
+    public bool lookAtEnemy;
 
     public float blend = 0.9f;
     public float blendThrust = 0.9f;
@@ -56,7 +59,15 @@ public class FlightBehavior : MonoBehaviour
 
     private bool sonicBoomHappened = false;
 
+    private float awayScale = 40f;
+    private float defaultScale = 11.26f;
+    private float pursuitMod = -20f;
+    private float curScale;
+    public bool doCutsceneScaling = false;
+
+
     CinemachineVirtualCamera virtualCamera;
+    CinemachineDollyCart dolly;
 
     public int hp = 1;
     public bool immunity = false;
@@ -75,10 +86,23 @@ public class FlightBehavior : MonoBehaviour
             new GradientAlphaKey[] { new GradientAlphaKey(0.2f, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
         );
         lineRenderer.colorGradient = gradient;
+        if (isCutscene)
+        {
+            cutsceneAnim.SetInteger("Cutscene", cutsceneID);
+            cutsceneAnim.SetBool("IsCutscene", isCutscene);
+        }
+        if (GetComponent<CinemachineDollyCart>())
+        {
+            dolly = GetComponent<CinemachineDollyCart>();
+        }
     }
 
     void Update()
     {
+        if (isCutscene)
+        {
+            return;
+        }
         // get input movement
         if (!simpleControls)
         {
@@ -109,7 +133,15 @@ public class FlightBehavior : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            lookAtEnemy = !lookAtEnemy;
+            if (lookAtEnemy)
+            {
+                lookAtEnemy = false;
+            }
+            else
+            {
+                lookAtEnemy = true;
+            }
+            Debug.Log("Toggle Look: " + lookAtEnemy);
             if (lookAtEnemy)
             {
                 cameras[1].Priority = 20;
@@ -146,6 +178,33 @@ public class FlightBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (lookAtEnemy)
+        {
+            targetLook.position = FindObjectOfType<BossMovement>().gameObject.transform.position;
+        }
+        else
+        {
+            targetLook.localPosition = new Vector3(yaw * lookSens + roll * lookSens / 2, -pitch * lookSens, 5f);
+        }
+        anim.SetFloat("CurSpeed", curSpeed);
+        if (lookAtEnemy)
+        {
+            targetLook.position = FindObjectOfType<BossMovement>().gameObject.transform.position;
+        }
+        if (isCutscene)
+        {
+            if (doCutsceneScaling) 
+            {
+                curScale = Mathf.Clamp(Vector3.Distance(transform.position, Camera.main.transform.position) + pursuitMod, defaultScale, awayScale);
+                anim.gameObject.transform.localScale = new Vector3(curScale, curScale, curScale);
+            }
+            else
+            {
+                anim.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+            }
+            dolly.m_Speed = curSpeed;
+            return;
+        }
         if(hp <= 0 && !isDie)
         {
             isDie = true;
@@ -153,22 +212,23 @@ public class FlightBehavior : MonoBehaviour
         if (!isDie)
         {
             Quaternion AddRot = Quaternion.identity;
-
             AddRot.eulerAngles = new Vector3(pitch, yaw, -roll);
             transform.rotation *= AddRot;
 
             if (simpleControls)
             {
-                transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
+                // Get the current euler angles
+                Vector3 euler = transform.eulerAngles;
 
-            }
-            if (lookAtEnemy)
-            {
-                targetLook.position = FindObjectOfType<BossMovement>().gameObject.transform.position;
-            }
-            else
-            {
-                targetLook.localPosition = new Vector3(yaw * lookSens + roll * lookSens / 2, -pitch * lookSens, 5f);
+                // Normalize pitch to the range of -180 to 180
+                if (euler.x > 180)
+                    euler.x -= 360;
+
+                // Clamp the pitch (x-axis) between -85 and 85 degrees
+                euler.x = Mathf.Clamp(euler.x, -85f, 85f);
+
+                // Apply the clamped pitch and maintain the yaw
+                transform.eulerAngles = new Vector3(euler.x, euler.y, 0f); // Keep roll as 0 if needed
             }
 
             curSpeed = rb.velocity.magnitude;
@@ -260,6 +320,7 @@ public class FlightBehavior : MonoBehaviour
 
     private void OnGUI()
     {
+        if (isCutscene) return;
         if (GUILayout.Button("Toggle Advanced Controls")) ToggleSimpleControls();
         if (GUILayout.Button("Toggle Pitch Invert")) TogglePitchInvert();
     }
@@ -287,5 +348,19 @@ public class FlightBehavior : MonoBehaviour
     {
         audioSource.clip = audioClips[index];
         audioSource.Play();
+    }
+
+    public void GivePriorityToCam(int index)
+    {
+        int curIndex = 0;
+        cameras[index].Priority = 50;
+        foreach(CinemachineVirtualCamera cam in cameras)
+        {
+            if(curIndex != index)
+            {
+                cam.Priority = 0;
+            }
+            curIndex++;
+        }
     }
 }
