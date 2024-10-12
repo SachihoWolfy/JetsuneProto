@@ -15,7 +15,6 @@ Dodge bullets and chase down the enemy! Build up speed and hit Mach to gain on t
 - Space to Change Camera
 
 ![Jetsune](https://cdn.discordapp.com/attachments/1112104087752822874/1288932169586049024/IMG_4173.jpg?ex=66fb9860&is=66fa46e0&hm=9d6278295ce06726532bd2cc31f5301bcabfd79e2ae3f78e02845f71ca4a1424&)
-![Polaris](https://cdn.discordapp.com/attachments/1112104087752822874/1291596158577152050/IMG_4216.jpg?ex=6700ac28&is=66ff5aa8&hm=9a97f5583108d99432052804af5294cc4c32e6a3ef34848b4f2ab90e64526611&)
 
 Changlog:
 
