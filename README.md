@@ -24,6 +24,10 @@ Changlog:
 
 - Added Demo Cutscene
 
+- Added Menu
+
+- Added Persistant Settings (During same Session)
+
 - Added Textures
 
 - Redid Materials from Maya to Unity (More Color!)
@@ -35,4 +39,5 @@ Changlog:
 Known Issues
 
 - On some browsers, player acceleration is insanely sluggish. (Unsolved)
-- - Might be a rendering thing slowing it down, but unsure if this is the true cause.
+  - Might be a rendering thing slowing it down, but unsure if this is the true cause.
+  - Windows with Chrome is recommended.
