@@ -24,6 +24,7 @@ public class CutsceneDollyEvent : MonoBehaviour
         anim.SetInteger("CutsceneID", fb.cutsceneID);
         if(SceneManager.GetActiveScene().buildIndex == 2)
         {
+            Time.timeScale = 1;
             StartCoroutine(PlayDemoAfter57());
             stopToggleSwitching = true;
             invertPitchToggle.isOn = Settings.invertPitch;
