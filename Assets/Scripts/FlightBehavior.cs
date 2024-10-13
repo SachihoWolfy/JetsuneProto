@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class FlightBehavior : MonoBehaviour
 {
@@ -95,6 +96,8 @@ public class FlightBehavior : MonoBehaviour
         {
             dolly = GetComponent<CinemachineDollyCart>();
         }
+        simpleControls = Settings.simpleControls;
+        pitchInvert = Settings.invertPitch;
     }
 
     void Update()
@@ -178,6 +181,8 @@ public class FlightBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
+        simpleControls = Settings.simpleControls;
+        pitchInvert = Settings.invertPitch;
         if (lookAtEnemy)
         {
             targetLook.position = FindObjectOfType<BossMovement>().gameObject.transform.position;
@@ -317,12 +322,12 @@ public class FlightBehavior : MonoBehaviour
     {
         pitchInvert = !pitchInvert;
     }
-
     private void OnGUI()
     {
         if (isCutscene) return;
-        if (GUILayout.Button("Toggle Advanced Controls")) ToggleSimpleControls();
-        if (GUILayout.Button("Toggle Pitch Invert")) TogglePitchInvert();
+        /*if (GUILayout.Button("Toggle Advanced Controls")) ToggleSimpleControls();
+        if (GUILayout.Button("Toggle Pitch Invert")) TogglePitchInvert();*/
+        if (GUILayout.Button("BackToMenu")) SceneManager.LoadScene(2);
     }
 
     public void TakeDamage(int dmg, float spdDamage)

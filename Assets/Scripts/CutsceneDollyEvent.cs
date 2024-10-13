@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.UI;
 
 public class CutsceneDollyEvent : MonoBehaviour
 {
@@ -12,21 +14,28 @@ public class CutsceneDollyEvent : MonoBehaviour
     public FlightBehavior fb;
     public BossMovement bm;
     public Animator anim;
+    public Toggle invertPitchToggle;
+    public Toggle simpleControlsToggle;
+    public bool stopToggleSwitching;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         anim.SetInteger("CutsceneID", fb.cutsceneID);
-        if(SceneManager.GetActiveScene().buildIndex == 1)
+        if(SceneManager.GetActiveScene().buildIndex == 2)
         {
             StartCoroutine(PlayDemoAfter57());
+            stopToggleSwitching = true;
+            invertPitchToggle.isOn = Settings.invertPitch;
+            simpleControlsToggle.isOn = Settings.simpleControls;
+            stopToggleSwitching = false;
         }
     }
 
     IEnumerator PlayDemoAfter57()
     {
         yield return new WaitForSeconds(57f);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
     public void SetPosSachi(float pos)
     {
@@ -66,5 +75,26 @@ public class CutsceneDollyEvent : MonoBehaviour
     public void PolarisAttack()
     {
         bm.visualAnim.Play("Polaris_Threat");
+    }
+
+    public void ToggleObject(GameObject obj)
+    {
+        bool isActive = obj.activeSelf;
+        obj.SetActive(!isActive);
+    }
+    public void ToggleInvert()
+    {
+        if(!stopToggleSwitching)
+        Settings.invertPitch = !Settings.invertPitch;
+    }
+
+    public void ToggleControls()
+    {
+        if(!stopToggleSwitching)
+        Settings.simpleControls = !Settings.simpleControls;
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

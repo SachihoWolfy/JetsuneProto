@@ -188,7 +188,7 @@ public class BossMovement : MonoBehaviour
         winText.text = "Returning to menu in: " + i;
         PlaySound(6);
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     public void SpawnBullet(int index = 0)
