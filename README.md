@@ -23,6 +23,7 @@ Changlog:
 - Added New Level (Mount Moonlight)
 
 - Added Demo Cutscene
+  - Added appropriate measures to skip my hard work.
 
 - Added Menu
 
