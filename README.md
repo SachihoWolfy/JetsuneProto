@@ -42,3 +42,5 @@ Known Issues
 - On some browsers, player acceleration is insanely sluggish. (Unsolved)
   - Might be a rendering thing slowing it down, but unsure if this is the true cause.
   - Windows with Chrome is recommended.
+- First Time load is increasingly sluggish as the game gets more complex.
+  - Might start considering individual platform builds.
