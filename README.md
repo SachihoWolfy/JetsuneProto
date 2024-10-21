@@ -18,11 +18,12 @@ Dodge bullets and chase down the enemy! Build up speed and hit Mach to gain on t
 
 ![Jetsune](https://cdn.discordapp.com/attachments/1112104087752822874/1288932169586049024/IMG_4173.jpg?ex=66fb9860&is=66fa46e0&hm=9d6278295ce06726532bd2cc31f5301bcabfd79e2ae3f78e02845f71ca4a1424&)
 
-Changlog:
+Changelog:
 
 - Added New Level (Mount Moonlight)
 
 - Added Demo Cutscene
+  - Added appropriate measures to skip my hard work.
 
 - Added Menu
 
@@ -41,3 +42,5 @@ Known Issues
 - On some browsers, player acceleration is insanely sluggish. (Unsolved)
   - Might be a rendering thing slowing it down, but unsure if this is the true cause.
   - Windows with Chrome is recommended.
+- First Time load is increasingly sluggish as the game gets more complex.
+  - Might start considering individual platform builds.
