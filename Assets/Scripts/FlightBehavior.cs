@@ -54,6 +54,8 @@ public class FlightBehavior : MonoBehaviour
     public Color c2 = Color.red;
 
     public TextMeshProUGUI hpText;
+    public TextMeshProUGUI powerupText;
+    public TextMeshProUGUI scoreText;
 
     private bool isDie;
     private bool isDead;
@@ -72,6 +74,18 @@ public class FlightBehavior : MonoBehaviour
 
     public int hp = 1;
     public bool immunity = false;
+
+    public bool tryingPowerup;
+    public bool isPowerup;
+    public bool disablePower;
+    static int curPowerAmount;
+    int dampingPowerUp = 2;
+    public float powerSpeed = 67;
+
+    static int score = 0;
+    int oldScore;
+    public int lifeScore = 10000;
+    public int powerScore = 5000;
     private void Start()
     {
         virtualCamera = FindAnyObjectByType<CinemachineVirtualCamera>();
@@ -100,12 +114,108 @@ public class FlightBehavior : MonoBehaviour
         pitchInvert = Settings.invertPitch;
     }
 
+    IEnumerator DoSachiPowerUp()
+    {
+        audioSource.PlayOneShot(audioClips[0]);
+        curPowerAmount--;
+        powerupText.text = "P x" + curPowerAmount;
+        immunity = true;
+        isPowerup = true;
+        anim.SetBool("IsPowerup", true);
+        gameObject.GetComponent<Animator>().SetBool("IsPowerup", true);
+        PlaySound(4);
+        yield return new WaitForSeconds(5);
+        audioSource.Stop();
+        anim.SetBool("IsPowerup", false);
+        gameObject.GetComponent<Animator>().SetBool("IsPowerup", false);
+        immunity = false;
+        isPowerup = false;
+    }
+
+    public void StopPowerup()
+    {
+        StopCoroutine(DoSachiPowerUp());
+        anim.SetBool("IsPowerup", false);
+        GetComponent<Animator>().SetBool("IsPowerup", false);
+        immunity = false;
+        isPowerup = false;
+    }
+
+    public void AddScore(int value)
+    {
+        oldScore = score;
+        score += value;
+        if ((score % lifeScore) < (oldScore % lifeScore))
+        {
+            hp++;
+        }
+        if ((score % powerScore) < (oldScore % powerScore))
+        {
+            curPowerAmount++;
+        }
+        if ((score % lifeScore) < (oldScore % lifeScore)|| (score % powerScore) < (oldScore % powerScore))
+        {
+            FindAnyObjectByType<GrazeController>().PlaySound(1);
+        }
+    }
+
+    void AccelerateToEnemy()
+    {
+        if(isPowerup)
+        immunity = true;
+        Vector3 bossPos = FindObjectOfType<BossMovement>().gameObject.transform.position;
+        var lookPos = bossPos - transform.position;
+        var rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampingPowerUp);
+        curSpeed = powerSpeed;
+        rb.velocity = transform.forward * curSpeed;
+    }
+    void DoLineRender()
+    {
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, FindAnyObjectByType<BossMovement>().transform.position);
+        if (FindAnyObjectByType<BossMovement>().wonGame)
+        {
+            lineRenderer.enabled = false;
+        }
+        else
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, FindAnyObjectByType<BossMovement>().transform.position);
+        }
+    }
     void Update()
     {
         if (isCutscene)
         {
             return;
         }
+        DoLineRender();
+        //Cam Shit
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (lookAtEnemy)
+            {
+                lookAtEnemy = false;
+            }
+            else
+            {
+                lookAtEnemy = true;
+            }
+            Debug.Log("Toggle Look: " + lookAtEnemy);
+            if (lookAtEnemy)
+            {
+                cameras[1].Priority = 20;
+                cameras[0].Priority = 10;
+            }
+            else
+            {
+                cameras[1].Priority = 10;
+                cameras[0].Priority = 20;
+            }
+        }
+        // Do the Powerup stuff
+        powerupText.text = "P x" + curPowerAmount;
         // get input movement
         if (!simpleControls)
         {
@@ -134,28 +244,6 @@ public class FlightBehavior : MonoBehaviour
         {
             pitch = Input.GetAxis("Vertical") * (Time.fixedDeltaTime * pitchSpeed);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (lookAtEnemy)
-            {
-                lookAtEnemy = false;
-            }
-            else
-            {
-                lookAtEnemy = true;
-            }
-            Debug.Log("Toggle Look: " + lookAtEnemy);
-            if (lookAtEnemy)
-            {
-                cameras[1].Priority = 20;
-                cameras[0].Priority = 10;
-            }
-            else
-            {
-                cameras[1].Priority = 10;
-                cameras[0].Priority = 20;
-            }
-        }
         if (pitchInvert) pitch = -pitch;
         pitch = blend * pitch + (1 - blend) * oldPitch;
         oldPitch = pitch;
@@ -163,24 +251,16 @@ public class FlightBehavior : MonoBehaviour
         thrust = Input.GetAxis("Thrust") * (Time.deltaTime * thrustSpeed);
         thrust = blendThrust * thrust + (1 - blendThrust) * oldThrust - 0.0004f * thrustSpeed * 2f;
         oldThrust = thrust;
-
-        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, FindAnyObjectByType<BossMovement>().transform.position);
-
-        if (FindAnyObjectByType<BossMovement>().wonGame)
+        if (Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.Mouse1) && !isPowerup && curPowerAmount > 0)
         {
-            lineRenderer.enabled = false;
-        }
-        else
-        {
-            lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, FindAnyObjectByType<BossMovement>().transform.position);
+            StartCoroutine(DoSachiPowerUp());
         }
         
     }
 
     void FixedUpdate()
     {
+        anim.SetFloat("CurSpeed", curSpeed);
         simpleControls = Settings.simpleControls;
         pitchInvert = Settings.invertPitch;
         if (lookAtEnemy)
@@ -191,24 +271,19 @@ public class FlightBehavior : MonoBehaviour
         {
             targetLook.localPosition = new Vector3(yaw * lookSens + roll * lookSens / 2, -pitch * lookSens, 5f);
         }
-        anim.SetFloat("CurSpeed", curSpeed);
         if (lookAtEnemy)
         {
             targetLook.position = FindObjectOfType<BossMovement>().gameObject.transform.position;
         }
         if (isCutscene)
         {
-            if (doCutsceneScaling) 
-            {
-                curScale = Mathf.Clamp(Vector3.Distance(transform.position, Camera.main.transform.position) + pursuitMod, defaultScale, awayScale);
-                anim.gameObject.transform.localScale = new Vector3(curScale, curScale, curScale);
-            }
-            else
-            {
-                anim.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
-            }
-            dolly.m_Speed = curSpeed;
+            DoCutsceneThings();
             return;
+        }
+        // Do the Powerup stuff
+        if (isPowerup && !disablePower)
+        {
+            AccelerateToEnemy();
         }
         if(hp <= 0 && !isDie)
         {
@@ -216,54 +291,10 @@ public class FlightBehavior : MonoBehaviour
         }
         if (!isDie)
         {
-            Quaternion AddRot = Quaternion.identity;
-            AddRot.eulerAngles = new Vector3(pitch, yaw, -roll);
-            transform.rotation *= AddRot;
-
-            if (simpleControls)
+            if (!isPowerup)
             {
-                // Get the current euler angles
-                Vector3 euler = transform.eulerAngles;
-
-                // Normalize pitch to the range of -180 to 180
-                if (euler.x > 180)
-                    euler.x -= 360;
-
-                // Clamp the pitch (x-axis) between -85 and 85 degrees
-                euler.x = Mathf.Clamp(euler.x, -85f, 85f);
-
-                // Apply the clamped pitch and maintain the yaw
-                transform.eulerAngles = new Vector3(euler.x, euler.y, 0f); // Keep roll as 0 if needed
-            }
-
-            curSpeed = rb.velocity.magnitude;
-            if (curSpeed < 2f) { curSpeed = 3f; }
-            oldSpeed = curSpeed;
-            curSpeed = Mathf.Clamp(curSpeed + (thrust * thrustSpeed) / (curSpeed), MINSPEED, maxSpeed);
-
-            if (oldSpeed > curSpeed)
-            {
-                curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed / 5f, MINSPEED, maxSpeed);
-            }
-            else if (curSpeed > 40 && curSpeed < 60)
-            {
-                if (!sonicBoomHappened) PlaySound(0);
-                curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed * 2, MINSPEED, maxSpeed);
-            }
-
-            rb.velocity = transform.forward * curSpeed;
-
-            anim.SetFloat("CurSpeed", curSpeed);
-
-            if (curSpeed < 10)
-            {
-                anim.ResetTrigger("Fly");
-                anim.SetTrigger("Hover");
-            }
-            else
-            {
-                anim.ResetTrigger("Hover");
-                anim.SetTrigger("Fly");
+                DoRotate();
+                DoSpeedThings();
             }
         }
         else if(!isDead)
@@ -273,6 +304,74 @@ public class FlightBehavior : MonoBehaviour
             Restart();
         }
         updateUI();
+    }
+    void DoCutsceneThings()
+    {
+        if (doCutsceneScaling)
+        {
+            curScale = Mathf.Clamp(Vector3.Distance(transform.position, Camera.main.transform.position) + pursuitMod, defaultScale, awayScale);
+            anim.gameObject.transform.localScale = new Vector3(curScale, curScale, curScale);
+        }
+        else
+        {
+            anim.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+        }
+        dolly.m_Speed = curSpeed;
+    }
+
+    void DoRotate()
+    {
+        Quaternion AddRot = Quaternion.identity;
+        AddRot.eulerAngles = new Vector3(pitch, yaw, -roll);
+        transform.rotation *= AddRot;
+
+        if (simpleControls)
+        {
+            // Get the current euler angles
+            Vector3 euler = transform.eulerAngles;
+
+            // Normalize pitch to the range of -180 to 180
+            if (euler.x > 180)
+                euler.x -= 360;
+
+            // Clamp the pitch (x-axis) between -85 and 85 degrees
+            euler.x = Mathf.Clamp(euler.x, -85f, 85f);
+
+            // Apply the clamped pitch and maintain the yaw
+            transform.eulerAngles = new Vector3(euler.x, euler.y, 0f); // Keep roll as 0 if needed
+        }
+    }
+    void DoSpeedThings()
+    {
+        curSpeed = rb.velocity.magnitude;
+        if (curSpeed < 2f) { curSpeed = 3f; }
+        oldSpeed = curSpeed;
+        curSpeed = Mathf.Clamp(curSpeed + (thrust * thrustSpeed) / (curSpeed), MINSPEED, maxSpeed);
+
+        if (oldSpeed > curSpeed)
+        {
+            curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed / 5f, MINSPEED, maxSpeed);
+        }
+        else if (curSpeed > 40 && curSpeed < 60)
+        {
+            if (!sonicBoomHappened) PlaySound(0);
+            curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed * 2, MINSPEED, maxSpeed);
+        }
+
+        rb.velocity = transform.forward * curSpeed;
+
+        anim.SetFloat("CurSpeed", curSpeed);
+
+        if (curSpeed < 10)
+        {
+            anim.ResetTrigger("Fly");
+            anim.SetTrigger("Hover");
+        }
+        else
+        {
+            anim.ResetTrigger("Hover");
+            anim.SetTrigger("Fly");
+        }
     }
 
     void Restart()
@@ -295,6 +394,8 @@ public class FlightBehavior : MonoBehaviour
             fillImage.color = Color.red;
         }
         hpText.text = "HP: " + hp;
+        powerupText.text = "P x" + curPowerAmount;
+        scoreText.text = "Score: " + score;
     }
 
     void Die()
@@ -322,17 +423,10 @@ public class FlightBehavior : MonoBehaviour
     {
         pitchInvert = !pitchInvert;
     }
-    private void OnGUI()
-    {
-        if (isCutscene) return;
-        /*if (GUILayout.Button("Toggle Advanced Controls")) ToggleSimpleControls();
-        if (GUILayout.Button("Toggle Pitch Invert")) TogglePitchInvert();*/
-        if (GUILayout.Button("BackToMenu")) SceneManager.LoadScene(2);
-    }
 
     public void TakeDamage(int dmg, float spdDamage)
     {
-        if (immunity) { return; }
+        if (immunity) { audioSource.PlayOneShot(audioClips[5]); AddScore(500); return; }
         immunity = true;
         StartCoroutine(ImmunityReset());
         hp -= dmg;

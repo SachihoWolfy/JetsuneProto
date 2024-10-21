@@ -43,7 +43,7 @@ public class BossMovement : MonoBehaviour
     {
         cart = GetComponent<CinemachineDollyCart>();
         player = FindAnyObjectByType<FlightBehavior>();
-        winText.text = "Engage Boss - Boss HP: " + hp;
+        winText.text = "Boss HP: " + hp;
         anim.SetInteger("Cutscene", cutsceneID);
         anim.SetBool("IsCutscene", isCutscene);
     }
@@ -100,9 +100,11 @@ public class BossMovement : MonoBehaviour
         }
         if (other.CompareTag("Player") && hp > 0 && !wonGame && !preventAttack)
         {
+            player.AddScore(2000);
             preventAttack = true;
             player.transform.position = playerOffset.position;
-            player.anim.SetTrigger("Attack");
+            if(!player.isPowerup) player.anim.SetTrigger("Attack");
+            else player.anim.SetTrigger("JavAttack");
             StartCoroutine(SlowPlayer());
             StartCoroutine(ResetAttack());
             hp += -1;
@@ -124,6 +126,8 @@ public class BossMovement : MonoBehaviour
     }
     IEnumerator SlowPlayer()
     {
+        player.StopPowerup();
+        player.disablePower = true;
         attackSequence = true;
         player.immunity = true;
         StartCoroutine(player.ImmunityReset(3f));
@@ -139,6 +143,7 @@ public class BossMovement : MonoBehaviour
         player.cameras[0].Priority = 20;
         player.lookAtEnemy = false;
         yield return new WaitForSeconds(1f);
+        player.disablePower = false;
         FindObjectOfType<CinemachineBrain>().m_DefaultBlend.m_Time = 0.2f;
     }
 

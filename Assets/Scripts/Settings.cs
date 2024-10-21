@@ -29,5 +29,16 @@ public class Settings : MonoBehaviour
     {
         simplePub = simpleControls;
         invertPub = invertPitch;
+        if (SceneManager.GetActiveScene().buildIndex > 2)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseMenu.instance.ToggleActive();
+            }
+        }
+        else
+        {
+            PauseMenu.instance.SetPauseActive(false);
+        }
     }
 }

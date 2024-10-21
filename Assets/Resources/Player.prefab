@@ -59,6 +59,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 44d692b2851b7034f8fd836b19558b77, type: 3}
   - {fileID: 8300000, guid: 3e395880f405a7d4ea7dd70dc47ba559, type: 3}
   - {fileID: 8300000, guid: 72492586c274af3428cdd097f6a56721, type: 3}
+  - {fileID: 8300000, guid: f438346704e47cc4a9c4a5881876b7ca, type: 3}
+  - {fileID: 8300000, guid: b4c2600ccff4c404d843f64a903fab92, type: 3}
   cameras:
   - {fileID: 0}
   - {fileID: 0}
@@ -84,8 +86,17 @@ MonoBehaviour:
   c1: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   c2: {r: 1, g: 0, b: 0, a: 1}
   hpText: {fileID: 0}
+  powerupText: {fileID: 0}
+  scoreText: {fileID: 0}
+  doCutsceneScaling: 0
   hp: 5
   immunity: 0
+  tryingPowerup: 0
+  isPowerup: 0
+  disablePower: 0
+  powerSpeed: 67
+  lifeScore: 10000
+  powerScore: 5000
 --- !u!54 &1595803403800808869
 Rigidbody:
   m_ObjectHideFlags: 0

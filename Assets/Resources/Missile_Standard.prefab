@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 2698068481214459730}
   m_Layer: 0
   m_Name: Missile_Standard
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -447,6 +447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 5052576206102307751}
   _explosionPrefab: {fileID: 0}
+  speedMod: 1
   rotateSpeed: 100
   maxDistancePredict: 100
   minDistancePredict: 5
