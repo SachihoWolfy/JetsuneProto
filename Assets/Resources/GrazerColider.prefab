@@ -339,7 +339,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.3516846
+  m_Radius: 1.8
   m_Center: {x: 0, y: 0, z: 0.35168457}
 --- !u!114 &3867601806867550492
 MonoBehaviour:
@@ -361,3 +361,4 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: 90c02bd4e93268b488a01c97a434e08c, type: 3}
   - {fileID: 8300000, guid: 3747dbd7ab04648418773d38913a43c6, type: 3}
+  - {fileID: 8300000, guid: ca68d3a0d633f4f4ea5c0fd8c90d4e01, type: 3}

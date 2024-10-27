@@ -8,6 +8,8 @@ using TMPro;
 public class BossMovement : MonoBehaviour
 {
     public bool isCutscene = false;
+    public bool isWaypoint = false;
+    private int gpsProgress;
     public int cutsceneID = 0;
     public float distanceToMaintain = 300f;
     public int hp = 5;
@@ -27,6 +29,7 @@ public class BossMovement : MonoBehaviour
     public Animator visualAnim;
     private bool isMach;
     public GameObject enemyVisual;
+    public GameObject waypointVisual;
     private float defaultScale = 11.26f;
     public float awayScale = 20f;
     public float enemyScale;
@@ -35,6 +38,7 @@ public class BossMovement : MonoBehaviour
     public bool wonGame = false;
 
     public ProjectileSpawner[] spawners;
+    public AdvProjectileSpawner[] advSpawners;
 
     public bool engaging = false;
     private bool preventAttack = false;
@@ -43,9 +47,30 @@ public class BossMovement : MonoBehaviour
     {
         cart = GetComponent<CinemachineDollyCart>();
         player = FindAnyObjectByType<FlightBehavior>();
-        winText.text = "Boss HP: " + hp;
         anim.SetInteger("Cutscene", cutsceneID);
         anim.SetBool("IsCutscene", isCutscene);
+        anim.SetBool("IsWaypoint", isWaypoint);
+        anim.SetInteger("HP", hp);
+        if (isWaypoint)
+        {
+            enemyVisual.SetActive(false);
+            waypointVisual.SetActive(true);
+            anim.Play("Stop");
+            foreach(ProjectileSpawner spawner in spawners)
+            {
+                spawner.gameObject.SetActive(false);
+            }
+            foreach (AdvProjectileSpawner spawner in advSpawners)
+            {
+                spawner.gameObject.SetActive(false);
+            }
+            winText.text = "Follow GPS";
+        }
+        else
+        {
+            winText.text = "Boss HP: " + hp;
+            waypointVisual.SetActive(false);
+        }
     }
 
     private void Update()
@@ -61,6 +86,11 @@ public class BossMovement : MonoBehaviour
         enemyScale = Mathf.Clamp(Vector3.Distance(player.transform.position, transform.position) + pursuitMod, defaultScale, awayScale);
         enemyVisual.transform.localScale = new Vector3(enemyScale, enemyScale, enemyScale);
         targetLook.transform.position = player.transform.position;
+        if (isWaypoint)
+        {
+            gpsProgress = (int)(cart.m_Position / cart.m_Path.PathLength * 100);
+            winText.text = "Follow GPS: " + gpsProgress +"%";
+        }
         if (isCutscene)
         {
             speed = cart.m_Speed - 5f;
@@ -74,27 +104,29 @@ public class BossMovement : MonoBehaviour
             if (isMach) { isMach = false; }
         }
 
-        if (Vector3.Distance(player.transform.position, transform.position) < distanceToMaintain && !engaging)
+        if (Vector3.Distance(player.transform.position, transform.position) < distanceToMaintain && (!engaging||isWaypoint))
         {
             speed = player.curSpeed * distanceToMaintain / Vector3.Distance(player.transform.position, transform.position);
         }
-        if (Vector3.Distance(player.transform.position, transform.position) > distanceToMaintain && !engaging)
+        if (Vector3.Distance(player.transform.position, transform.position) > distanceToMaintain && (!engaging||isWaypoint))
         {
             speed = player.curSpeed * distanceToMaintain / Vector3.Distance(player.transform.position, transform.position);
         }
-        if (engaging)
+        if (engaging && !isWaypoint)
         {
             speed = engageFlightSpeed;
             distanceToMaintain = Mathf.Clamp(distanceToMaintain - 0.1f, 50f, distanceToMaintain);
             if (!isMach) { isMach = true; }
         }
+
         visualAnim.SetBool("IsMach", isMach);
         cart.m_Speed = speed;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isCutscene)
+        anim.SetInteger("HP", hp);
+        if (isCutscene || isWaypoint)
         {
             return;
         }
@@ -236,6 +268,22 @@ public class BossMovement : MonoBehaviour
     public void SpawnProjectilesInSphere(int index = 0)
     {
         spawners[index].SpawnProjectilesInSphere();
+    }
+
+    public void FireTheAdvancedSpawner(int index = 0)
+    {
+        if(advSpawners[index])
+        {
+            advSpawners[index].isFiring = true;
+        }
+    }
+
+    public void StopTheAdvancedSpawner(int index = 0)
+    {
+        if (advSpawners[index])
+        {
+            advSpawners[index].isFiring = false;
+        }
     }
 
     public void PlaySound(int index = 0)

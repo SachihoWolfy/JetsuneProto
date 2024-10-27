@@ -85,6 +85,11 @@ MonoBehaviour:
   fillImage: {fileID: 0}
   c1: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   c2: {r: 1, g: 0, b: 0, a: 1}
+  powerGauge: {fileID: 0}
+  fillImageP: {fileID: 0}
+  pGuageColor1: {r: 1, g: 0, b: 0, a: 1}
+  pGuageColor2: {r: 0, g: 0, b: 0, a: 0}
+  pGuageColor3: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   hpText: {fileID: 0}
   powerupText: {fileID: 0}
   scoreText: {fileID: 0}
@@ -95,8 +100,8 @@ MonoBehaviour:
   isPowerup: 0
   disablePower: 0
   powerSpeed: 67
-  lifeScore: 10000
-  powerScore: 5000
+  lifeScore: 20000
+  powerScore: 10000
 --- !u!54 &1595803403800808869
 Rigidbody:
   m_ObjectHideFlags: 0

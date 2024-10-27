@@ -53,6 +53,12 @@ public class FlightBehavior : MonoBehaviour
     public Color c1 = Color.yellow;
     public Color c2 = Color.red;
 
+    public Slider powerGauge;
+    public Image fillImageP;
+    public Color pGuageColor1 = Color.red;
+    public Color pGuageColor2;
+    public Color pGuageColor3 = Color.yellow;
+
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI powerupText;
     public TextMeshProUGUI scoreText;
@@ -83,9 +89,12 @@ public class FlightBehavior : MonoBehaviour
     public float powerSpeed = 67;
 
     static int score = 0;
+    static int scoreP = 0;
     int oldScore;
+    int oldScoreP;
     public int lifeScore = 10000;
     public int powerScore = 5000;
+    private bool canPointDestroy = true;
     private void Start()
     {
         virtualCamera = FindAnyObjectByType<CinemachineVirtualCamera>();
@@ -130,6 +139,7 @@ public class FlightBehavior : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("IsPowerup", false);
         immunity = false;
         isPowerup = false;
+        scoreP = 0;
     }
 
     public void StopPowerup()
@@ -145,13 +155,19 @@ public class FlightBehavior : MonoBehaviour
     {
         oldScore = score;
         score += value;
+        if (curPowerAmount < 1)
+        {
+            oldScoreP = scoreP;
+            scoreP += value;
+        }
         if ((score % lifeScore) < (oldScore % lifeScore))
         {
-            hp++;
+            Mathf.Clamp(hp++,0,9);
         }
-        if ((score % powerScore) < (oldScore % powerScore))
+        if ((scoreP % powerScore) < (oldScoreP % powerScore) && curPowerAmount < 1)
         {
-            curPowerAmount++;
+            FindAnyObjectByType<GrazeController>().PlaySound(2);
+            Mathf.Clamp(curPowerAmount++,0,1);
         }
         if ((score % lifeScore) < (oldScore % lifeScore)|| (score % powerScore) < (oldScore % powerScore))
         {
@@ -396,6 +412,20 @@ public class FlightBehavior : MonoBehaviour
         hpText.text = "HP: " + hp;
         powerupText.text = "P x" + curPowerAmount;
         scoreText.text = "Score: " + score;
+        if (powerGauge.maxValue != powerScore) powerGauge.maxValue = powerScore;
+        powerGauge.value = scoreP;
+        if (curPowerAmount >= 1)
+        {
+            fillImageP.color = pGuageColor2;
+        }
+        else if (isPowerup)
+        {
+            fillImageP.color = pGuageColor3;
+        }
+        else
+        {
+            fillImageP.color = pGuageColor1;
+        }
     }
 
     void Die()
@@ -426,7 +456,16 @@ public class FlightBehavior : MonoBehaviour
 
     public void TakeDamage(int dmg, float spdDamage)
     {
-        if (immunity) { audioSource.PlayOneShot(audioClips[5]); AddScore(500); return; }
+        if (immunity) 
+        { 
+            if (canPointDestroy)
+            {
+                audioSource.PlayOneShot(audioClips[5]);
+                AddScore(500);
+                StartCoroutine(pointDestroyOnCooldown());
+            }
+            return; 
+        }
         immunity = true;
         StartCoroutine(ImmunityReset());
         hp -= dmg;
@@ -461,5 +500,12 @@ public class FlightBehavior : MonoBehaviour
             }
             curIndex++;
         }
+    }
+
+    IEnumerator pointDestroyOnCooldown()
+    {
+        canPointDestroy = false;
+        yield return new WaitForSeconds(0.2f);
+        canPointDestroy = true;
     }
 }

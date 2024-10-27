@@ -77,6 +77,24 @@ MonoBehaviour:
   rb: {fileID: 250869808752495013}
   speedDamage: 40
   projectileTime: 5
+  isHoming: 0
+  homingArmTime: 2
+  damping: 3
+  speedDamping: 3
+  homingSpeed: 70
+  isOscillate: 0
+  oscillateArmTime: 0.5
+  isPause: 0
+  pauseArmTime: 0.5
+  pauseDisarmTime: 1
+  isbulletExplode: 0
+  explodeArmTime: 1
+  explodeCooldownTime: 0.3
+  explosionAmount: 1
+  isSpdTime: 0
+  finalSpd: 0
+  curSpeed: 0
+  initialSpeed: 0
 --- !u!1 &7026455457962581473
 GameObject:
   m_ObjectHideFlags: 0
