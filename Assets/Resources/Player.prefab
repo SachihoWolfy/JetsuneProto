@@ -75,7 +75,7 @@ MonoBehaviour:
   pitchSpeedMach: 40
   rollSpeed: 120
   yawSpeed: 40
-  thrustSpeed: 11
+  thrustSpeed: 63
   maxSpeed: 61
   lookSens: 0.5
   rb: {fileID: 1595803403800808869}

@@ -23,6 +23,7 @@ public class Settings : MonoBehaviour
             simpleControls = true;
             invertPitch = false;
         }
+        Application.targetFrameRate = 60;
         SceneManager.LoadScene(1);
     }
     private void Update()

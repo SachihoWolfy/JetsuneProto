@@ -97,6 +97,10 @@ public class FlightBehavior : MonoBehaviour
     private bool canPointDestroy = true;
     private void Start()
     {
+        if (curPowerAmount >= 1)
+        {
+            scoreP = powerScore;
+        }
         virtualCamera = FindAnyObjectByType<CinemachineVirtualCamera>();
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.widthMultiplier = 0.2f;
@@ -121,13 +125,21 @@ public class FlightBehavior : MonoBehaviour
         }
         simpleControls = Settings.simpleControls;
         pitchInvert = Settings.invertPitch;
+        if(SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            Debug.Log("Reseting Score");
+            score = 0;
+            scoreP = 0;
+            curPowerAmount = 0;
+            hp = 5;
+        }
     }
 
     IEnumerator DoSachiPowerUp()
     {
         audioSource.PlayOneShot(audioClips[0]);
         curPowerAmount--;
-        powerupText.text = "P x" + curPowerAmount;
+        powerupText.text = ">>P>>";
         immunity = true;
         isPowerup = true;
         anim.SetBool("IsPowerup", true);
@@ -162,6 +174,7 @@ public class FlightBehavior : MonoBehaviour
         }
         if ((score % lifeScore) < (oldScore % lifeScore))
         {
+            FindAnyObjectByType<GrazeController>().PlaySound(1);
             Mathf.Clamp(hp++,0,9);
         }
         if ((scoreP % powerScore) < (oldScoreP % powerScore) && curPowerAmount < 1)
@@ -169,10 +182,10 @@ public class FlightBehavior : MonoBehaviour
             FindAnyObjectByType<GrazeController>().PlaySound(2);
             Mathf.Clamp(curPowerAmount++,0,1);
         }
-        if ((score % lifeScore) < (oldScore % lifeScore)|| (score % powerScore) < (oldScore % powerScore))
+        /*if ((score % lifeScore) < (oldScore % lifeScore)|| (score % powerScore) < (oldScore % powerScore))
         {
             FindAnyObjectByType<GrazeController>().PlaySound(1);
-        }
+        }*/
     }
 
     void AccelerateToEnemy()
@@ -231,7 +244,9 @@ public class FlightBehavior : MonoBehaviour
             }
         }
         // Do the Powerup stuff
-        powerupText.text = "P x" + curPowerAmount;
+        //powerupText.text = "P x" + curPowerAmount;
+        if (curPowerAmount >= 1) { powerupText.text = ">Ready!<"; }
+        else { powerupText.text = ">>P>>"; }
         // get input movement
         if (!simpleControls)
         {
@@ -270,6 +285,10 @@ public class FlightBehavior : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.Mouse1) && !isPowerup && curPowerAmount > 0)
         {
             StartCoroutine(DoSachiPowerUp());
+        }
+        if (!isDie)
+        {
+            DoSpeedThings();
         }
         
     }
@@ -310,7 +329,7 @@ public class FlightBehavior : MonoBehaviour
             if (!isPowerup)
             {
                 DoRotate();
-                DoSpeedThings();
+                //DoSpeedThings();
             }
         }
         else if(!isDead)
@@ -362,16 +381,16 @@ public class FlightBehavior : MonoBehaviour
         curSpeed = rb.velocity.magnitude;
         if (curSpeed < 2f) { curSpeed = 3f; }
         oldSpeed = curSpeed;
-        curSpeed = Mathf.Clamp(curSpeed + (thrust * thrustSpeed) / (curSpeed), MINSPEED, maxSpeed);
-
+        float adjustedThrust = (thrust * thrustSpeed * Time.deltaTime);
+        curSpeed = Mathf.Clamp(curSpeed + adjustedThrust / curSpeed, MINSPEED, maxSpeed);
         if (oldSpeed > curSpeed)
         {
-            curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed / 5f, MINSPEED, maxSpeed);
+            curSpeed = Mathf.Clamp(curSpeed + adjustedThrust / 5f, MINSPEED, maxSpeed);
         }
         else if (curSpeed > 40 && curSpeed < 60)
         {
             if (!sonicBoomHappened) PlaySound(0);
-            curSpeed = Mathf.Clamp(curSpeed + thrust * thrustSpeed * 2, MINSPEED, maxSpeed);
+            curSpeed = Mathf.Clamp(curSpeed + adjustedThrust * 2, MINSPEED, maxSpeed);
         }
 
         rb.velocity = transform.forward * curSpeed;
@@ -410,7 +429,9 @@ public class FlightBehavior : MonoBehaviour
             fillImage.color = Color.red;
         }
         hpText.text = "HP: " + hp;
-        powerupText.text = "P x" + curPowerAmount;
+        //powerupText.text = "P x" + curPowerAmount;
+        if(curPowerAmount >= 1) { powerupText.text = ">Ready!<"; }
+        else { powerupText.text = ">>P>>"; }
         scoreText.text = "Score: " + score;
         if (powerGauge.maxValue != powerScore) powerGauge.maxValue = powerScore;
         powerGauge.value = scoreP;

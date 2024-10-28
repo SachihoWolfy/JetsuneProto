@@ -27124,7 +27124,7 @@ GameObject:
   - component: {fileID: 1113643285}
   - component: {fileID: 1113643284}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: SkyboxTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27143,6 +27143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredSkybox: {fileID: 2100000, guid: fcf0300253c880549bd8792d403e5923, type: 2}
+  ambientColor: {r: 0.3393693, g: 0.14001423, b: 0.3584906, a: 0}
 --- !u!65 &1113643285
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29022,7 +29023,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
