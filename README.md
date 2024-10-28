@@ -18,28 +18,22 @@ Dodge bullets and chase down the enemy! Build up speed and hit Mach to gain on t
 
 - Space to Change Camera
 
-![Jetsune](https://cdn.discordapp.com/attachments/1112104087752822874/1288932169586049024/IMG_4173.jpg?ex=66fb9860&is=66fa46e0&hm=9d6278295ce06726532bd2cc31f5301bcabfd79e2ae3f78e02845f71ca4a1424&)
+**Changelog v0.6.3:**
 
-Changelog:
-
-- Added Powerup (Use with Left+Right click)
-  - Powerups are persistent.
-
-- Added Point and Reward system.
-  - Grazing bullets +100
-    - Going mach while grazing +50 bonus
-  - Destroying bullets while invulnerable +200
-  - Hitting enemy +2,000
-  - Powerup rewarded at intervals of 5,000
-  - Lives rewarded at intervals of 10,000
-  - Points are persistant.
-
-- Added Pause menu
-  - Includes ability to exit level and restart
-  - Can edit settings in pause.
-
-- Slight Modification to HUD. New font.
-
+- Moved from WebGL to actual system builds due to limitations.
+- Upgraded level.
+    - All future levels will contain a "Course" before a boss fight, to vary gameplay.
+    - Basically, new first part of the level!
+    - New Advanced Bullet Spawner allows for neat things.
+    - Level renamed to "Action Impulse" for story reasons.
+    - Added placeholder story dialogue, just to have something there while cutscenes are worked on.
+    - New Polaris Attacks, and pinch mode.
+- Modified Grazing and how Powerups work.
+    - Tweaked how many points you need for rewards. 
+    - Further Hud modification, Powerups have a bar and you can only have one of them.
+    - Fixed destroying bullets during projectile spawn giving way too many points.
+- Pause menu contains controls now.
+- People with larger screens no longer accelerate at a snails pace, but still accelerate slower.
 - Various minor improvements.
 
 Known Issues
