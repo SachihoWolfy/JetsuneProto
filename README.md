@@ -1,4 +1,10 @@
-[Play Game](https://sachihowolfy.github.io/JetsuneProto/)
+**WebGL BUILD WILL BE OUTDATED.**
+
+Go to the Itch.io page instead.
+
+[Jetsune Emberfall on Itch.io](https://sachiterasu-wolfy.itch.io/jetsune-1-emberfall-prototype)
+
+[Play WEBGL Game](https://sachihowolfy.github.io/JetsuneProto/)
 
 ![Logo](Assets/Textures/Jetsune_Logo.png)
 
