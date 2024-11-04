@@ -14,6 +14,7 @@ Dodge bullets and chase down the enemy! Build up speed and hit Mach to gain on t
 - Left + Right (M1 + M2) to use Powerup
 - Space to Change Camera
 
+
 **Changelog v0.7.2:**
 
 - Terrain has been repainted for environmental storytelling (It's getting hot, snow is melting) and to generally look better.
@@ -27,6 +28,8 @@ Dodge bullets and chase down the enemy! Build up speed and hit Mach to gain on t
 - Fixed a bug preventing player from interacting with settings in the pause menu.
 - Fixed a bug where Linux users would experience glitchy shadows.
 - Various minor improvements and Bug Fixes
+
+
 
 Known Issues
 
