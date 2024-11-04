@@ -1,61 +1,155 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DialogueScript : MonoBehaviour
 {
-    public GameObject[] dialoguePanels;
-    int index = 0;
-    bool advancing = false;
-    public AudioSource audioSource;
-    public AudioClip[] audioClips;
+    [System.Serializable]
+    public class DialoguePanel
+    {
+        public string speakerName;           
+        public Sprite leftPortrait;          
+        public bool showLeftPortrait;        
+        public Sprite rightPortrait;         
+        public bool showRightPortrait;       
+        [TextArea(3, 10)]
+        public string dialogueText;          
+        public AudioClip soundEffect;        
+    }
+
+    public DialoguePanel[] dialoguePanels;   
+    public Image leftPortraitImage;          
+    public Image rightPortraitImage;         
+    public TMP_Text nameText;                
+    public TMP_Text dialogueText;            
+    public AudioSource audioSource;          
+    public AudioClip nextSceneSound;
+    public AudioClip titleCardSound;
+    public GameObject titleCard;             
+    public float textSpeed = 0.05f;          
+    public float sceneTransitionDelay = 2f;  
+
+    private int index = 0;                   
+    private bool isTyping = false;           
+    private bool advancing = false;          
 
     private void Start()
     {
-        foreach(GameObject panel in dialoguePanels)
-        {
-            panel.SetActive(false);
-        }
-        dialoguePanels[index].SetActive(true);
+        // Start with all dialogue panels hidden and title card inactive
+        if (titleCard != null)
+            titleCard.SetActive(false);
+
+        LoadDialoguePanel(index);
     }
-    void Update()
+
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space))
         {
-            AdvanceScreen();
+            AdvanceDialogue();
         }
     }
 
-    void AdvanceScreen()
+    private void AdvanceDialogue()
     {
+        if (isTyping)
+        {
+            // Complete typing immediately if player advances mid-animation
+            StopAllCoroutines();
+            dialogueText.text = dialoguePanels[index].dialogueText;
+            isTyping = false;
+            return;
+        }
+
         index++;
         if (index < dialoguePanels.Length)
         {
-            dialoguePanels[index - 1].SetActive(false);
-            dialoguePanels[index].SetActive(true);
-            PlaySound(1);
+            LoadDialoguePanel(index);
         }
-        else
+        else if (index == dialoguePanels.Length)
         {
-            if (!advancing)
-            {
-                advancing = true;
-                StartCoroutine(LoadNextScene());
-            }
+            PlaySound(titleCardSound);
+            ShowTitleCard();
+        }
+        else if (!advancing)
+        {
+            advancing = true;
+            StartCoroutine(LoadNextScene());
         }
     }
 
-    IEnumerator LoadNextScene()
+    private void LoadDialoguePanel(int panelIndex)
     {
-        PlaySound(0);
-        yield return new WaitForSeconds(2);
+        DialoguePanel panel = dialoguePanels[panelIndex];
+
+        // Update speaker name and dialogue text
+        if (nameText != null) nameText.text = panel.speakerName;
+        PlaySound(panel.soundEffect);
+
+        // Display or hide portraits based on panel settings
+        if (panel.showLeftPortrait)
+        {
+            leftPortraitImage.sprite = panel.leftPortrait;
+            leftPortraitImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            leftPortraitImage.gameObject.SetActive(false);
+        }
+
+        if (panel.showRightPortrait)
+        {
+            rightPortraitImage.sprite = panel.rightPortrait;
+            rightPortraitImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            rightPortraitImage.gameObject.SetActive(false);
+        }
+
+        // Start typing the text
+        StartCoroutine(TypeDialogue(panel.dialogueText));
+    }
+
+    private IEnumerator TypeDialogue(string line)
+    {
+        isTyping = true;
+        dialogueText.text = "";
+        foreach (char letter in line)
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(textSpeed);
+        }
+        isTyping = false;
+    }
+
+    private void ShowTitleCard()
+    {
+        // Deactivate dialogue UI if needed and show the title card
+        leftPortraitImage.gameObject.SetActive(false);
+        rightPortraitImage.gameObject.SetActive(false);
+        if (nameText != null) nameText.gameObject.SetActive(false);
+        dialogueText.text = "";
+
+        if (titleCard != null)
+            titleCard.SetActive(true);
+    }
+
+    private IEnumerator LoadNextScene()
+    {
+        PlaySound(nextSceneSound);
+        yield return new WaitForSeconds(sceneTransitionDelay);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-    public void PlaySound(int index = 0)
+
+    private void PlaySound(AudioClip clip)
     {
-        audioSource.clip = audioClips[index];
-        audioSource.Play();
+        if (clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
     }
 }

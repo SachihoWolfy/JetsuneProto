@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class FlightBehavior : MonoBehaviour
 {
+    public Transform sachiVisual;
     public bool isCutscene = false;
     public int cutsceneID = 0;
     public Animator cutsceneAnim;
@@ -24,6 +25,9 @@ public class FlightBehavior : MonoBehaviour
     public float pitchSpeed = 120f;
     public float pitchSpeedMach = 80f;
     public float rollSpeed = 120f;
+    public float maxLeanAngle = 45f; // Lean
+    public float maxPitchAngle = 30f; // Leeeeean
+    public float leanSpeed = 5f;
     public float yawSpeed = 40f;
     public float thrustSpeed;
     private float MINSPEED = 3f;
@@ -74,7 +78,6 @@ public class FlightBehavior : MonoBehaviour
     private float curScale;
     public bool doCutsceneScaling = false;
 
-
     CinemachineVirtualCamera virtualCamera;
     CinemachineDollyCart dolly;
 
@@ -84,17 +87,20 @@ public class FlightBehavior : MonoBehaviour
     public bool tryingPowerup;
     public bool isPowerup;
     public bool disablePower;
-    static int curPowerAmount;
+    public static int curPowerAmount;
     int dampingPowerUp = 2;
     public float powerSpeed = 67;
 
-    static int score = 0;
-    static int scoreP = 0;
+    public static int score = 0;
+    public static int scoreP = 0;
     int oldScore;
     int oldScoreP;
     public int lifeScore = 10000;
     public int powerScore = 5000;
     private bool canPointDestroy = true;
+
+    private ScoreDisplay scoreDisplay;
+
     private void Start()
     {
         if (curPowerAmount >= 1)
@@ -103,6 +109,7 @@ public class FlightBehavior : MonoBehaviour
         }
         virtualCamera = FindAnyObjectByType<CinemachineVirtualCamera>();
         lineRenderer = gameObject.AddComponent<LineRenderer>();
+        scoreDisplay = FindAnyObjectByType<ScoreDisplay>();
         lineRenderer.widthMultiplier = 0.2f;
         lineRenderer.positionCount = 2;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
@@ -137,6 +144,7 @@ public class FlightBehavior : MonoBehaviour
 
     IEnumerator DoSachiPowerUp()
     {
+        anim.Play("Sachi_Javilin");
         audioSource.PlayOneShot(audioClips[0]);
         curPowerAmount--;
         powerupText.text = ">>P>>";
@@ -290,8 +298,39 @@ public class FlightBehavior : MonoBehaviour
         {
             DoSpeedThings();
         }
+        /* if(Input.GetKeyDown(KeyCode.Mouse1) && !Input.GetKey(KeyCode.Mouse0) && curSpeed > 40 && canParry)
+        {
+            DoParry();
+        } */
         
     }
+    /*
+    private bool isParrying;
+    private bool canParry = true;
+    private bool successfulParry;
+     void DoParry()
+    {
+        isParrying = true;
+        canParry = false;
+        anim.Play("Sachi_Attack");
+        StartCoroutine(CooldownParry());
+    } 
+    IEnumerator CooldownParry()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isParrying = false;
+        canParry = true;
+        if (successfulParry)
+        {
+            curSpeed = 59;
+        }
+        else
+        {
+            rb.velocity = rb.velocity.normalized * 25f;
+            curSpeed = 30f;
+        }
+    }
+    */
 
     void FixedUpdate()
     {
@@ -305,10 +344,6 @@ public class FlightBehavior : MonoBehaviour
         else
         {
             targetLook.localPosition = new Vector3(yaw * lookSens + roll * lookSens / 2, -pitch * lookSens, 5f);
-        }
-        if (lookAtEnemy)
-        {
-            targetLook.position = FindObjectOfType<BossMovement>().gameObject.transform.position;
         }
         if (isCutscene)
         {
@@ -374,6 +409,39 @@ public class FlightBehavior : MonoBehaviour
 
             // Apply the clamped pitch and maintain the yaw
             transform.eulerAngles = new Vector3(euler.x, euler.y, 0f); // Keep roll as 0 if needed
+        }
+        LeanSachi();
+    }
+    void LeanSachi()
+    {
+        if (sachiVisual != null)
+        {
+            // Calculate target angles for roll and pitch
+            float targetLeanAngle;
+            if(simpleControls) targetLeanAngle = Mathf.Clamp(yaw * -maxLeanAngle, -maxLeanAngle, maxLeanAngle);
+            else targetLeanAngle = Mathf.Clamp(roll * -maxLeanAngle, -maxLeanAngle, maxLeanAngle);
+            float targetPitchAngle = Mathf.Clamp(pitch * maxPitchAngle, -maxPitchAngle, maxPitchAngle);
+
+            float targetYawAngle = 0f;
+            if (!simpleControls)
+            {
+                targetPitchAngle = Mathf.Clamp(pitch * maxPitchAngle, -10, 10);
+                targetLeanAngle = Mathf.Clamp(roll * -maxLeanAngle, -5, 5);
+                targetYawAngle = Mathf.Clamp(yaw * maxPitchAngle, -5, 5);
+            }
+
+            // Smoothly interpolate current angles towards target angles
+            float currentLeanAngle = Mathf.LerpAngle(sachiVisual.localEulerAngles.z, targetLeanAngle, Time.deltaTime * leanSpeed);
+            float currentPitchAngle = Mathf.LerpAngle(sachiVisual.localEulerAngles.x, targetPitchAngle, Time.deltaTime * leanSpeed);
+            float currentYawAngle = Mathf.LerpAngle(sachiVisual.localEulerAngles.y, targetYawAngle, Time.deltaTime * leanSpeed);
+
+            // Create separate quaternions for pitch, yaw, and roll
+            Quaternion pitchRotation = Quaternion.Euler(currentPitchAngle, 0, 0);
+            Quaternion yawRotation = Quaternion.Euler(0, currentYawAngle, 0);
+            Quaternion rollRotation = Quaternion.Euler(0, 0, currentLeanAngle);
+
+            // Combine pitch, yaw, and roll rotations
+            sachiVisual.localRotation = pitchRotation * yawRotation * rollRotation;
         }
     }
     void DoSpeedThings()
@@ -447,6 +515,7 @@ public class FlightBehavior : MonoBehaviour
         {
             fillImageP.color = pGuageColor1;
         }
+        if(scoreDisplay != null) scoreDisplay.UpdateScore(score);
     }
 
     void Die()
@@ -477,6 +546,7 @@ public class FlightBehavior : MonoBehaviour
 
     public void TakeDamage(int dmg, float spdDamage)
     {
+        
         if (immunity) 
         { 
             if (canPointDestroy)
@@ -492,8 +562,7 @@ public class FlightBehavior : MonoBehaviour
         hp -= dmg;
         curSpeed = Mathf.Clamp(curSpeed - spdDamage,MINSPEED,maxSpeed);
         rb.velocity = transform.forward * curSpeed;
-        Debug.Log("Damaged");
-        anim.SetTrigger("Damage");
+        anim.Play("Damaged");
         PlaySound(2);
     }
 

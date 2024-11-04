@@ -104,14 +104,11 @@ public class BossMovement : MonoBehaviour
             if (isMach) { isMach = false; }
         }
 
-        if (Vector3.Distance(player.transform.position, transform.position) < distanceToMaintain && (!engaging||isWaypoint))
+        if (Vector3.Distance(player.transform.position, transform.position) != distanceToMaintain && (!engaging||isWaypoint))
         {
             speed = player.curSpeed * distanceToMaintain / Vector3.Distance(player.transform.position, transform.position);
         }
-        if (Vector3.Distance(player.transform.position, transform.position) > distanceToMaintain && (!engaging||isWaypoint))
-        {
-            speed = player.curSpeed * distanceToMaintain / Vector3.Distance(player.transform.position, transform.position);
-        }
+
         if (engaging && !isWaypoint)
         {
             speed = engageFlightSpeed;
@@ -135,8 +132,8 @@ public class BossMovement : MonoBehaviour
             player.AddScore(2000);
             preventAttack = true;
             player.transform.position = playerOffset.position;
-            if(!player.isPowerup) player.anim.SetTrigger("Attack");
-            else player.anim.SetTrigger("JavAttack");
+            if(!player.isPowerup) player.anim.Play("Sachi_Attack");
+            else player.anim.Play("JavAttack");
             StartCoroutine(SlowPlayer());
             StartCoroutine(ResetAttack());
             hp += -1;
