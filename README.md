@@ -1,10 +1,6 @@
-**WebGL BUILD WILL BE OUTDATED.**
-
-Go to the Itch.io page instead.
+No more WebGL, download it on Itch.io!
 
 [Jetsune Emberfall on Itch.io](https://sachiterasu-wolfy.itch.io/jetsune-1-emberfall-prototype)
-
-[Play WEBGL Game](https://sachihowolfy.github.io/JetsuneProto/)
 
 ![Logo](Assets/Textures/Jetsune_Logo.png)
 
@@ -13,34 +9,24 @@ Prototype flight "Chaser" bullet hell.
 Dodge bullets and chase down the enemy! Build up speed and hit Mach to gain on the enemy and put them down with a devestating blow!
 
 - W/S Pitch
-
-- A/D Roll (Yaw in simple controls)
-
-- Q/E Yaw
-
-- SHIFT/CTRL or M1/M2 Thrust
-
+- A/D Yaw
+- M1/M2 Thrust
 - Left + Right (M1 + M2) to use Powerup
-
 - Space to Change Camera
 
-**Changelog v0.6.3:**
+**Changelog v0.7.2:**
 
-- Moved from WebGL to actual system builds due to limitations.
-- Upgraded level.
-    - All future levels will contain a "Course" before a boss fight, to vary gameplay.
-    - Basically, new first part of the level!
-    - New Advanced Bullet Spawner allows for neat things.
-    - Level renamed to "Action Impulse" for story reasons.
-    - Added placeholder story dialogue, just to have something there while cutscenes are worked on.
-    - New Polaris Attacks, and pinch mode.
-- Modified Grazing and how Powerups work.
-    - Tweaked how many points you need for rewards. 
-    - Further Hud modification, Powerups have a bar and you can only have one of them.
-    - Fixed destroying bullets during projectile spawn giving way too many points.
-- Pause menu contains controls now.
-- People with larger screens no longer accelerate at a snails pace, but still accelerate slower.
-- Various minor improvements.
+- Terrain has been repainted for environmental storytelling (It's getting hot, snow is melting) and to generally look better.
+- New accumulating score and mini power-bar that only appears during point acquisition, meaning you don't have to take your eyes too far away from the action.
+- Sachi now leans in the direction you are turning.
+- Sachi has a separate animation from slowing down from Mach.
+- Dialogue screens now look like dialogue screens.
+    - Character portraits have been added to cutscenes. (Sachi's is temporary until I make art that is the same as Polaris's artstyle)
+- Fixed a bug where the attack animation would be delayed
+- Fixed a bug where using a powerup had a delayed animation
+- Fixed a bug preventing player from interacting with settings in the pause menu.
+- Fixed a bug where Linux users would experience glitchy shadows.
+- Various minor improvements and Bug Fixes
 
 Known Issues
 
@@ -58,10 +44,9 @@ Credits
 - Missile code from [Tutorial](https://youtu.be/Z6qBeuN-H1M?si=wmq64OtvQFFeijn3) by Tarodev.
 - Aces04 font (inspired by fonts from Project Aces) is created by Roach Typographics
   - [Font page](https://www.moddb.com/mods/aces-typografics/addons/aces04-true-type-font-family)
-- Bedacoalmaster on Discord for the Readme Art of Sachi
 
 - Special Thanks
-  - Lumikattlik for being there.
+  - Lumikattlik and Bedacoalmaster for being there.
   - [MinusT](https://youtube.com/@0minust?si=e9V6mRUq_7vSmG6N) and [SituP](https://youtube.com/@situp4747?si=NLGkL_KUNuzrUmUg) on youtube for inspiration.
   - My professors for egging me on and pushing me.
   - And my long time discord friends.
