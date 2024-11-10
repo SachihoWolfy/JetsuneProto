@@ -51,6 +51,7 @@ public class BossMovement : MonoBehaviour
         anim.SetBool("IsCutscene", isCutscene);
         anim.SetBool("IsWaypoint", isWaypoint);
         anim.SetInteger("HP", hp);
+        visualAnim.SetInteger("HP", hp);
         if (isWaypoint)
         {
             enemyVisual.SetActive(false);
@@ -123,6 +124,7 @@ public class BossMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         anim.SetInteger("HP", hp);
+        visualAnim.SetInteger("HP", hp);
         if (isCutscene || isWaypoint)
         {
             return;

@@ -105,12 +105,11 @@ public class ProjectileSpawner : MonoBehaviour
             GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
             bulletObj.transform.forward = dir;
 
-            //alternate mats
-            MeshRenderer bulletRenderer = bulletObj.GetComponentInChildren<MeshRenderer>();
-            bulletRenderer.material = material2;
-
-            // get bullet script
+            // Get bullet script
             Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+            //alternate mats
+            MeshRenderer bulletRenderer = bulletScript.mr;
+            bulletRenderer.material = material2;
             // initialize it and set the velocity
             bulletScript.Initialize(dmg, speedDmg);
             bulletScript.rb.velocity = combinedDir * bulletSpeed;
@@ -188,8 +187,10 @@ public class ProjectileSpawner : MonoBehaviour
             GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
             bulletObj.transform.forward = dir;
 
+            // Get bullet script
+            Bullet bulletScript = bulletObj.GetComponent<Bullet>();
             //alternate mats
-            MeshRenderer bulletRenderer = bulletObj.GetComponentInChildren<MeshRenderer>();
+            MeshRenderer bulletRenderer = bulletScript.mr;
             if (bulletRenderer != null)
             {
                 // Alternate materials
@@ -201,8 +202,6 @@ public class ProjectileSpawner : MonoBehaviour
                 Debug.LogWarning("MeshRenderer not found in bullet prefab's children!");
             }
 
-            // Get bullet script
-            Bullet bulletScript = bulletObj.GetComponent<Bullet>();
             // Initialize it and set the velocity
             bulletScript.Initialize(dmg, speedDmg);
             bulletScript.rb.velocity = combinedDir * bulletSpeed;

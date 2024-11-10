@@ -10,9 +10,15 @@ public class Settings : MonoBehaviour
     public static bool simpleControls;
     [SerializeField]
     public static bool invertPitch;
+    [SerializeField]
+    public static bool doTutorials;
+    [SerializeField]
+    public static bool doTips;
 
     public bool simplePub;
     public bool invertPub;
+    public bool tutorialPub;
+    public bool tipPub;
 
     void Start()
     {
@@ -22,6 +28,8 @@ public class Settings : MonoBehaviour
             DontDestroyOnLoad(this);
             simpleControls = true;
             invertPitch = false;
+            doTutorials = true;
+            doTips = true;
         }
         Application.targetFrameRate = 60;
         SceneManager.LoadScene(1);
@@ -30,6 +38,8 @@ public class Settings : MonoBehaviour
     {
         simplePub = simpleControls;
         invertPub = invertPitch;
+        tipPub = doTips;
+        tutorialPub = doTutorials;
         if (SceneManager.GetActiveScene().buildIndex > 2)
         {
             if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))

@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class FlightBehavior : MonoBehaviour
 {
     public Transform sachiVisual;
+    private BossMovement boss;
     public bool isCutscene = false;
     public int cutsceneID = 0;
     public Animator cutsceneAnim;
@@ -66,6 +67,7 @@ public class FlightBehavior : MonoBehaviour
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI powerupText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI bossDistanceText;
 
     private bool isDie;
     private bool isDead;
@@ -110,6 +112,7 @@ public class FlightBehavior : MonoBehaviour
         virtualCamera = FindAnyObjectByType<CinemachineVirtualCamera>();
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         scoreDisplay = FindAnyObjectByType<ScoreDisplay>();
+        boss = FindFirstObjectByType<BossMovement>();
         lineRenderer.widthMultiplier = 0.2f;
         lineRenderer.positionCount = 2;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
@@ -153,11 +156,11 @@ public class FlightBehavior : MonoBehaviour
         anim.SetBool("IsPowerup", true);
         gameObject.GetComponent<Animator>().SetBool("IsPowerup", true);
         PlaySound(4);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(7);
         audioSource.Stop();
         anim.SetBool("IsPowerup", false);
         gameObject.GetComponent<Animator>().SetBool("IsPowerup", false);
-        immunity = false;
+        StartCoroutine(ImmunityReset(2));
         isPowerup = false;
         scoreP = 0;
     }
@@ -167,7 +170,7 @@ public class FlightBehavior : MonoBehaviour
         StopCoroutine(DoSachiPowerUp());
         anim.SetBool("IsPowerup", false);
         GetComponent<Animator>().SetBool("IsPowerup", false);
-        immunity = false;
+        StartCoroutine(ImmunityReset(2));
         isPowerup = false;
     }
 
@@ -188,6 +191,7 @@ public class FlightBehavior : MonoBehaviour
         if ((scoreP % powerScore) < (oldScoreP % powerScore) && curPowerAmount < 1)
         {
             FindAnyObjectByType<GrazeController>().PlaySound(2);
+            FindAnyObjectByType<TipsHandler>().StartCoroutine(FindAnyObjectByType<TipsHandler>().ShowPowerupPrompt());
             Mathf.Clamp(curPowerAmount++,0,1);
         }
         /*if ((score % lifeScore) < (oldScore % lifeScore)|| (score % powerScore) < (oldScore % powerScore))
@@ -200,7 +204,7 @@ public class FlightBehavior : MonoBehaviour
     {
         if(isPowerup)
         immunity = true;
-        Vector3 bossPos = FindObjectOfType<BossMovement>().gameObject.transform.position;
+        Vector3 bossPos = boss.gameObject.transform.position;
         var lookPos = bossPos - transform.position;
         var rotation = Quaternion.LookRotation(lookPos);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampingPowerUp);
@@ -210,15 +214,15 @@ public class FlightBehavior : MonoBehaviour
     void DoLineRender()
     {
         lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, FindAnyObjectByType<BossMovement>().transform.position);
-        if (FindAnyObjectByType<BossMovement>().wonGame)
+        lineRenderer.SetPosition(1, boss.transform.position);
+        if (boss.wonGame)
         {
             lineRenderer.enabled = false;
         }
         else
         {
             lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, FindAnyObjectByType<BossMovement>().transform.position);
+            lineRenderer.SetPosition(1, boss.transform.position);
         }
     }
     void Update()
@@ -464,6 +468,7 @@ public class FlightBehavior : MonoBehaviour
         rb.velocity = transform.forward * curSpeed;
 
         anim.SetFloat("CurSpeed", curSpeed);
+        anim.SetBool("Decelerating", oldSpeed > curSpeed);
 
         if (curSpeed < 10)
         {
@@ -481,6 +486,18 @@ public class FlightBehavior : MonoBehaviour
     {
         FindAnyObjectByType<BossMovement>().StartCoroutine("RestartGame");
     }
+
+    public float minDistance = 5f;
+    public float maxDistance = 30f;
+    public float minFlashSpeed = 0.5f;  // Speed when far
+    public float maxFlashSpeed = 5.0f;  // Speed when close
+    public float alphaLerpSpeed = 5f;
+    private float currentFlashSpeed;
+    private float currentAlpha = 0f; // Current alpha value for smoother transitions
+
+    // Variables to track the distance change rate
+    private float previousDistance = float.MaxValue;
+    private float distanceChangeRate = 0f;
     public void updateUI()
     {
         speedGauge.value = curSpeed;
@@ -488,7 +505,7 @@ public class FlightBehavior : MonoBehaviour
         {
             fillImage.color = Color.yellow;
         }
-        else if(curSpeed > 40)
+        else if (curSpeed > 40)
         {
             fillImage.color = Color.cyan;
         }
@@ -498,7 +515,7 @@ public class FlightBehavior : MonoBehaviour
         }
         hpText.text = "HP: " + hp;
         //powerupText.text = "P x" + curPowerAmount;
-        if(curPowerAmount >= 1) { powerupText.text = ">Ready!<"; }
+        if (curPowerAmount >= 1) { powerupText.text = ">Ready!<"; }
         else { powerupText.text = ">>P>>"; }
         scoreText.text = "Score: " + score;
         if (powerGauge.maxValue != powerScore) powerGauge.maxValue = powerScore;
@@ -515,7 +532,79 @@ public class FlightBehavior : MonoBehaviour
         {
             fillImageP.color = pGuageColor1;
         }
-        if(scoreDisplay != null) scoreDisplay.UpdateScore(score);
+        if (scoreDisplay != null) scoreDisplay.UpdateScore(score);
+        if (bossDistanceText != null && boss != null)
+        {
+            // Calculate the distance between the player and the boss
+            float distance = Mathf.Clamp(Vector3.Distance(boss.transform.position, transform.position) - 6.4f,0,float.MaxValue);
+
+            // If within max distance, adjust flashing and visibility
+            if (previousDistance != float.MaxValue)
+            {
+                distanceChangeRate = previousDistance - distance;
+            }
+
+            // Check if within the max visible range
+            if (distance < maxDistance && curSpeed > 40)
+            {
+                // Update the text with the current proximity distance
+                bossDistanceText.text = "!Prox: " + distance.ToString("F1") + "!";
+
+                // Calculate flash speed based on distance (closer = faster)
+                float flashSpeed = Mathf.Lerp(minFlashSpeed, maxFlashSpeed, Mathf.InverseLerp(maxDistance, minDistance, distance));
+
+                // Calculate the target alpha for the flashing effect
+                float targetAlpha = Mathf.PingPong(Time.time * flashSpeed, 1.0f);
+
+                // Smoothly transition the current alpha to the target alpha
+                currentAlpha = Mathf.Lerp(currentAlpha, targetAlpha, Time.deltaTime * alphaLerpSpeed);
+
+                // Clamp currentAlpha to ensure it reaches full transparency (0) or opacity (1)
+                if (Mathf.Abs(currentAlpha - targetAlpha) < 0.01f)
+                {
+                    currentAlpha = targetAlpha;
+                }
+
+                // Determine color based on distance change rate (approaching vs moving away)
+                Color targetColor;
+
+                if (distance < previousDistance && curSpeed>40)
+                {
+                    // Player is getting closer (fade to green)
+                    // Use the absolute rate of change (no need for speed)
+                    float greenIntensity = Mathf.Clamp01(Mathf.Abs(distance-previousDistance)*5);
+                    targetColor = Color.Lerp(Color.white, Color.green, greenIntensity);
+                    if(greenIntensity > 0.5f) bossDistanceText.text = ">>Prox: " + distance.ToString("F1") + "<<";
+                    else bossDistanceText.text = ">Prox: " + distance.ToString("F1") + "<";
+                }
+                else
+                {
+                    // Player is getting farther away (fade to red)
+                    // Use the absolute rate of change (no need for speed)
+                    float redIntensity = Mathf.Clamp01(Mathf.Abs(distance - previousDistance)*5);
+                    targetColor = Color.Lerp(Color.white, Color.red, redIntensity);
+                    if (redIntensity > 0.5f) bossDistanceText.text = "!! Prox: " + distance.ToString("F1") + " !!";
+                    else bossDistanceText.text = "! Prox: " + distance.ToString("F1") + " !";
+                }
+
+                // Apply the smoothed alpha to the target color
+                targetColor.a = currentAlpha;
+                bossDistanceText.color = targetColor;
+                lineRenderer.startColor = targetColor;
+            }
+            else
+            {
+                // Hide the text if beyond max distance
+                Gradient gradient = new Gradient();
+                gradient.SetKeys(
+                    new GradientColorKey[] { new GradientColorKey(c1, 0.0f), new GradientColorKey(c2, 1.0f) },
+                    new GradientAlphaKey[] { new GradientAlphaKey(0.2f, 0.0f), new GradientAlphaKey(1f, 1.0f) }
+                );
+                lineRenderer.colorGradient = gradient;
+                bossDistanceText.color = new Color(bossDistanceText.color.r, bossDistanceText.color.g, bossDistanceText.color.b, 0);
+            }
+            previousDistance = distance;
+        }
     }
 
     void Die()
@@ -544,7 +633,7 @@ public class FlightBehavior : MonoBehaviour
         pitchInvert = !pitchInvert;
     }
 
-    public void TakeDamage(int dmg, float spdDamage)
+    public void TakeDamage(int dmg, float spdDamage, bool isGround = false)
     {
         
         if (immunity) 
@@ -563,7 +652,14 @@ public class FlightBehavior : MonoBehaviour
         curSpeed = Mathf.Clamp(curSpeed - spdDamage,MINSPEED,maxSpeed);
         rb.velocity = transform.forward * curSpeed;
         anim.Play("Damaged");
-        PlaySound(2);
+        if (isGround)
+        {
+            PlaySound(6);
+        }
+        else
+        {
+            PlaySound(2);
+        }
     }
 
     public IEnumerator ImmunityReset(float duration = 1f)
@@ -597,5 +693,13 @@ public class FlightBehavior : MonoBehaviour
         canPointDestroy = false;
         yield return new WaitForSeconds(0.2f);
         canPointDestroy = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.CompareTag("Ground") && curSpeed > 40)
+        {
+            TakeDamage(1, 37, true);
+        }
     }
 }

@@ -6,8 +6,11 @@ public class Bullet : MonoBehaviour
 {
     public float bulletSize = 1f;
     public Rigidbody rb;
+    public GameObject visual;
+    public MeshRenderer mr;
     private int damage;
     private Vector3 oldPosition;
+    ProjectileSettings ps;
 
     public float speedDamage = 40f;
     public float projectileTime = 5f;
@@ -83,7 +86,24 @@ public class Bullet : MonoBehaviour
     }
     private void Update()
     {
-        if(isSpdTime)
+        // Get the player's forward velocity component
+        Vector3 playerForwardVelocity = player.transform.forward * player.curSpeed;
+
+        // Calculate the bullet's velocity relative to the player's forward movement
+        Vector3 relativeVelocity = rb.velocity - playerForwardVelocity;
+
+        // Check if the relative velocity has a significant magnitude
+        if (relativeVelocity.sqrMagnitude > 0.001f)
+        {
+            // Set the bullet's rotation based on the calculated relative direction
+            visual.transform.rotation = Quaternion.LookRotation(relativeVelocity.normalized);
+        }
+        else
+        {
+            // If relative velocity is too small, fallback to the bullet's own velocity direction
+            visual.transform.rotation = Quaternion.LookRotation(rb.velocity.normalized);
+        }
+        if (isSpdTime)
         {
             oldSpeed = curSpeed;
             curSpeed = Mathf.Lerp(curSpeed, finalSpd, ((Time.time-startTime) / (projectileTime*projectileTime*2)));
@@ -164,7 +184,7 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(explodeArmTime);
         while(explosionAmount > 0)
         {
-            FindAnyObjectByType<AdvProjectileSpawner>().SpawnCirclePattern(transform);
+            FindAnyObjectByType<AdvProjectileSpawner>().SpawnCirclePattern(transform, ps);
             explosionAmount--;
             yield return new WaitForSeconds(explodeCooldownTime);
         }

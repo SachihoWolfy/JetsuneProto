@@ -593,6 +593,7 @@ GameObject:
   - component: {fileID: 337095111194961675}
   - component: {fileID: 8310389660188370500}
   - component: {fileID: 4283209396633010025}
+  - component: {fileID: 8359093232387881857}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -732,6 +733,299 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8359093232387881857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319189441689803350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e52b2eed43eaf24e91b9a597ba3d87c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patterns:
+  - patternName: None
+    patternLayers:
+    - bulletShape: 0
+      spawnMotion: 0
+      motionIncrement: 10
+      waveAmplitude: 70
+      waveSpeed: 5
+      rotateMotion: 0
+      rotateSpeed: 1
+      rotateOffset: 0
+      rotateRadius: 15
+      clockwise: 1
+      sprayAngle: 45
+      sprayAxis: {x: 0, y: 1, z: 0}
+      spawnLocation: {fileID: 8202955196642895935}
+      layerDelay: 0
+      rateOfFire: 1
+      isBurst: 0
+      burstCount: 0
+      burstCooldown: 0
+      settings:
+        damage: 1
+        speedDamage: 30
+        bulletSpeed: 10
+        radius: 5
+        inwardSpeed: 10
+        projectileCount: 20
+        useMaterial1: 0
+        mat1: {fileID: 0}
+  - patternName: 1 - Test
+    patternLayers:
+    - bulletShape: 2
+      spawnMotion: 0
+      motionIncrement: 10
+      waveAmplitude: 15
+      waveSpeed: 1
+      rotateMotion: 0
+      rotateSpeed: 1
+      rotateOffset: 0
+      rotateRadius: 15
+      clockwise: 1
+      sprayAngle: 45
+      sprayAxis: {x: 0, y: 1, z: 0}
+      spawnLocation: {fileID: 8202955196642895935}
+      layerDelay: 0
+      rateOfFire: 5
+      isBurst: 1
+      burstCount: 3
+      burstCooldown: 2
+      settings:
+        damage: 1
+        speedDamage: 30
+        bulletSpeed: 10
+        radius: 5
+        inwardSpeed: 0.2
+        projectileCount: 20
+        useMaterial1: 0
+        mat1: {fileID: 0}
+    - bulletShape: 3
+      spawnMotion: 0
+      motionIncrement: 10
+      waveAmplitude: 15
+      waveSpeed: 1
+      rotateMotion: 0
+      rotateSpeed: 1
+      rotateOffset: 0
+      rotateRadius: 15
+      clockwise: 1
+      sprayAngle: 45
+      sprayAxis: {x: 0, y: 1, z: 0}
+      spawnLocation: {fileID: 8202955196642895935}
+      layerDelay: 0.25
+      rateOfFire: 5
+      isBurst: 1
+      burstCount: 3
+      burstCooldown: 2
+      settings:
+        damage: 1
+        speedDamage: 30
+        bulletSpeed: 20
+        radius: 5
+        inwardSpeed: 0.3
+        projectileCount: 20
+        useMaterial1: 0
+        mat1: {fileID: 0}
+  - patternName: 2 - Motion
+    patternLayers:
+    - bulletShape: 1
+      spawnMotion: 3
+      motionIncrement: 10
+      waveAmplitude: 10
+      waveSpeed: 1
+      rotateMotion: 0
+      rotateSpeed: 1
+      rotateOffset: 0
+      rotateRadius: 15
+      clockwise: 1
+      sprayAngle: 45
+      sprayAxis: {x: 0, y: 1, z: 0}
+      spawnLocation: {fileID: 8202955196642895935}
+      layerDelay: 0
+      rateOfFire: 5
+      isBurst: 1
+      burstCount: 0
+      burstCooldown: 0
+      settings:
+        damage: 1
+        speedDamage: 30
+        bulletSpeed: 10
+        radius: 5
+        inwardSpeed: 0.3
+        projectileCount: 20
+        useMaterial1: 0
+        mat1: {fileID: 0}
+    - bulletShape: 1
+      spawnMotion: 2
+      motionIncrement: 10
+      waveAmplitude: 15
+      waveSpeed: 1
+      rotateMotion: 0
+      rotateSpeed: 1
+      rotateOffset: 0
+      rotateRadius: 15
+      clockwise: 1
+      sprayAngle: 45
+      sprayAxis: {x: 0, y: 1, z: 0}
+      spawnLocation: {fileID: 8202955196642895935}
+      layerDelay: 0
+      rateOfFire: 5
+      isBurst: 0
+      burstCount: 0
+      burstCooldown: 0
+      settings:
+        damage: 1
+        speedDamage: 30
+        bulletSpeed: 20
+        radius: 5
+        inwardSpeed: 0.3
+        projectileCount: 20
+        useMaterial1: 0
+        mat1: {fileID: 0}
+    - bulletShape: 1
+      spawnMotion: 1
+      motionIncrement: 15
+      waveAmplitude: 15
+      waveSpeed: 10
+      rotateMotion: 0
+      rotateSpeed: 1
+      rotateOffset: 0
+      rotateRadius: 15
+      clockwise: 1
+      sprayAngle: 45
+      sprayAxis: {x: 0, y: 1, z: 0}
+      spawnLocation: {fileID: 8202955196642895935}
+      layerDelay: 0
+      rateOfFire: 5
+      isBurst: 0
+      burstCount: 0
+      burstCooldown: 0
+      settings:
+        damage: 1
+        speedDamage: 30
+        bulletSpeed: 10
+        radius: 15
+        inwardSpeed: 0.3
+        projectileCount: 50
+        useMaterial1: 0
+        mat1: {fileID: 0}
+  - patternName: 3 - Rotation
+    patternLayers:
+    - bulletShape: 2
+      spawnMotion: 0
+      motionIncrement: 10
+      waveAmplitude: 15
+      waveSpeed: 1
+      rotateMotion: 0
+      rotateSpeed: 1
+      rotateOffset: 0
+      rotateRadius: 15
+      clockwise: 1
+      sprayAngle: 45
+      sprayAxis: {x: 1, y: 0, z: 0}
+      spawnLocation: {fileID: 7791724020086082636}
+      layerDelay: 0
+      rateOfFire: 2
+      isBurst: 0
+      burstCount: 0
+      burstCooldown: 0
+      settings:
+        damage: 1
+        speedDamage: 30
+        bulletSpeed: 10
+        radius: 5
+        inwardSpeed: -1
+        projectileCount: 15
+        useMaterial1: 0
+        mat1: {fileID: 2100000, guid: 9bf32d430fcd91b42bf7149fec03b891, type: 2}
+    - bulletShape: 2
+      spawnMotion: 0
+      motionIncrement: 15
+      waveAmplitude: 15
+      waveSpeed: 10
+      rotateMotion: 0
+      rotateSpeed: -1
+      rotateOffset: 50
+      rotateRadius: 15
+      clockwise: 1
+      sprayAngle: 15
+      sprayAxis: {x: 0, y: 1, z: 0}
+      spawnLocation: {fileID: 7791724020086082636}
+      layerDelay: 0.25
+      rateOfFire: 2
+      isBurst: 0
+      burstCount: 0
+      burstCooldown: 0
+      settings:
+        damage: 1
+        speedDamage: 30
+        bulletSpeed: 10
+        radius: 2
+        inwardSpeed: -1
+        projectileCount: 10
+        useMaterial1: 0
+        mat1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
+    - bulletShape: 4
+      spawnMotion: 0
+      motionIncrement: 10
+      waveAmplitude: 10
+      waveSpeed: 1
+      rotateMotion: 0
+      rotateSpeed: 1
+      rotateOffset: 0
+      rotateRadius: 15
+      clockwise: 0
+      sprayAngle: 45
+      sprayAxis: {x: 0, y: 0, z: 0}
+      spawnLocation: {fileID: 7791724020086082636}
+      layerDelay: 3
+      rateOfFire: 3
+      isBurst: 1
+      burstCount: 3
+      burstCooldown: 3
+      settings:
+        damage: 1
+        speedDamage: 30
+        bulletSpeed: 10
+        radius: 5
+        inwardSpeed: 0.4
+        projectileCount: 30
+        useMaterial1: 0
+        mat1: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  - patternName: 4 - Finale
+    patternLayers:
+    - bulletShape: 4
+      spawnMotion: 0
+      motionIncrement: 10
+      waveAmplitude: 15
+      waveSpeed: 1
+      rotateMotion: 0
+      rotateSpeed: 1
+      rotateOffset: 0
+      rotateRadius: 15
+      clockwise: 1
+      sprayAngle: 45
+      sprayAxis: {x: 1, y: 0, z: 0}
+      spawnLocation: {fileID: 7791724020086082636}
+      layerDelay: 0
+      rateOfFire: 1
+      isBurst: 0
+      burstCount: 5
+      burstCooldown: 3
+      settings:
+        damage: 1
+        speedDamage: 30
+        bulletSpeed: 5
+        radius: 5
+        inwardSpeed: -0.5
+        projectileCount: 20
+        useMaterial1: 0
+        mat1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
 --- !u!1 &1383818954036001032
 GameObject:
   m_ObjectHideFlags: 0

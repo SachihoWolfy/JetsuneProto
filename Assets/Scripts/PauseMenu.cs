@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public static PauseMenu instance;
     public Toggle invertPitchToggle;
     public Toggle simpleControlsToggle;
+    public Toggle tipToggle;
     public bool stopToggleSwitching;
     void Start()
     {
@@ -26,6 +27,7 @@ public class PauseMenu : MonoBehaviour
         stopToggleSwitching = true;
         invertPitchToggle.isOn = Settings.invertPitch;
         simpleControlsToggle.isOn = Settings.simpleControls;
+        tipToggle.isOn = Settings.doTips;
         stopToggleSwitching = false;
     }
 
@@ -44,6 +46,16 @@ public class PauseMenu : MonoBehaviour
     {
         if (!stopToggleSwitching)
             Settings.simpleControls = !Settings.simpleControls;
+    }
+    public void ToggleTutorials()
+    {
+        if (!stopToggleSwitching)
+            Settings.doTutorials = !Settings.doTutorials;
+    }
+    public void ToggleTips()
+    {
+        if (!stopToggleSwitching)
+            Settings.doTips = !Settings.doTips;
     }
     public void RestartGame()
     {

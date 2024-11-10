@@ -16,6 +16,8 @@ public class CutsceneDollyEvent : MonoBehaviour
     public Animator anim;
     public Toggle invertPitchToggle;
     public Toggle simpleControlsToggle;
+    public Toggle tutorialToggle;
+    public Toggle tipToggle;
     public bool stopToggleSwitching;
 
     private void Start()
@@ -29,6 +31,8 @@ public class CutsceneDollyEvent : MonoBehaviour
             stopToggleSwitching = true;
             invertPitchToggle.isOn = Settings.invertPitch;
             simpleControlsToggle.isOn = Settings.simpleControls;
+            tutorialToggle.isOn = Settings.doTutorials;
+            tipToggle.isOn = Settings.doTips;
             stopToggleSwitching = false;
         }
     }
@@ -93,6 +97,16 @@ public class CutsceneDollyEvent : MonoBehaviour
     {
         if(!stopToggleSwitching)
         Settings.simpleControls = !Settings.simpleControls;
+    }
+    public void ToggleTutorials()
+    {
+        if (!stopToggleSwitching)
+            Settings.doTutorials = !Settings.doTutorials;
+    }
+    public void ToggleTips()
+    {
+        if (!stopToggleSwitching)
+            Settings.doTips = !Settings.doTips;
     }
     public void ExitGame()
     {
