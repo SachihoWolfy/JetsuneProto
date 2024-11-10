@@ -47,6 +47,7 @@ Credits
 - Missile code from [Tutorial](https://youtu.be/Z6qBeuN-H1M?si=wmq64OtvQFFeijn3) by Tarodev.
 - Aces04 font (inspired by fonts from Project Aces) is created by Roach Typographics
   - [Font page](https://www.moddb.com/mods/aces-typografics/addons/aces04-true-type-font-family)
+- "Post apocalyptic building - Lowpoly" (https://skfb.ly/ovpXC) by arca_done is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 
 - Special Thanks
   - Lumikattlik and Bedacoalmaster for being there.
