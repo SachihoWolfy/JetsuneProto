@@ -15,27 +15,18 @@ Dodge bullets and chase down the enemy! Build up speed and hit Mach to gain on t
 - Space to Change Camera
 
 
-**Changelog v0.7.2:**
+**Changelog v0.10:**
 
-- Terrain has been repainted for environmental storytelling (It's getting hot, snow is melting) and to generally look better.
-- New accumulating score and mini power-bar that only appears during point acquisition, meaning you don't have to take your eyes too far away from the action.
-- Sachi now leans in the direction you are turning.
-- Sachi has a separate animation from slowing down from Mach.
-- Dialogue screens now look like dialogue screens.
-    - Character portraits have been added to cutscenes. (Sachi's is temporary until I make art that is the same as Polaris's artstyle)
-- Fixed a bug where the attack animation would be delayed
-- Fixed a bug where using a powerup had a delayed animation
-- Fixed a bug preventing player from interacting with settings in the pause menu.
-- Fixed a bug where Linux users would experience glitchy shadows.
+- GPS fallback has been implemented so if players fly past the GPS, they will have a path to follow.
+- Freelook has been implemented. You can use it with holding space or using side mouse buttons.
+- Bullets now have sounds and colored impact effects, so that it feels better to dodge.
 - Various minor improvements and Bug Fixes
 
 
 
 Known Issues
 
-- On some browsers, player acceleration is insanely sluggish. (Unsolved)
-  - Might be a rendering thing slowing it down, but unsure if this is the true cause.
-  - Windows with Chrome is recommended.
+- Player acceleration is sluggish above the intended 60FPS..
 - First Time load is increasingly sluggish as the game gets more complex.
   - Might start considering individual platform builds.
 
