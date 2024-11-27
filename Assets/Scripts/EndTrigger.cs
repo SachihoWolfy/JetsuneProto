@@ -8,6 +8,13 @@ public class EndTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (FindAnyObjectByType<LevelTimer>())
+            {
+                LevelTimer levelTimer = FindAnyObjectByType<LevelTimer>();
+                levelTimer.StopTimer();
+                levelTimer.SaveTimeToSettings(true, FindAnyObjectByType<LevelManager>().levelIndex); // true for GPS.
+                levelTimer.ResetTimer();
+            }
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }

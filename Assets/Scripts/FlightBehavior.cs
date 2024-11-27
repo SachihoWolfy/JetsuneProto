@@ -2,21 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Cinemachine;
+using Unity.Cinemachine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
 public class FlightBehavior : MonoBehaviour
 {
+    public GameObject visualObj;
     public Transform sachiVisual;
+    public bool isNight;
+    private bool navLightsEnabled;
+    public ParticleSystem[] wingTips;
+    public GameObject[] navLights;
     private BossMovement boss;
     public bool isCutscene = false;
     public int cutsceneID = 0;
     public Animator cutsceneAnim;
     public Animator anim;
     public AudioSource audioSource;
+    public AudioSource[] deathAudio;
+    public CinemachineCamera deathCam;
+    public GameObject deathExplosion;
+    public ParticleSystem smoke;
+    public ParticleSystem fire;
     public AudioClip[] audioClips;
-    public CinemachineVirtualCamera[] cameras;
+    public CinemachineCamera[] cameras;
     public bool simpleControls = true;
     public bool pitchInvert = false;
     public bool lookAtEnemy;
@@ -80,8 +90,8 @@ public class FlightBehavior : MonoBehaviour
     private float curScale;
     public bool doCutsceneScaling = false;
 
-    CinemachineVirtualCamera virtualCamera;
-    CinemachineDollyCart dolly;
+    CinemachineCamera virtualCamera;
+    CinemachineSplineCart dolly;
 
     public int hp = 1;
     public bool immunity = false;
@@ -102,14 +112,19 @@ public class FlightBehavior : MonoBehaviour
     private bool canPointDestroy = true;
 
     private ScoreDisplay scoreDisplay;
+    public GameObject backupSettings;
 
     private void Start()
     {
+        if (!Settings.instance)
+        {
+            Instantiate(backupSettings);
+        }
         if (curPowerAmount >= 1)
         {
             scoreP = powerScore;
         }
-        virtualCamera = FindAnyObjectByType<CinemachineVirtualCamera>();
+        virtualCamera = FindAnyObjectByType<CinemachineCamera>();
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         scoreDisplay = FindAnyObjectByType<ScoreDisplay>();
         boss = FindFirstObjectByType<BossMovement>();
@@ -124,14 +139,22 @@ public class FlightBehavior : MonoBehaviour
             new GradientAlphaKey[] { new GradientAlphaKey(0.2f, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
         );
         lineRenderer.colorGradient = gradient;
+        if (isNight)
+        {
+            EnableNavLights();
+        }
+        else
+        {
+            DisableNavLights();
+        }
         if (isCutscene)
         {
             cutsceneAnim.SetInteger("Cutscene", cutsceneID);
             cutsceneAnim.SetBool("IsCutscene", isCutscene);
         }
-        if (GetComponent<CinemachineDollyCart>())
+        if (GetComponent<CinemachineSplineCart>())
         {
-            dolly = GetComponent<CinemachineDollyCart>();
+            dolly = GetComponent<CinemachineSplineCart>();
         }
         simpleControls = Settings.simpleControls;
         pitchInvert = Settings.invertPitch;
@@ -142,6 +165,32 @@ public class FlightBehavior : MonoBehaviour
             scoreP = 0;
             curPowerAmount = 0;
             hp = 5;
+            Settings.seenGPS = false;
+            Settings.seenBoss = false;
+        }
+        var mainModule = wingTips[0].main;
+        initialWingtipColor = mainModule.startColor.color;
+    }
+    public void EnableNavLights()
+    {
+        foreach(GameObject navLight in navLights)
+        {
+            navLight.SetActive(true);
+        }
+    }
+    public void DisableNavLights()
+    {
+        foreach (GameObject navLight in navLights)
+        {
+            navLight.SetActive(false);
+        }
+    }
+
+    public void SetNavLights(bool value)
+    {
+        foreach (GameObject navLight in navLights)
+        {
+            navLight.SetActive(value);
         }
     }
 
@@ -225,6 +274,11 @@ public class FlightBehavior : MonoBehaviour
             lineRenderer.SetPosition(1, boss.transform.position);
         }
     }
+    private bool spaceTapped = false;
+    private float holdDuration = 0.3f; 
+    private float holdTime = 0f; 
+    private bool spaceHeld = false;
+    private bool isLookStored = false;
     void Update()
     {
         if (isCutscene)
@@ -232,8 +286,28 @@ public class FlightBehavior : MonoBehaviour
             return;
         }
         DoLineRender();
-        //Cam Shit
-        if (Input.GetKeyDown(KeyCode.Space))
+        //Cam Stuff
+        if (Input.GetKey(KeyCode.Space))
+        {
+            holdTime += Time.deltaTime;
+            if (holdTime >= holdDuration)
+            {
+                spaceHeld = true;
+            }
+        }
+        else if(Input.GetKey(KeyCode.Mouse3)|| Input.GetKey(KeyCode.Mouse4)|| Input.GetKey(KeyCode.Mouse5)|| Input.GetKey(KeyCode.Mouse6))
+        {
+            spaceHeld = true;
+        }
+        else
+        {
+            holdTime = 0f;
+            spaceHeld = false;
+        }
+        spaceTapped = Input.GetKeyUp(KeyCode.Space);
+        CinemachineCore.GetInputAxis = CinemachineCore.GetInputAxis = GetAxisCustom;
+        bool storedLookAtEnemy = lookAtEnemy;
+        if (spaceTapped)
         {
             if (lookAtEnemy)
             {
@@ -243,7 +317,22 @@ public class FlightBehavior : MonoBehaviour
             {
                 lookAtEnemy = true;
             }
-            Debug.Log("Toggle Look: " + lookAtEnemy);
+        }
+        if (spaceHeld && cameras[4].IsValid && !FindAnyObjectByType<LevelManager>().isEnding) {
+            cameras[4].Priority = 30;
+            if (!isLookStored)
+            {
+                storedLookAtEnemy = lookAtEnemy;
+                isLookStored = true;
+            }
+        }
+        else
+        {
+            if(cameras[4].Priority > 5)
+            {
+                lookAtEnemy = storedLookAtEnemy;
+                isLookStored = false;
+            }
             if (lookAtEnemy)
             {
                 cameras[1].Priority = 20;
@@ -254,6 +343,7 @@ public class FlightBehavior : MonoBehaviour
                 cameras[1].Priority = 10;
                 cameras[0].Priority = 20;
             }
+            cameras[4].Priority = 5;
         }
         // Do the Powerup stuff
         //powerupText.text = "P x" + curPowerAmount;
@@ -291,17 +381,14 @@ public class FlightBehavior : MonoBehaviour
         pitch = blend * pitch + (1 - blend) * oldPitch;
         oldPitch = pitch;
 
-        thrust = Input.GetAxis("Thrust") * (Time.deltaTime * thrustSpeed);
+        thrust = Input.GetAxis("Thrust") * (Time.fixedDeltaTime * thrustSpeed);
         thrust = blendThrust * thrust + (1 - blendThrust) * oldThrust - 0.0004f * thrustSpeed * 2f;
         oldThrust = thrust;
         if (Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.Mouse1) && !isPowerup && curPowerAmount > 0)
         {
             StartCoroutine(DoSachiPowerUp());
         }
-        if (!isDie)
-        {
-            DoSpeedThings();
-        }
+       
         /* if(Input.GetKeyDown(KeyCode.Mouse1) && !Input.GetKey(KeyCode.Mouse0) && curSpeed > 40 && canParry)
         {
             DoParry();
@@ -335,6 +422,32 @@ public class FlightBehavior : MonoBehaviour
         }
     }
     */
+    public float GetAxisCustom(string axisName)
+    {
+        if (axisName == "Mouse X")
+        {
+            if (spaceHeld)
+            {
+                return Input.GetAxis("Mouse X");
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        else if (axisName == "Mouse Y")
+        {
+            if (spaceHeld)
+            {
+                return Input.GetAxis("Mouse Y");
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        return Input.GetAxis(axisName);
+    }
 
     void FixedUpdate()
     {
@@ -359,28 +472,34 @@ public class FlightBehavior : MonoBehaviour
         {
             AccelerateToEnemy();
         }
-        if(hp <= 0 && !isDie)
+        if(hp <= 0 && !isDying)
         {
-            isDie = true;
+            isDying = true;
+            StartCoroutine(DieSequence());
         }
         if (!isDie)
         {
             if (!isPowerup)
             {
                 DoRotate();
-                //DoSpeedThings();
+                DoSpeedThings();
             }
         }
-        else if(!isDead)
+        else
+        {
+            rb.velocity = new Vector3(0, 0, 0);
+        }
+        /*else if(!isDead)
         {
             Die();
             isDead = true;
             Restart();
-        }
+        }*/
         updateUI();
     }
     void DoCutsceneThings()
     {
+        var autodolly = dolly.AutomaticDolly.Method as SplineAutoDolly.FixedSpeed;
         if (doCutsceneScaling)
         {
             curScale = Mathf.Clamp(Vector3.Distance(transform.position, Camera.main.transform.position) + pursuitMod, defaultScale, awayScale);
@@ -390,7 +509,10 @@ public class FlightBehavior : MonoBehaviour
         {
             anim.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
         }
-        dolly.m_Speed = curSpeed;
+        if (autodolly != null)
+        {
+            autodolly.Speed = curSpeed;
+        }
     }
 
     void DoRotate()
@@ -453,7 +575,7 @@ public class FlightBehavior : MonoBehaviour
         curSpeed = rb.velocity.magnitude;
         if (curSpeed < 2f) { curSpeed = 3f; }
         oldSpeed = curSpeed;
-        float adjustedThrust = (thrust * thrustSpeed * Time.deltaTime);
+        float adjustedThrust = (thrust);
         curSpeed = Mathf.Clamp(curSpeed + adjustedThrust / curSpeed, MINSPEED, maxSpeed);
         if (oldSpeed > curSpeed)
         {
@@ -498,6 +620,65 @@ public class FlightBehavior : MonoBehaviour
     // Variables to track the distance change rate
     private float previousDistance = float.MaxValue;
     private float distanceChangeRate = 0f;
+    Color color1 = Color.red; // First color (flashing color 1)
+    Color color2 = Color.yellow; // Second color (flashing color 2)
+    public float flashSpeed = 1f; // Speed at which the colors interpolate
+    private float lerpTime = 0f; // Time used to interpolate between colors
+    private Color initialWingtipColor;
+    private bool clearedWingtips;
+    public Color FlashColor()
+    {
+        lerpTime += Time.fixedDeltaTime * flashSpeed;
+        if (lerpTime > 1f) lerpTime = 0f;
+        Color flashColor = Color.Lerp(color1, color2, Mathf.PingPong(lerpTime, 1f));
+        return flashColor;
+    }
+    void ColorTheWingTips(Color pGC)
+    {
+        if (!clearedWingtips)
+        {
+            ClearWingtips();
+        }
+        Color emissiveColor = pGC;
+
+        // Loop through each particle system
+        foreach (ParticleSystem ps in wingTips)
+        {
+            // Access the renderer for this particle system
+            ParticleSystemRenderer renderer = ps.GetComponent<ParticleSystemRenderer>();
+
+            // Ensure the renderer has a material
+            if (renderer != null && renderer.material != null)
+            {
+                // Create an instance of the material to avoid affecting the original
+                Material instanceMaterial = renderer.trailMaterial;
+                instanceMaterial.color = pGC;
+                // Check if the material supports emissive color changes
+                if (instanceMaterial.HasProperty("_EmissionColor"))
+                {
+                    // Enable emission keyword if necessary (for Standard shaders)
+                    instanceMaterial.EnableKeyword("_EMISSION");
+
+                    // Set the emissive color
+                    instanceMaterial.SetColor("_EmissionColor", emissiveColor);
+
+                    // Assign the instanced material back to the renderer
+                    renderer.material = instanceMaterial;
+                }
+            }
+        }
+    }
+    void ClearWingtips()
+    {
+        foreach (ParticleSystem ps in wingTips)
+        {
+            ps.Clear();
+            ps.Play();
+        }
+        clearedWingtips = true;
+    }
+    private int curPowerState;
+    private int oldPowerState;
     public void updateUI()
     {
         speedGauge.value = curSpeed;
@@ -513,13 +694,27 @@ public class FlightBehavior : MonoBehaviour
         {
             fillImage.color = Color.red;
         }
-        hpText.text = "HP: " + hp;
+        if (hp > 0)
+        {
+            hpText.text = "HP: " + hp;
+            hpText.color = Color.white;
+        }
+        else
+        {
+            hpText.text = "<!>";
+            hpText.color = FlashColor();
+        }
         //powerupText.text = "P x" + curPowerAmount;
         if (curPowerAmount >= 1) { powerupText.text = ">Ready!<"; }
         else { powerupText.text = ">>P>>"; }
         scoreText.text = "Score: " + score;
         if (powerGauge.maxValue != powerScore) powerGauge.maxValue = powerScore;
         powerGauge.value = scoreP;
+        if(oldPowerState != curPowerState)
+        {
+            clearedWingtips = false;
+        }
+        oldPowerState = curPowerState;
         if (curPowerAmount >= 1)
         {
             fillImageP.color = pGuageColor2;
@@ -618,6 +813,49 @@ public class FlightBehavior : MonoBehaviour
         Vector3 spin = new Vector3(-50f, 0f, 0f);
         rb.AddRelativeTorque(spin,ForceMode.Impulse);
     }
+    bool isDying;
+    IEnumerator DieSequence()
+    {
+        //Start Warning
+        deathAudio[0].Play();
+        smoke.Play();
+        yield return new WaitForSeconds(6f);
+        deathAudio[0].Stop();
+        if (hp < 1)
+        {
+            deathAudio[1].Play();
+            fire.Play();
+            yield return new WaitForSeconds(4f);
+        }
+        else
+        {
+            smoke.Stop();
+        }
+        //Explode and Spawn explosion, stop smoke, and do death cam.
+        if (hp < 1)
+        {
+            isDie = true;
+            lineRenderer.enabled = false;
+            fire.Stop();
+            smoke.Stop();
+            deathAudio[1].Stop();
+            deathAudio[2].Play();
+            rb.velocity = new Vector3(0, 0, 0);
+            curSpeed = 3f;
+            visualObj.SetActive(false);
+            deathExplosion.SetActive(true);
+            deathCam.Priority = 300;
+            Restart();
+        }
+        else
+        {
+            isDie = false;
+            isDying = false;
+            fire.Stop();
+            smoke.Stop();
+            deathAudio[1].Stop();
+        }
+    }
     void CalculateState(float dt)
     {
         //var invRotation = Quaternion.Inverse(Rigidbody.rotation);
@@ -678,7 +916,7 @@ public class FlightBehavior : MonoBehaviour
     {
         int curIndex = 0;
         cameras[index].Priority = 50;
-        foreach(CinemachineVirtualCamera cam in cameras)
+        foreach(CinemachineCamera cam in cameras)
         {
             if(curIndex != index)
             {

@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 
 public class CutsceneDollyEvent : MonoBehaviour
 {
-    public CinemachineDollyCart polarisCart;
-    public CinemachineDollyCart sachiCart;
-    public CinemachinePathBase polarisTrack;
+    public CinemachineSplineCart polarisCart;
+    public CinemachineSplineCart sachiCart;
     public FlightBehavior fb;
     public BossMovement bm;
     public Animator anim;
@@ -24,7 +23,9 @@ public class CutsceneDollyEvent : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         anim.SetInteger("CutsceneID", fb.cutsceneID);
-        if(SceneManager.GetActiveScene().buildIndex == 2)
+        if (sachiCart == null) { sachiCart = fb.gameObject.GetComponent<CinemachineSplineCart>(); }
+        if(polarisCart == null) { polarisCart = bm.cart; }
+        if (SceneManager.GetActiveScene().buildIndex == 2)
         {
             Time.timeScale = 1;
             StartCoroutine(PlayDemoAfter57());
@@ -44,15 +45,15 @@ public class CutsceneDollyEvent : MonoBehaviour
     }
     public void SetPosSachi(float pos)
     {
-        sachiCart.m_Position = pos;
+        sachiCart.SplinePosition = pos;
     }
     public void SetPosPolaris(float pos)
     {
-        polarisCart.m_Position = pos;
+        polarisCart.SplinePosition = pos;
     }
     public void SetSachiOnPolarisTrack()
     {
-        sachiCart.m_Path = polarisTrack;
+        sachiCart.Spline = polarisCart.Spline;
     }
     public void triggerAttack()
     {
@@ -107,6 +108,21 @@ public class CutsceneDollyEvent : MonoBehaviour
     {
         if (!stopToggleSwitching)
             Settings.doTips = !Settings.doTips;
+    }
+    public void ResetRoll()
+    {
+        // Get the current euler angles
+        Vector3 euler = fb.transform.eulerAngles;
+
+        // Normalize pitch to the range of -180 to 180
+        if (euler.x > 180)
+            euler.x -= 360;
+
+        // Clamp the pitch (x-axis) between -85 and 85 degrees
+        euler.x = Mathf.Clamp(euler.x, -85f, 85f);
+
+        // Apply the clamped pitch and maintain the yaw
+        fb.transform.eulerAngles = new Vector3(euler.x, euler.y, 0f); // Keep roll as 0 if needed
     }
     public void ExitGame()
     {

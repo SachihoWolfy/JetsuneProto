@@ -36,11 +36,16 @@ public class ProjectileSpawner : MonoBehaviour
 
     public int numberSphereProjectiles = 100;
     public float radiusSphere = 2f;
+    private bool isPooled;
 
     private void Start()
     {
         player = FindAnyObjectByType<FlightBehavior>();
         boss = FindAnyObjectByType<BossMovement>();
+        if (FindAnyObjectByType<BulletPoolManager>())
+        {
+            isPooled = true;
+        }
     }
 
     private void FixedUpdate()
@@ -55,16 +60,18 @@ public class ProjectileSpawner : MonoBehaviour
 
     public void SpawnMissile()
     {
-        Vector3 dir = spawnLocation.transform.forward;
+        return;
+        /* Vector3 dir = spawnLocation.transform.forward;
         Vector3 pos = spawnLocation.transform.position;
         // spawn and orientate it
-        GameObject bulletObj = Instantiate(missilePrefab, pos, Quaternion.identity);
+        GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+        bulletObj.transform.position = pos;
         bulletObj.transform.forward = dir;
         // get missile script
         Missile bulletScript = bulletObj.GetComponent<Missile>();
         // initialize it and set the velocity
         bulletScript.Initialize(dmg, speedDmg, bulletSpeed);
-        bulletScript.rb.velocity = -dir * bulletSpeed;
+        bulletScript.rb.velocity = -dir * bulletSpeed; */
     }
 
     //Novaborn2 code
@@ -73,11 +80,17 @@ public class ProjectileSpawner : MonoBehaviour
         Vector3 dir = spawnLocation.transform.forward;
         Vector3 pos = spawnLocation.transform.position;
         // spawn and orientate it
-        GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+        GameObject bulletObj;
+        // spawn and orientate it
+        if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+        else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+        bulletObj.transform.position = pos;
         bulletObj.transform.forward = dir;
         // get bullet script
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
         // initialize it and set the velocity
+        MeshRenderer bulletRenderer = bulletScript.mr;
+        bulletRenderer.material = material2;
         bulletScript.Initialize(dmg, speedDmg);
         bulletScript.rb.velocity = dir * bulletSpeed;
         int rando = Random.Range(0, shootSound.Length);
@@ -102,7 +115,11 @@ public class ProjectileSpawner : MonoBehaviour
             Vector3 combinedDir = dir + (inwardDir * inwardSpeed);
             combinedDir.Normalize();
             //spawn and orientate it
-            GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            GameObject bulletObj;
+            // spawn and orientate it
+            if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+            else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            bulletObj.transform.position = pos;
             bulletObj.transform.forward = dir;
 
             // Get bullet script
@@ -142,8 +159,12 @@ public class ProjectileSpawner : MonoBehaviour
             // Transform the local position into world space based on spawnLocation's orientation
             Vector3 pos = spawnLocation.position + spawnLocation.TransformDirection(localPosition);
 
-            // Instantiate the bullet at the calculated position
-            GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+                // Instantiate the bullet at the calculated position
+                GameObject bulletObj;
+                // spawn and orientate it
+                if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+                else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+                bulletObj.transform.position = pos;
 
             // Calculate the direction from the spawn location to the bullet's position
             Vector3 direction = (pos - spawnLocation.position).normalized;
@@ -153,8 +174,10 @@ public class ProjectileSpawner : MonoBehaviour
 
             // Get bullet script and initialize it
             Bullet bulletScript = bulletObj.GetComponent<Bullet>();
-            // initialize it and set the velocity
-            bulletScript.Initialize(dmg, speedDmg);
+                MeshRenderer bulletRenderer = bulletScript.mr;
+                bulletRenderer.material = material2;
+                // initialize it and set the velocity
+                bulletScript.Initialize(dmg, speedDmg);
             bulletScript.rb.velocity = combinedDir * bulletSpeed;
             }
     }
@@ -184,7 +207,11 @@ public class ProjectileSpawner : MonoBehaviour
             combinedDir.Normalize();
 
             // Spawn and orientate it
-            GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            GameObject bulletObj;
+            // spawn and orientate it
+            if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+            else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            bulletObj.transform.position = pos;
             bulletObj.transform.forward = dir;
 
             // Get bullet script

@@ -9,24 +9,36 @@ EditorBuildSettings:
     path: Assets/Scenes/Init.unity
     guid: 416356c53fb0d304da8a1de875943c43
   - enabled: 1
-    path: Assets/Scenes/CutsceneTest.unity
+    path: Assets/Scenes/Title/Demo_Title.unity
     guid: b031cbf74fed7594c80def663aaddd3b
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/Title/Menu.unity
     guid: 6edabd7f6a04d76458702cf945b50d9e
   - enabled: 1
-    path: Assets/Scenes/Cutscene_ToMountain.unity
+    path: Assets/Scenes/Level_1/Level1_A.unity
+    guid: 01c8cf30c11baed498a96e550000c483
+  - enabled: 1
+    path: Assets/Scenes/Level_1/Level1_B.unity
+    guid: 34be3d9dbe66d094fbd1b4ca232cf32d
+  - enabled: 1
+    path: Assets/Scenes/Level_1/Level1_C.unity
+    guid: 89b31c773dce958468a77871e2b35100
+  - enabled: 1
+    path: Assets/Scenes/Level_1/Level1_D.unity
+    guid: 56dfbc407d5948c43ba000c7e9cbbf38
+  - enabled: 1
+    path: Assets/Scenes/Level_5/Level5_A.unity
     guid: 3b45a2be8ce6bd04b9a2d7e1abc16f3a
   - enabled: 1
-    path: Assets/Scenes/WaypointTest.unity
+    path: Assets/Scenes/Level_5/Level5_B.unity
     guid: d5cf769cb5440184a835ffe19295785e
   - enabled: 1
-    path: Assets/Scenes/Cutscene_PolarisConfront.unity
+    path: Assets/Scenes/Level_5/Level5_C.unity
     guid: 6e3c76d9fb983ad439c16a4de8040bbc
   - enabled: 1
-    path: Assets/Scenes/TerrainTest.unity
+    path: Assets/Scenes/Level_5/Level5_D.unity
     guid: d83ac635fdac02a44a7462435109dff4
   - enabled: 0
-    path: Assets/Scenes/Test.unity
+    path: Assets/Scenes/Test/Test.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

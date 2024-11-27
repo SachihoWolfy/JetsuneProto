@@ -42,11 +42,11 @@ public class TipsHandler : MonoBehaviour
         if(promptText!=null) promptText.gameObject.SetActive(false);
         if (Settings.doTutorials)
         {
-            if (!FindFirstObjectByType<BossMovement>().isWaypoint && !FindFirstObjectByType<BossMovement>().isCutscene)
+            if (!FindFirstObjectByType<BossMovement>().isWaypoint && !FindFirstObjectByType<BossMovement>().isCutscene && !Settings.seenBoss)
             {
                 StartCoroutine(ShowBossTutorialPrompt());
             }
-            else if (FindFirstObjectByType<BossMovement>().isWaypoint)
+            else if (FindFirstObjectByType<BossMovement>().isWaypoint && !Settings.seenGPS)
             {
                 StartCoroutine(ShowTutorialPrompt());
             }
@@ -55,6 +55,7 @@ public class TipsHandler : MonoBehaviour
 
     void Update()
     {
+        if (FindFirstObjectByType<BossMovement>().wonGame) return;
         FindFirstObjectByType<BossMovement>().anim.SetBool("TutorialActive", isDoingTutorial);
         if (FindFirstObjectByType<BossMovement>().isWaypoint || FindFirstObjectByType<BossMovement>().isCutscene)
         {
@@ -110,6 +111,7 @@ public class TipsHandler : MonoBehaviour
     }
     IEnumerator ShowBossTutorialPrompt()
     {
+        int curBossHP = FindAnyObjectByType<BossMovement>().hp;
         isDoingTutorial = true;
         ShowPrompt("This is a boss");
         yield return new WaitForSeconds(5f);
@@ -130,7 +132,7 @@ public class TipsHandler : MonoBehaviour
         ShowPrompt("The line will turn green when getting closer\nStay in the green");
         yield return new WaitForSeconds(5f);
         ShowPrompt("> Hit the boss <");
-        while (FindAnyObjectByType<BossMovement>().hp > 4)
+        while (FindAnyObjectByType<BossMovement>().hp >= curBossHP)
         {
             yield return new WaitForSeconds(1f);
         }
@@ -141,6 +143,7 @@ public class TipsHandler : MonoBehaviour
         yield return new WaitForSeconds(5f);
         HidePrompt();
         isDoingTutorial = false;
+        Settings.seenBoss = true;
     }
 
     IEnumerator ShowTutorialPrompt()
@@ -207,6 +210,7 @@ public class TipsHandler : MonoBehaviour
         promptText.color = Color.green;
         yield return new WaitForSeconds(5f);
         HidePrompt();
+        Settings.seenGPS = true;
         isDoingTutorial = false;
     }
 
@@ -262,7 +266,7 @@ public class TipsHandler : MonoBehaviour
     // Detect oscillation (boss going off-screen multiple times in a time window)
     void DetectOscillation()
     {
-        bool isPitchUp = Input.GetAxis("Vertical") > 0; // Assuming Vertical axis is mapped for up/down pitch
+        /*bool isPitchUp = Input.GetAxis("Vertical") > 0; // Assuming Vertical axis is mapped for up/down pitch
 
         // Track pitch change (from up to down or down to up)
         if (isPitchUp != wasPitchUp)
@@ -304,7 +308,7 @@ public class TipsHandler : MonoBehaviour
             ShowPrompt("Steady yourself!");
             offScreenCount = 0;
             oscillationTipTimer = oscillationTipDuration; // Set the duration to show the tip
-        }
+        }*/
     }
 
     private bool canPlay = true;

@@ -244,8 +244,8 @@ GameObject:
   - component: {fileID: 1056924609352810299}
   - component: {fileID: 6646950350684786128}
   - component: {fileID: 2724934343261009087}
-  - component: {fileID: 2878799495940068032}
   - component: {fileID: 3867601806867550492}
+  - component: {fileID: 5615137570863765434}
   m_Layer: 0
   m_Name: GrazerColider
   m_TagString: Enemy
@@ -266,6 +266,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 6201234852444945901}
   - {fileID: 5387246755624261396}
   - {fileID: 5342967005688862324}
   m_Father: {fileID: 0}
@@ -320,8 +321,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2878799495940068032
-SphereCollider:
+--- !u!114 &3867601806867550492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576287028608239600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068dec9a772556d4d9affb90abab5fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletsGrazed: 0
+  grazeAmountToReward: 50
+  machBonus: 100
+  cooldown: 0.14
+  audioSource: {fileID: 664911618192804309}
+  audioClips:
+  - {fileID: 8300000, guid: 90c02bd4e93268b488a01c97a434e08c, type: 3}
+  - {fileID: 8300000, guid: 95bc180d3105f3442919190ab272e1f2, type: 3}
+  - {fileID: 8300000, guid: ca68d3a0d633f4f4ea5c0fd8c90d4e01, type: 3}
+--- !u!136 &5615137570863765434
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -338,27 +360,139 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Radius: 1.8
-  m_Center: {x: 0, y: 0, z: 0.35168457}
---- !u!114 &3867601806867550492
+  m_Height: 4.55
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.72}
+--- !u!1 &7738584570292288353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6201234852444945901}
+  - component: {fileID: 7540637068249586480}
+  - component: {fileID: 448573177542954002}
+  - component: {fileID: 5064113270710721334}
+  - component: {fileID: 4512839477993506386}
+  m_Layer: 0
+  m_Name: Woosh
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6201234852444945901
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7738584570292288353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1056924609352810299}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7540637068249586480
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7738584570292288353}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &448573177542954002
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7738584570292288353}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &5064113270710721334
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7738584570292288353}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Height: 7.41
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.72}
+--- !u!114 &4512839477993506386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7576287028608239600}
+  m_GameObject: {fileID: 7738584570292288353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 068dec9a772556d4d9affb90abab5fdd, type: 3}
+  m_Script: {fileID: 11500000, guid: cbc354262313c5642bd6b31fe4134a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletsGrazed: 0
-  grazeAmountToReward: 50
-  machBonus: 50
-  cooldown: 0.14
-  audioSource: {fileID: 664911618192804309}
   audioClips:
-  - {fileID: 8300000, guid: 90c02bd4e93268b488a01c97a434e08c, type: 3}
-  - {fileID: 8300000, guid: 95bc180d3105f3442919190ab272e1f2, type: 3}
-  - {fileID: 8300000, guid: ca68d3a0d633f4f4ea5c0fd8c90d4e01, type: 3}
+  - {fileID: 8300000, guid: e9abed5cafe65f641976f689cadb428b, type: 3}
+  - {fileID: 8300000, guid: dd7df2201bb7d734da3131622c497171, type: 3}
+  - {fileID: 8300000, guid: e9036b71ecddf2441b8124a217093681, type: 3}
+  - {fileID: 8300000, guid: 8b7851493fe651447b5d0fad0cb94348, type: 3}
+  - {fileID: 8300000, guid: 739079a815096214e9238366cf71385b, type: 3}
+  - {fileID: 8300000, guid: 65efa9d9fae0f654da9a5228b0743e47, type: 3}
+  audioSource: {fileID: 0}
+  wooshRadius: 15
+  volume: 0.6
+  cooldownDuration: 0.2

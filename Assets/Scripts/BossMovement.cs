@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
 public class BossMovement : MonoBehaviour
 {
+    public int charID = 0;
     public bool isCutscene = false;
     public bool isWaypoint = false;
     private int gpsProgress;
@@ -19,7 +20,7 @@ public class BossMovement : MonoBehaviour
     public float warningDistance;
     public float pursuitMod = 1f;
     public FlightBehavior player;
-    public CinemachineDollyCart cart;
+    public CinemachineSplineCart cart;
     public TextMeshProUGUI winText;
     public Transform playerOffset;
     public GameObject targetLook;
@@ -45,12 +46,13 @@ public class BossMovement : MonoBehaviour
 
     private void Start()
     {
-        cart = GetComponent<CinemachineDollyCart>();
+        cart = GetComponent<CinemachineSplineCart>();
         player = FindAnyObjectByType<FlightBehavior>();
         anim.SetInteger("Cutscene", cutsceneID);
         anim.SetBool("IsCutscene", isCutscene);
         anim.SetBool("IsWaypoint", isWaypoint);
         anim.SetInteger("HP", hp);
+        anim.SetInteger("CharID", charID);
         visualAnim.SetInteger("HP", hp);
         if (isWaypoint)
         {
@@ -84,17 +86,34 @@ public class BossMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        var autodolly = cart.AutomaticDolly.Method as SplineAutoDolly.FixedSpeed;
         enemyScale = Mathf.Clamp(Vector3.Distance(player.transform.position, transform.position) + pursuitMod, defaultScale, awayScale);
         enemyVisual.transform.localScale = new Vector3(enemyScale, enemyScale, enemyScale);
         targetLook.transform.position = player.transform.position;
         if (isWaypoint)
         {
-            gpsProgress = (int)(cart.m_Position / cart.m_Path.PathLength * 100);
-            winText.text = "Follow GPS: " + gpsProgress +"%";
+            if (Vector3.Distance(player.transform.position, transform.position) < distanceToMaintain * 2 || !FindAnyObjectByType<SplineRenderer>())
+            {
+                gpsProgress = (int)(cart.SplinePosition / cart.Spline.Spline.GetLength() * 100);
+                winText.text = "Follow GPS: " + gpsProgress + "%";
+            }
+            else
+            {
+                Debug.Log("GPS TOO FAR!");
+                winText.text = "<!>GPS ERROR<!>";
+            }
+            if (FindAnyObjectByType<SplineRenderer>())
+            {
+                if (!FindAnyObjectByType<SplineRenderer>().isShowing)
+                    FindAnyObjectByType<SplineRenderer>().ShowLine();
+            }
         }
         if (isCutscene)
         {
-            speed = cart.m_Speed - 5f;
+            if (autodolly != null)
+            {
+                speed = autodolly.Speed - 5f;
+            }
             return;
         }
         engaging = player.curSpeed >= engageSpeed;
@@ -118,7 +137,10 @@ public class BossMovement : MonoBehaviour
         }
 
         visualAnim.SetBool("IsMach", isMach);
-        cart.m_Speed = speed;
+        if (autodolly != null)
+        {
+            autodolly.Speed = speed;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -147,7 +169,11 @@ public class BossMovement : MonoBehaviour
             player.cameras[0].Priority = 100;
             anim.SetBool("Died", wonGame);
             PlaySound(4);
-            StartCoroutine(EndGame());
+            if (FindAnyObjectByType<LevelManager>())
+            {
+                StartCoroutine(AdvancedEndGame());
+            }
+            else StartCoroutine(EndGame());
         }
     }
     IEnumerator ResetAttack()
@@ -169,13 +195,13 @@ public class BossMovement : MonoBehaviour
         player.rb.velocity = new Vector3(0, 0, 0);
         player.curSpeed = 3f;
         yield return new WaitForSeconds(2f);
-        FindObjectOfType<CinemachineBrain>().m_DefaultBlend.m_Time = 0.7f;
+        FindObjectOfType<CinemachineBrain>().DefaultBlend.Time = 0.7f;
         player.cameras[1].Priority = 10;
         player.cameras[0].Priority = 20;
         player.lookAtEnemy = false;
         yield return new WaitForSeconds(1f);
         player.disablePower = false;
-        FindObjectOfType<CinemachineBrain>().m_DefaultBlend.m_Time = 0.2f;
+        FindObjectOfType<CinemachineBrain>().DefaultBlend.Time = 0.2f;
     }
 
     IEnumerator RestartGame()
@@ -225,6 +251,17 @@ public class BossMovement : MonoBehaviour
         PlaySound(6);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(2);
+    }
+
+    IEnumerator AdvancedEndGame()
+    {
+        FindAnyObjectByType<LevelTimer>().StopTimer();
+        FindAnyObjectByType<LevelManager>().HideHud();
+        FindAnyObjectByType<LevelManager>().StopMusic();
+        yield return new WaitForSeconds(3f);
+        FindAnyObjectByType<LevelManager>().EndLevel();
+        yield return new WaitForSeconds(1f);
+        FindAnyObjectByType<LevelManager>().PlayEndMusic();
     }
 
     public void SpawnBullet(int index = 0)

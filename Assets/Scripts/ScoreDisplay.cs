@@ -82,7 +82,7 @@ public class ScoreDisplay : MonoBehaviour
         powerGauge.value = FlightBehavior.scoreP;
         if (FlightBehavior.curPowerAmount >= 1)
         {
-            fillImageP.color = player.pGuageColor2;
+            fillImageP.color = player.FlashColor();
         }
         else if (player.isPowerup)
         {

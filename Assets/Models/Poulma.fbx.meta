@@ -3,7 +3,77 @@ guid: a2c3857f205dd8446af0659a438ace03
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BLACK
+    second: {fileID: 2100000, guid: ae38646c1a1fc164e972291b5eda2a1f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EyeColor
+    second: {fileID: 2100000, guid: 4d1577717a2ccbc42b1e4e85e6e63abc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes1
+    second: {fileID: 2100000, guid: 579bac06bf2aff0459bcfd1698c5ff68, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hair1
+    second: {fileID: 2100000, guid: ed03120531962e14d8a531d65d8db141, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HairSeeThrough
+    second: {fileID: 2100000, guid: 0f23037d0ee241949bb8aef2160ecd41, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Jet
+    second: {fileID: 2100000, guid: c56bfbe2f0b642a45951bd9db2456baf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Jet2
+    second: {fileID: 2100000, guid: 9aea5c435004b32468ee8029576d47ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Jet3
+    second: {fileID: 2100000, guid: 37f8dd6c33658f1418f64797d4a4b2c8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kemono
+    second: {fileID: 2100000, guid: 780e6ce4851485545acb9b6ed68aa43f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 9fcf03888f3b074479319fe7c52d9eda, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Red
+    second: {fileID: 2100000, guid: 787e9ec171875e642bbcc7cb8528b119, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skin
+    second: {fileID: 2100000, guid: 69de54f8efdb5854f9379a494b698022, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Trim
+    second: {fileID: 2100000, guid: 59b7ea06318da28459390d2799b76ab3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UnderClothes
+    second: {fileID: 2100000, guid: 31c73a44a6cdcfa4d92201b71109858f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -79,10 +79,16 @@ public class AdvProjectileSpawner : MonoBehaviour
     public int[] patterns;
     public int patternIndex;
 
+    private bool isPooled;
+
     private void Start()
     {
         player = FindAnyObjectByType<FlightBehavior>();
         boss = FindAnyObjectByType<BossMovement>();
+        if (FindAnyObjectByType<BulletPoolManager>())
+        {
+            isPooled = true;
+        }
     }
 
     private void Update()
@@ -199,8 +205,11 @@ public class AdvProjectileSpawner : MonoBehaviour
     {
         Vector3 dir = spawnLocation.transform.forward;
         Vector3 pos = spawnLocation.transform.position;
+        GameObject bulletObj;
         // spawn and orientate it
-        GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+        if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+        else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+        bulletObj.transform.position = pos;
         bulletObj.transform.forward = dir;
         // Get bullet script and initialize it
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
@@ -221,8 +230,11 @@ public class AdvProjectileSpawner : MonoBehaviour
     {
         Vector3 dir = customSpawn.forward;
         Vector3 pos = customSpawn.position;
+        GameObject bulletObj;
         // spawn and orientate it
-        GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+        if(isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+        else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+        bulletObj.transform.position = pos;
         bulletObj.transform.forward = dir;
         // Get bullet script and initialize it
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
@@ -254,8 +266,11 @@ public class AdvProjectileSpawner : MonoBehaviour
             Vector3 inwardDir = -(spawnLocation.position - pos).normalized;
             Vector3 combinedDir = dir + (inwardDir * inwardSpeed);
             combinedDir.Normalize();
-            //spawn and orientate it
-            GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            GameObject bulletObj;
+            // spawn and orientate it
+            if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+            else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            bulletObj.transform.position = pos;
             bulletObj.transform.forward = dir;
 
             // Get bullet script and initialize it
@@ -289,8 +304,11 @@ public class AdvProjectileSpawner : MonoBehaviour
             Vector3 inwardDir = -(customSpawn.position - pos).normalized;
             Vector3 combinedDir = dir + (inwardDir * projectileSettings.inwardSpeed);
             combinedDir.Normalize();
-            //spawn and orientate it
-            GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            GameObject bulletObj;
+            // spawn and orientate it
+            if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+            else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            bulletObj.transform.position = pos;
             bulletObj.transform.forward = dir;
 
             // Get bullet script and initialize it
@@ -336,7 +354,11 @@ public class AdvProjectileSpawner : MonoBehaviour
                 Vector3 pos = spawnLocation.position + spawnLocation.TransformDirection(localPosition);
 
                 // Instantiate the bullet at the calculated position
-                GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+                GameObject bulletObj;
+                // spawn and orientate it
+                if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+                else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+                bulletObj.transform.position = pos;
                 // Get bullet script and initialize it
                 Bullet bulletScript = bulletObj.GetComponent<Bullet>();
                 //alternate mats
@@ -386,7 +408,11 @@ public class AdvProjectileSpawner : MonoBehaviour
                 Vector3 pos = customSpawn.position + customSpawn.TransformDirection(localPosition);
 
                 // Instantiate the bullet at the calculated position
-                GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+                GameObject bulletObj;
+                // spawn and orientate it
+                if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+                else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+                bulletObj.transform.position = pos;
                 // Get bullet script and initialize it
                 Bullet bulletScript = bulletObj.GetComponent<Bullet>();
                 //alternate mats
@@ -434,7 +460,11 @@ public class AdvProjectileSpawner : MonoBehaviour
             combinedDir.Normalize();
 
             // Spawn and orientate it
-            GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            GameObject bulletObj;
+            // spawn and orientate it
+            if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+            else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            bulletObj.transform.position = pos;
             bulletObj.transform.forward = dir;
 
             // Get bullet script and initialize it
@@ -484,7 +514,11 @@ public class AdvProjectileSpawner : MonoBehaviour
             combinedDir.Normalize();
 
             // Spawn and orientate it
-            GameObject bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            GameObject bulletObj;
+            // spawn and orientate it
+            if (isPooled) bulletObj = BulletPoolManager.Instance.GetBullet();
+            else bulletObj = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            bulletObj.transform.position = pos;
             bulletObj.transform.forward = dir;
 
             // Get bullet script and initialize it

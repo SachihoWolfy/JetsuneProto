@@ -589,7 +589,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4358330386311490261}
-  - component: {fileID: 2394961566773453648}
+  - component: {fileID: 4999313681369309458}
   - component: {fileID: 337095111194961675}
   - component: {fileID: 8310389660188370500}
   - component: {fileID: 4283209396633010025}
@@ -623,7 +623,7 @@ Transform:
   - {fileID: 6680679622205698091}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2394961566773453648
+--- !u!114 &4999313681369309458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -632,14 +632,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1319189441689803350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99a9c787e5d1bbf48a389834c4a9641c, type: 3}
+  m_Script: {fileID: 11500000, guid: 450f466b666a79a4698f2b19a5c87c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Path: {fileID: 0}
-  m_UpdateMethod: 1
-  m_PositionUnits: 1
-  m_Speed: 0
-  m_Position: 0
+  SplineSettings:
+    Spline: {fileID: 0}
+    Position: 0
+    Units: 0
+  UpdateMethod: 1
+  AutomaticDolly:
+    Enabled: 1
+    Method:
+      rid: 8367713640591392768
+  TrackingTarget: {fileID: 0}
+  m_LegacyPosition: -1
+  m_LegacyUnits: 0
+  m_LegacySpline: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8367713640591392768
+      type: {class: SplineAutoDolly/FixedSpeed, ns: Unity.Cinemachine, asm: Unity.Cinemachine}
+      data:
+        Speed: 0
 --- !u!114 &337095111194961675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,6 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4749f2a52ba7b7c40bbc571498068841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charID: 0
   isCutscene: 0
   isWaypoint: 0
   cutsceneID: 0
@@ -663,7 +679,7 @@ MonoBehaviour:
   warningDistance: 0
   pursuitMod: -20
   player: {fileID: 0}
-  cart: {fileID: 0}
+  cart: {fileID: 4999313681369309458}
   winText: {fileID: 0}
   playerOffset: {fileID: 5667744418513438628}
   targetLook: {fileID: 9162792921040887748}

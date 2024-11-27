@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public GameObject explosionPrefab;
     public float bulletSize = 1f;
     public Rigidbody rb;
     public GameObject visual;
@@ -45,11 +46,14 @@ public class Bullet : MonoBehaviour
     private float startTime;
     private Vector3 dir;
 
+    private bool isPooled;
+
     public void Initialize(int damage, float spdDamage)
     {
         this.damage = damage;
         speedDamage = spdDamage;
-        Destroy(gameObject, projectileTime);
+        StartCoroutine(ReturnBulletAfterTime(projectileTime));
+
     }
     public void Initialize(int damage, float spdDamage, float spdTime)
     {
@@ -58,34 +62,23 @@ public class Bullet : MonoBehaviour
         finalSpd = spdTime;
         isSpdTime = true;
         startTime = Time.time;
-        Destroy(gameObject, projectileTime);
+        StartCoroutine(ReturnBulletAfterTime(projectileTime));
     }
 
     private void Start()
     {
         player = FindAnyObjectByType<FlightBehavior>();
         boss = FindObjectOfType<BossMovement>();
+        if (FindAnyObjectByType<ExplosionPoolManager>())
+        {
+            isPooled = true;
+        }
 
         oldPosition = transform.position;
-        if (isHoming)
-        {
-            StartCoroutine(ArmHoming());
-        }
-        if (isbulletExplode)
-        {
-            StartCoroutine(ArmExplode());
-        }
-        if (isPause)
-        {
-            StartCoroutine(ArmPause());
-        }
-        if (isOscillate)
-        {
-            StartCoroutine(ArmOscillate());
-        }
     }
     private void Update()
     {
+        
         // Get the player's forward velocity component
         Vector3 playerForwardVelocity = player.transform.forward * player.curSpeed;
 
@@ -131,21 +124,6 @@ public class Bullet : MonoBehaviour
             StartCoroutine(ArmHoming());
             isHoming = false;
         }
-        if (isbulletExplode)
-        {
-            StartCoroutine(ArmExplode());
-            isbulletExplode = false;
-        }
-        if (isPause)
-        {
-            StartCoroutine(ArmPause());
-            isPause = false;
-        }
-        if (isOscillate)
-        {
-            StartCoroutine(ArmOscillate());
-            isOscillate = false;
-        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -153,8 +131,8 @@ public class Bullet : MonoBehaviour
         {
             player.TakeDamage(damage, speedDamage);
         }
-        if (!other.gameObject.CompareTag("Enemy"))
-            Destroy(gameObject);
+        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("BulletIgnore"))
+            ReturnBullet();
     }
 
     public IEnumerator ArmHoming()
@@ -194,5 +172,91 @@ public class Bullet : MonoBehaviour
     {
         isHoming = true;
         activeHoming = true;
+    }
+    public IEnumerator ReturnBulletAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        ReturnBullet();
+    }
+    bool IsOffScreen()
+    {
+        Vector3 bossViewportPos = Camera.main.WorldToViewportPoint(transform.position);
+        return bossViewportPos.x < 0 || bossViewportPos.x > 1 || bossViewportPos.y < 0 || bossViewportPos.y > 1;
+    }
+    public void ReturnBullet()
+    {
+        if (!IsOffScreen())
+        {
+            GameObject explosion;
+            // spawn and orientate it
+            if (isPooled) explosion = ExplosionPoolManager.Instance.GetBullet();
+            else explosion = Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity);
+            explosion.transform.position = transform.position;
+            // Set Partical Color
+            Material bulletMaterial = mr.material;
+            ParticleSystem explosionParticles = explosion.GetComponentInChildren<ParticleSystem>();
+            if (bulletMaterial.HasProperty("_Color"))
+            {
+                Color bulletColor = bulletMaterial.color;
+                var mainModule = explosionParticles.main;
+                mainModule.startColor = bulletColor;
+
+
+
+                // Get all particle systems under the parent, including the parent itself
+                ParticleSystem[] particleSystems = explosionParticles.gameObject.GetComponentsInChildren<ParticleSystem>();
+
+                // Loop through each particle system and set the start color
+                foreach (ParticleSystem ps in particleSystems)
+                {
+                    mainModule = ps.main;
+                    mainModule.startColor = bulletColor;
+
+                }
+                // Get the emissive color from the bullet material
+                Color emissiveColor = bulletMaterial.color;
+
+                // Loop through each particle system
+                foreach (ParticleSystem ps in particleSystems)
+                {
+                    // Access the renderer for this particle system
+                    ParticleSystemRenderer renderer = ps.GetComponent<ParticleSystemRenderer>();
+
+                    // Ensure the renderer has a material
+                    if (renderer != null && renderer.material != null)
+                    {
+                        // Create an instance of the material to avoid affecting the original
+                        Material instanceMaterial = renderer.material;
+
+                        // Check if the material supports emissive color changes
+                        if (instanceMaterial.HasProperty("_EmissionColor"))
+                        {
+                            // Enable emission keyword if necessary (for Standard shaders)
+                            instanceMaterial.EnableKeyword("_EMISSION");
+
+                            // Set the emissive color
+                            instanceMaterial.SetColor("_EmissionColor", emissiveColor);
+
+                            // Assign the instanced material back to the renderer
+                            renderer.material = instanceMaterial;
+                        }
+                    }
+                }
+
+            }
+
+            else
+            {
+                Debug.LogWarning("The bullet material does not have a _Color property.");
+            }
+        }
+        if (FindAnyObjectByType<BulletPoolManager>())
+        {
+            BulletPoolManager.Instance.ReturnBullet(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

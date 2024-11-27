@@ -14,7 +14,7 @@ public class DanmakuComposer : MonoBehaviour
     {
         if (index >= 0 && index < patterns.Count)
         {
-            Debug.Log("Setting active pattern: " + index);
+            
 
             // Stop all coroutines before switching to the new pattern
             StopAllCoroutines();
@@ -42,17 +42,14 @@ public class DanmakuComposer : MonoBehaviour
             layer.Initialize(); // Initialize layer properties, including cooldowns
 
             // Wait for the layer's delay before starting to spawn bullets
-            Debug.Log($"Waiting {layer.layerDelay} seconds before firing layer: {layer.bulletShape}");
             yield return new WaitForSeconds(layer.layerDelay);
 
             if (layer.isBurst && layer.burstCount > 0)
             {
-                Debug.Log("Starting burst firing for layer: " + layer.bulletShape);
                 StartCoroutine(FireBurstLayer(layer)); // Handle burst pattern
             }
             else
             {
-                Debug.Log("Starting regular firing for layer: " + layer.bulletShape);
                 StartCoroutine(FireLayer(layer)); // Handle non-burst pattern
             }
         }
@@ -61,10 +58,8 @@ public class DanmakuComposer : MonoBehaviour
     // Fire bullets for a layer without burst (just regular rate of fire)
     private IEnumerator FireLayer(PatternLayer layer)
     {
-        Debug.Log("Firing bullets with combined SpawnMotion and RotateMotion!");
 
         float currentAngle = 0f; // Angle for spiral motion
-        float circularAngle = 0f; // Angle for circular rotation
 
         while (isActive)
         {
@@ -181,13 +176,11 @@ public class DanmakuComposer : MonoBehaviour
     // Fire bullets for a burst pattern, considering burst cooldown
     private IEnumerator FireBurstLayer(PatternLayer layer)
     {
-        Debug.Log("Firing burst layer!");
 
         int burstFired = 0; // Keep track of how many bursts have been fired
 
         while (isActive && burstFired < layer.burstCount)
         {
-            Debug.Log($"Firing burst {burstFired + 1} of {layer.burstCount}");
 
             // Fire bullets for the current burst
             for (int i = 0; i < layer.burstCount; i++)
@@ -201,7 +194,6 @@ public class DanmakuComposer : MonoBehaviour
             // Wait for burst cooldown before firing the next burst
             if (burstFired < layer.burstCount)
             {
-                Debug.Log("Cooldown after burst, waiting for " + layer.burstCooldown + " seconds.");
                 yield return new WaitForSeconds(layer.burstCooldown); // Cooldown after each burst
             }
         }
@@ -209,7 +201,6 @@ public class DanmakuComposer : MonoBehaviour
 
     private void SpawnShape(PatternLayer layer)
     {
-        Debug.Log("Trying to spawn shape!");
         AdvProjectileSpawner spawner = FindObjectOfType<AdvProjectileSpawner>();
 
         if (spawner == null)
@@ -223,19 +214,15 @@ public class DanmakuComposer : MonoBehaviour
             case BulletShape.None:
                 break;
             case BulletShape.Line:
-                Debug.Log("Spawning Line shape");
                 spawner.SpawnLinePattern(layer.spawnLocation, layer.settings);
                 break;
             case BulletShape.Circle:
-                Debug.Log("Spawning Circle shape");
                 spawner.SpawnCirclePattern(layer.spawnLocation, layer.settings);
                 break;
             case BulletShape.Hemisphere:
-                Debug.Log("Spawning Hemisphere shape");
                 spawner.SpawnHemispherePattern(layer.spawnLocation, layer.settings);
                 break;
             case BulletShape.Sphere:
-                Debug.Log("Spawning Sphere shape");
                 spawner.SpawnSpherePattern(layer.spawnLocation, layer.settings);
                 break;
             default:

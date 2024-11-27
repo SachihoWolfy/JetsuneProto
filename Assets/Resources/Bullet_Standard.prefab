@@ -74,12 +74,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b84befc49f639384eb13d5d5e2293bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 1668857415454636519, guid: 904c8c725aa5f1540aea966fc543f0a2, type: 3}
   bulletSize: 1
   rb: {fileID: 250869808752495013}
   visual: {fileID: 4790533732982674974}
   mr: {fileID: 6929190401930079669}
   speedDamage: 40
-  projectileTime: 5
+  projectileTime: 10
   isHoming: 0
   homingArmTime: 2
   damping: 3
@@ -109,7 +110,7 @@ GameObject:
   - component: {fileID: 3690537918599068318}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,7 +144,7 @@ GameObject:
   - component: {fileID: 2265542859957900308}
   m_Layer: 0
   m_Name: pCube1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,7 +226,7 @@ GameObject:
   - component: {fileID: 5472360933488569402}
   m_Layer: 0
   m_Name: Visual
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -260,7 +261,7 @@ GameObject:
   - component: {fileID: 6929190401930079669}
   m_Layer: 0
   m_Name: pasted__pCube1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -448,7 +449,7 @@ GameObject:
   - component: {fileID: 8069045499706856427}
   m_Layer: 0
   m_Name: Crystal_Bullet
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
