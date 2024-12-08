@@ -140,7 +140,7 @@ public class DanmakuComposer : MonoBehaviour
 
     private void SpawnShapeAtPosition(Vector3 spawnPosition, PatternLayer layer, Quaternion spawnRotation)
     {
-        AdvProjectileSpawner spawner = FindObjectOfType<AdvProjectileSpawner>();
+        AdvProjectileSpawner spawner = GetComponentInChildren<AdvProjectileSpawner>();
 
         Transform tempTransform = new GameObject("TempTransform").transform;
         tempTransform.position = spawnPosition;
@@ -201,7 +201,7 @@ public class DanmakuComposer : MonoBehaviour
 
     private void SpawnShape(PatternLayer layer)
     {
-        AdvProjectileSpawner spawner = FindObjectOfType<AdvProjectileSpawner>();
+        AdvProjectileSpawner spawner = GetComponentInChildren<AdvProjectileSpawner>();
 
         if (spawner == null)
         {

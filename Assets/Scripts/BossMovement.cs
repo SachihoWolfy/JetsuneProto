@@ -156,7 +156,15 @@ public class BossMovement : MonoBehaviour
             player.AddScore(2000);
             preventAttack = true;
             player.transform.position = playerOffset.position;
-            if(!player.isPowerup) player.anim.Play("Sachi_Attack");
+            if (!player.isPowerup)
+            {
+                player.anim.Play("Sachi_Attack");
+                if (player.GetComponentInChildren<AllyController>())
+                {
+                    AllyController ally = player.GetComponentInChildren<AllyController>();
+                    ally.characterAnim.Play("Ally_Attack");
+                }
+            }
             else player.anim.Play("JavAttack");
             StartCoroutine(SlowPlayer());
             StartCoroutine(ResetAttack());
@@ -187,6 +195,10 @@ public class BossMovement : MonoBehaviour
         player.disablePower = true;
         attackSequence = true;
         player.immunity = true;
+        if (player.ally)
+        {
+            player.ally.shootBoss = true;
+        }
         StartCoroutine(player.ImmunityReset(3f));
         player.cameras[1].Priority = 30;
         yield return new WaitForSeconds(0.3f);
@@ -200,6 +212,10 @@ public class BossMovement : MonoBehaviour
         player.cameras[0].Priority = 20;
         player.lookAtEnemy = false;
         yield return new WaitForSeconds(1f);
+        if (player.ally)
+        {
+            player.ally.shootBoss = false;
+        }
         player.disablePower = false;
         FindObjectOfType<CinemachineBrain>().DefaultBlend.Time = 0.2f;
     }

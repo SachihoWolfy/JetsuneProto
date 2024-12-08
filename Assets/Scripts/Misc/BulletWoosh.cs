@@ -27,7 +27,7 @@ public class BulletWoosh : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") && canPlaySound)
+        if (other.CompareTag("EnemyBullet") && canPlaySound)
         {
             if(other.gameObject.TryGetComponent<AudioSource>(out AudioSource audioSource))
             {

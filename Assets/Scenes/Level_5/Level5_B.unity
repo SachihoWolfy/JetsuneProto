@@ -14,12 +14,12 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
+  m_Fog: 1
+  m_FogColor: {r: 0.2679245, g: 0.2679245, b: 0.2679245, a: 1}
+  m_FogMode: 1
   m_FogDensity: 0.01
   m_LinearFogStart: 0
-  m_LinearFogEnd: 300
+  m_LinearFogEnd: 150
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -1053,7 +1053,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -1064,6 +1064,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -1086,6 +1087,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &42026021
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1624,7 +1628,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -1635,6 +1639,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -1657,6 +1662,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &63870884
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3531,7 +3539,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -3542,6 +3550,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -3564,6 +3573,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &143279591
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5083,7 +5095,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -5094,6 +5106,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -5116,6 +5129,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &226199054
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8136,7 +8152,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -8147,6 +8163,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -8169,6 +8186,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &334508529
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10018,7 +10038,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -10029,6 +10049,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -10051,6 +10072,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &422328110
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10960,7 +10984,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -10971,6 +10995,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -10993,6 +11018,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &455751396
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13062,6 +13090,119 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553343796}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &568705906
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1273915125232972, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Name
+      value: SmokeEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 852
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -98
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 308
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70002717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.704538
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.08490375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.079872414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -103.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 88.227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -88.63699
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ringBufferMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 12.901683
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3.2957213
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
 --- !u!1 &569828940
 GameObject:
   m_ObjectHideFlags: 0
@@ -13161,7 +13302,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -13172,6 +13313,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -13194,6 +13336,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &570073339
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13665,7 +13810,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -13676,6 +13821,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -13698,6 +13844,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &580046968
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13831,7 +13980,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -13842,6 +13991,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -13864,6 +14014,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &587646930
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13935,6 +14088,119 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587646927}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &614674309
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1273915125232972, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Name
+      value: SmokeEffect (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 802
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -98
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -607
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70002717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.704538
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.08490375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.079872414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -103.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 88.227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -88.63699
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ringBufferMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 12.901683
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3.2957213
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
 --- !u!1 &615982674
 GameObject:
   m_ObjectHideFlags: 0
@@ -13997,7 +14263,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -14008,6 +14274,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -14030,6 +14297,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &615982677
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16099,7 +16369,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -16110,6 +16380,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -16132,6 +16403,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &685240577
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16922,7 +17196,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -16933,6 +17207,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -16955,6 +17230,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &723929264
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17336,7 +17614,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -17347,6 +17625,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -17369,6 +17648,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &734998033
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17944,6 +18226,119 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &765253937
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1273915125232972, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Name
+      value: SmokeEffect (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 742
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -98
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70002717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.704538
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.08490375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.079872414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -103.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 88.227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -88.63699
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ringBufferMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 12.901683
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3.2957213
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
 --- !u!1 &768712525
 GameObject:
   m_ObjectHideFlags: 0
@@ -18473,7 +18868,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -18484,6 +18879,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -18506,6 +18902,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &794070126
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19490,6 +19889,119 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &835689960
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1273915125232972, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Name
+      value: SmokeEffect (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 12.894376
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 12.894376
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 12.894376
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -504
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 164
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -451
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70002717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.704538
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.08490375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.079872414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -103.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 88.227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -88.63699
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ringBufferMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 12.901683
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3.2957213
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
 --- !u!1 &846472628
 GameObject:
   m_ObjectHideFlags: 0
@@ -19763,7 +20275,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -19774,6 +20286,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -19796,6 +20309,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &852831544
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20329,7 +20845,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -20340,6 +20856,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -20362,6 +20879,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &876876705
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20495,7 +21015,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -20506,6 +21026,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -20528,6 +21049,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &877447449
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21675,7 +22199,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -21686,6 +22210,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -21708,6 +22233,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &932839317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21841,7 +22369,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -21852,6 +22380,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -21874,6 +22403,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &939390566
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22217,7 +22749,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -22228,6 +22760,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -22250,6 +22783,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &943650357
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23847,7 +24383,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -23858,6 +24394,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -23880,6 +24417,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &998720448
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24614,7 +25154,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -24625,6 +25165,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -24647,6 +25188,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1045198710
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28154,7 +28698,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -28165,6 +28709,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -28187,6 +28732,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1143067311
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28320,7 +28868,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -28331,6 +28879,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -28353,6 +28902,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1146714214
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28566,6 +29118,119 @@ Transform:
   - {fileID: 493069087}
   m_Father: {fileID: 932839315}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1169569326
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1273915125232972, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Name
+      value: SmokeEffect (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1874
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 84
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70002717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.704538
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.08490375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.079872414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -103.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 88.227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -88.63699
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ringBufferMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 12.901683
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3.2957213
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
 --- !u!1 &1171560954
 GameObject:
   m_ObjectHideFlags: 0
@@ -30625,7 +31290,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -30636,6 +31301,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -30658,6 +31324,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1270629183
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31839,7 +32508,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -31850,6 +32519,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -31872,6 +32542,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1323643643
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32133,7 +32806,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -32144,6 +32817,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -32166,6 +32840,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1333158888
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32492,7 +33169,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -32503,6 +33180,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -32525,6 +33203,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1360715271
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32658,7 +33339,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -32669,6 +33350,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -32691,6 +33373,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1364695752
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34237,7 +34922,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -34248,6 +34933,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -34270,6 +34956,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1440761164
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35362,7 +36051,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -35373,6 +36062,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -35395,6 +36085,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1472372176
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35528,7 +36221,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -35539,6 +36232,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -35561,6 +36255,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1476474667
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36058,7 +36755,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -36069,6 +36766,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -36091,6 +36789,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1504237437
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36667,7 +37368,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -36678,6 +37379,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -36700,6 +37402,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1531942835
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36876,6 +37581,119 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533026992}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1533248114
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1273915125232972, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Name
+      value: SmokeEffect (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -234
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -98
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 537
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70002717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.704538
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.08490375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.079872414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -103.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 88.227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -88.63699
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ringBufferMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 12.901683
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3.2957213
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
 --- !u!1 &1533414966
 GameObject:
   m_ObjectHideFlags: 0
@@ -37697,7 +38515,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -37708,6 +38526,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -37730,6 +38549,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1583963591
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38327,6 +39149,128 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1599469079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1599469084}
+  - component: {fileID: 1599469083}
+  - component: {fileID: 1599469082}
+  - component: {fileID: 1599469081}
+  - component: {fileID: 1599469080}
+  m_Layer: 0
+  m_Name: FogTrigger
+  m_TagString: BulletIgnore
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1599469080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599469079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1154a9b9ed9a911459192f9c31317fe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableFogOnEnter: 1
+  resetFogOnExit: 0
+  fogColor: {r: 0.2679245, g: 0.2679245, b: 0.2679245, a: 1}
+  fogDensity: 0.37
+--- !u!65 &1599469081
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599469079}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1599469082
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599469079}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1599469083
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599469079}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1599469084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599469079}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.2877076, z: -0, w: 0.9577183}
+  m_LocalPosition: {x: 589, y: 97, z: 756}
+  m_LocalScale: {x: 1358.4451, y: 271.60272, z: 947.5084}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 33.442, z: 0}
 --- !u!1 &1602644366
 GameObject:
   m_ObjectHideFlags: 0
@@ -38809,7 +39753,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -38820,6 +39764,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -38842,6 +39787,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1629218624
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39350,7 +40298,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -39361,6 +40309,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -39383,6 +40332,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1650906326
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39644,7 +40596,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -39655,6 +40607,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -39677,6 +40630,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1659949850
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39810,7 +40766,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -39821,6 +40777,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -39843,6 +40800,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1660267971
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41204,7 +42164,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -41215,6 +42175,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -41237,6 +42198,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1748266110
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41370,7 +42334,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -41381,6 +42345,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -41403,6 +42368,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1749297277
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42616,7 +43584,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -42627,6 +43595,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -42649,6 +43618,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1794914463
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42887,7 +43859,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -42898,6 +43870,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -42920,6 +43893,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1802098174
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43513,7 +44489,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -43524,6 +44500,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -43546,6 +44523,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1823719732
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43948,7 +44928,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -43959,6 +44939,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -43981,6 +44962,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1836818500
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -44302,7 +45286,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -44313,6 +45297,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -44335,6 +45320,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1858065711
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -44678,7 +45666,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -44689,6 +45677,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -44711,6 +45700,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1887188055
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45589,7 +46581,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -45600,6 +46592,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -45622,6 +46615,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1912474302
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46281,7 +47277,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -46292,6 +47288,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -46314,6 +47311,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &1922807805
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47883,6 +48883,119 @@ MonoBehaviour:
     Time: 0
     Smoothing: 0
     IgnoreY: 0
+--- !u!1001 &1963674934
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1273915125232972, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Name
+      value: SmokeEffect (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 23.860357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -98
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 673
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70002717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.704538
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.08490375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.079872414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -103.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 88.227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -88.63699
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ringBufferMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 12.901683
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3.2957213
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
 --- !u!1 &1964953774
 GameObject:
   m_ObjectHideFlags: 0
@@ -48984,6 +50097,119 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994133266}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1994541728
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1273915125232972, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Name
+      value: SmokeEffect (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 40.404736
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 40.404736
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 40.404736
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -319
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -98
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 682
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70002717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.704538
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.08490375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.079872414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -103.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 88.227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508696319873668, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -88.63699
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ringBufferMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 12.901683
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3.2957213
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199099840506733646, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
 --- !u!1 &1998893016
 GameObject:
   m_ObjectHideFlags: 0
@@ -50710,7 +51936,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -50721,6 +51947,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -50743,6 +51970,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &2099123561
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -51649,7 +52879,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -51660,6 +52890,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -51682,6 +52913,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &2142772864
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -51799,7 +53033,7 @@ MonoBehaviour:
   lookAtPlayer: 0
   useAlternateMaterials: 0
   material1: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
-  material2: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+  material2: {fileID: 2100000, guid: 2e69e40c877799e438d74a299c9428b8, type: 2}
   radius: 5
   numberOfProjectiles: 10
   inwardSpeed: -0.13
@@ -51810,6 +53044,7 @@ MonoBehaviour:
   isFiring: 1
   disconnected: 1
   lead: 1
+  isAlly: 0
   distanceToActive: 200
   type: 0
   finalSpeed: 50
@@ -51832,6 +53067,9 @@ MonoBehaviour:
   inaccuracyAngle: 3
   patterns: 01000000
   patternIndex: 0
+  targetBoss: 0
+  allyIndex: 0
+  targetedBullet: {fileID: 0}
 --- !u!65 &2147286076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -51970,6 +53208,10 @@ PrefabInstance:
     - target: {fileID: 1056924609352810299, guid: 9c489c944ff18424096f59be99db7df4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681911055818934905, guid: 9c489c944ff18424096f59be99db7df4, type: 3}
+      propertyPath: m_Radius
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3867601806867550492, guid: 9c489c944ff18424096f59be99db7df4, type: 3}
       propertyPath: cooldown
@@ -52212,6 +53454,22 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 2.1279584e-14
       objectReference: {fileID: 0}
+    - target: {fileID: 8225692735556522041, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.2806
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225692735556522041, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.037506
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225692735556522041, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.21937373
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225692735556522041, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.97564095
+      objectReference: {fileID: 0}
     - target: {fileID: 8537990959087422612, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
       propertyPath: promptText
       value: 
@@ -52428,9 +53686,18 @@ SceneRoots:
   - {fileID: 1502275232}
   - {fileID: 3132452083046129667}
   - {fileID: 1113643288}
+  - {fileID: 1599469084}
   - {fileID: 543305365}
   - {fileID: 2105908119}
   - {fileID: 304683138}
   - {fileID: 1223661673}
   - {fileID: 1944156324}
   - {fileID: 383171776}
+  - {fileID: 568705906}
+  - {fileID: 765253937}
+  - {fileID: 1963674934}
+  - {fileID: 1533248114}
+  - {fileID: 1169569326}
+  - {fileID: 835689960}
+  - {fileID: 614674309}
+  - {fileID: 1994541728}

@@ -14,7 +14,7 @@ public class FlightBehavior : MonoBehaviour
     private bool navLightsEnabled;
     public ParticleSystem[] wingTips;
     public GameObject[] navLights;
-    private BossMovement boss;
+    public BossMovement boss;
     public bool isCutscene = false;
     public int cutsceneID = 0;
     public Animator cutsceneAnim;
@@ -113,6 +113,7 @@ public class FlightBehavior : MonoBehaviour
 
     private ScoreDisplay scoreDisplay;
     public GameObject backupSettings;
+    public AllyController ally;
 
     private void Start()
     {
@@ -128,6 +129,7 @@ public class FlightBehavior : MonoBehaviour
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         scoreDisplay = FindAnyObjectByType<ScoreDisplay>();
         boss = FindFirstObjectByType<BossMovement>();
+        ally = GetComponentInChildren<AllyController>();
         lineRenderer.widthMultiplier = 0.2f;
         lineRenderer.positionCount = 2;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
@@ -170,6 +172,10 @@ public class FlightBehavior : MonoBehaviour
         }
         var mainModule = wingTips[0].main;
         initialWingtipColor = mainModule.startColor.color;
+    }
+    public BossMovement GetBoss()
+    {
+        return boss;
     }
     public void EnableNavLights()
     {
@@ -845,6 +851,8 @@ public class FlightBehavior : MonoBehaviour
             visualObj.SetActive(false);
             deathExplosion.SetActive(true);
             deathCam.Priority = 300;
+            yield return new WaitForSeconds(0.25f);
+            deathAudio[3].Play();
             Restart();
         }
         else

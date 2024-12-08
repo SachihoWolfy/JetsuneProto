@@ -57,6 +57,11 @@ public class LevelManager : MonoBehaviour
     {
         playerVis = FindAnyObjectByType<FlightBehavior>().anim.gameObject;
         enemyVis = FindAnyObjectByType<BossMovement>().visualAnim.gameObject;
+        if (FindAnyObjectByType<AllyController>())
+        {
+            var ally = FindAnyObjectByType<AllyController>();
+            ally.activeAlly = false;
+        }
         playerVis.SetActive(false);
         enemyVis.SetActive(false);
         FindAnyObjectByType<JetSoundController>().gameObject.SetActive(false);

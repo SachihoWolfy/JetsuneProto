@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 public class TipsHandler : MonoBehaviour
 {
-    Transform boss;  // Reference to the boss
+    BossMovement boss;
+    Transform bossTransform;  // Reference to the boss
     public TextMeshProUGUI promptText; // The prompt UI text element
     public float offScreenDelay = 3.0f;  // Time in seconds to wait before showing prompt
     public float timeWindow = 5f; // Time window for detecting oscillations (in seconds)
@@ -37,16 +38,17 @@ public class TipsHandler : MonoBehaviour
     {
         // Cache the main camera reference
         mainCamera = Camera.main;
-        boss = FindFirstObjectByType<BossMovement>().transform;
+        boss = FindFirstObjectByType<BossMovement>();
+        bossTransform = boss.transform;
         // Hide the prompt initially
         if(promptText!=null) promptText.gameObject.SetActive(false);
         if (Settings.doTutorials)
         {
-            if (!FindFirstObjectByType<BossMovement>().isWaypoint && !FindFirstObjectByType<BossMovement>().isCutscene && !Settings.seenBoss)
+            if (!boss.isWaypoint && !boss.isCutscene && !Settings.seenBoss)
             {
                 StartCoroutine(ShowBossTutorialPrompt());
             }
-            else if (FindFirstObjectByType<BossMovement>().isWaypoint && !Settings.seenGPS)
+            else if (boss.isWaypoint && !Settings.seenGPS)
             {
                 StartCoroutine(ShowTutorialPrompt());
             }
@@ -55,13 +57,13 @@ public class TipsHandler : MonoBehaviour
 
     void Update()
     {
-        if (FindFirstObjectByType<BossMovement>().wonGame) return;
-        FindFirstObjectByType<BossMovement>().anim.SetBool("TutorialActive", isDoingTutorial);
-        if (FindFirstObjectByType<BossMovement>().isWaypoint || FindFirstObjectByType<BossMovement>().isCutscene)
+        if (boss.wonGame) return;
+        boss.anim.SetBool("TutorialActive", isDoingTutorial);
+        if (boss.isWaypoint || boss.isCutscene)
         {
             return;
         }
-        FindFirstObjectByType<BossMovement>().anim.SetBool("TutorialActive", isDoingTutorial);
+        boss.anim.SetBool("TutorialActive", isDoingTutorial);
         if (Settings.doTips)
         {
             // Check for boss off-screen status and display appropriate prompt
@@ -98,7 +100,7 @@ public class TipsHandler : MonoBehaviour
     // Check if the boss is off-screen
     bool IsBossOffScreen()
     {
-        Vector3 bossViewportPos = mainCamera.WorldToViewportPoint(boss.position);
+        Vector3 bossViewportPos = mainCamera.WorldToViewportPoint(bossTransform.position);
         return bossViewportPos.x < 0 || bossViewportPos.x > 1 || bossViewportPos.y < 0 || bossViewportPos.y > 1;
     }
 
@@ -123,7 +125,7 @@ public class TipsHandler : MonoBehaviour
         yield return new WaitForSeconds(5f);
         ShowPrompt("> Get In Range <");
         yield return new WaitForSeconds(5f);
-        while (Vector3.Distance(FindAnyObjectByType<FlightBehavior>().transform.position, FindAnyObjectByType<BossMovement>().transform.position) > 45) 
+        while (Vector3.Distance(FindAnyObjectByType<FlightBehavior>().transform.position, boss.transform.position) > 45) 
         {
             yield return new WaitForSeconds(0.2f);
         }
@@ -132,7 +134,7 @@ public class TipsHandler : MonoBehaviour
         ShowPrompt("The line will turn green when getting closer\nStay in the green");
         yield return new WaitForSeconds(5f);
         ShowPrompt("> Hit the boss <");
-        while (FindAnyObjectByType<BossMovement>().hp >= curBossHP)
+        while (boss.hp >= curBossHP)
         {
             yield return new WaitForSeconds(1f);
         }

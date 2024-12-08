@@ -15,8 +15,8 @@ public class Bullet : MonoBehaviour
 
     public float speedDamage = 40f;
     public float projectileTime = 5f;
-    private FlightBehavior player;
-    private BossMovement boss;
+    private static FlightBehavior player;
+    private static BossMovement boss;
 
     public bool isHoming = false;
     private bool activeHoming = false;
@@ -47,15 +47,33 @@ public class Bullet : MonoBehaviour
     private Vector3 dir;
 
     private bool isPooled;
+    public ProximityIndicator tracker;
+    public bool allyBullet = false;
+    private SphereCollider col;
+    public bool observed;
+    public float dangerWeight;
 
-    public void Initialize(int damage, float spdDamage)
+    public void Initialize(int damage, float spdDamage, bool isAlly = false)
     {
         this.damage = damage;
         speedDamage = spdDamage;
         StartCoroutine(ReturnBulletAfterTime(projectileTime));
-
+        col = GetComponentInChildren<SphereCollider>();
+        if (isAlly)
+        {
+            col.tag = "AllyBullet";
+            allyBullet = true;
+            transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        }
+        else
+        {
+            col.tag = "EnemyBullet";
+            allyBullet = false;
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        observed = false;
     }
-    public void Initialize(int damage, float spdDamage, float spdTime)
+    public void Initialize(int damage, float spdDamage, float spdTime, bool isAlly = false)
     {
         this.damage = damage;
         speedDamage = spdDamage;
@@ -63,22 +81,49 @@ public class Bullet : MonoBehaviour
         isSpdTime = true;
         startTime = Time.time;
         StartCoroutine(ReturnBulletAfterTime(projectileTime));
+        col = GetComponentInChildren<SphereCollider>();
+        if (isAlly)
+        {
+            col.tag = "AllyBullet";
+            transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            allyBullet = true;
+        }
+        else
+        {
+            col.tag = "EnemyBullet";
+            allyBullet = false;
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        observed = false;
     }
-
+    private AllyBulletCollector collector;
     private void Start()
     {
-        player = FindAnyObjectByType<FlightBehavior>();
-        boss = FindObjectOfType<BossMovement>();
+        if (player == null)
+        {
+            player = FindAnyObjectByType<FlightBehavior>();
+        }
+        if(boss == null)
+        {
+            boss = FindObjectOfType<BossMovement>();
+        }
         if (FindAnyObjectByType<ExplosionPoolManager>())
         {
             isPooled = true;
         }
-
+        if(collector == null)
+        {
+            collector = FindObjectOfType<AllyBulletCollector>();
+        }
+        col = GetComponentInChildren<SphereCollider>();
         oldPosition = transform.position;
+    }
+    public float GetDistanceToPlayer()
+    {
+        return (player.transform.position - transform.position).magnitude;
     }
     private void Update()
     {
-        
         // Get the player's forward velocity component
         Vector3 playerForwardVelocity = player.transform.forward * player.curSpeed;
 
@@ -127,12 +172,41 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (allyBullet)
         {
-            player.TakeDamage(damage, speedDamage);
+            if (other.gameObject.CompareTag("EnemyBullet"))
+            {
+                if (other.gameObject.transform.parent)
+                {
+                    if (other.gameObject.transform.parent.TryGetComponent<Bullet>(out Bullet bullet))
+                    {
+                        if (!other.gameObject.transform.parent.GetComponent<Bullet>().allyBullet)
+                        {
+                            other.gameObject.transform.parent.GetComponent<Bullet>().ReturnBullet();
+                            player.AddScore(10);
+                            col.tag = "EnemyBullet";
+                            ReturnBullet();
+                        }
+                    }
+                }
+                
+            }
+            if (!other.gameObject.CompareTag("Player") && !other.gameObject.CompareTag("BulletIgnore") && !other.gameObject.CompareTag("AllyBullet") && !other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("EnemyBullet"))
+                ReturnBullet();
         }
-        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("BulletIgnore"))
-            ReturnBullet();
+        else
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                player.TakeDamage(damage, speedDamage);
+            }
+            if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("BulletIgnore") && !other.gameObject.CompareTag("AllyBullet") && !other.gameObject.CompareTag("EnemyBullet"))
+                ReturnBullet();
+        }
+    }
+    private void FixedUpdate()
+    {
+        oldPosition = transform.position;
     }
 
     public IEnumerator ArmHoming()
@@ -178,13 +252,60 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(time);
         ReturnBullet();
     }
-    bool IsOffScreen()
+    public bool IsOffScreen()
     {
         Vector3 bossViewportPos = Camera.main.WorldToViewportPoint(transform.position);
         return bossViewportPos.x < 0 || bossViewportPos.x > 1 || bossViewportPos.y < 0 || bossViewportPos.y > 1;
     }
+    public float GetDangerWeight()
+    {
+        // Get current and previous positions relative to the player
+        Vector3 curPosToPlayer = transform.position - player.transform.position;
+
+        // Calculate relative velocity (bullet velocity relative to player velocity)
+        Vector3 bulletVelocity = rb.velocity; // Bullet's Rigidbody velocity
+        Vector3 playerVelocity = player.rb.velocity; // Player's Rigidbody velocity
+        Vector3 relativeVelocity = bulletVelocity - playerVelocity;
+
+        // Determine how much the bullet is moving towards the player
+        float relativeApproachSpeed = Vector3.Dot(relativeVelocity, -curPosToPlayer.normalized);
+
+        // Weight based on proximity: closer bullets are exponentially more dangerous
+        float proximityWeight = Mathf.Max(0.1f, curPosToPlayer.magnitude); // Prevent division by zero
+        float weightedDistanceToPlayer = 1f / (proximityWeight * proximityWeight);
+
+        // Add fine-tuning constants for different factors
+        float proximityFactor = 0.3f;      // Influence of proximity
+        float approachSpeedFactor = 0.7f;  // Influence of approach speed
+
+        // Player's forward direction (assuming the player is facing the positive Z axis)
+        Vector3 playerForward = player.transform.forward;
+
+        // Calculate the direction of the bullet relative to the player
+        Vector3 bulletDirection = (transform.position - player.transform.position).normalized;
+
+        // Weight based on whether the bullet is in front of the player (dot product)
+        float frontWeight = Mathf.Max(0f, Vector3.Dot(playerForward, bulletDirection));
+
+        // Combine the weights
+        float weight = (proximityFactor * weightedDistanceToPlayer) +
+                       (approachSpeedFactor * Mathf.Max(0f, relativeApproachSpeed)) +
+                       (frontWeight * 0.9f); // Add weight for being in front of the player
+
+        return weight;
+    }
+
     public void ReturnBullet()
     {
+        if(tracker != null)
+        {
+            tracker.ReturnIndicator();
+        }
+        tracker = null;
+        if (observed)
+        {
+            collector.bullets.Remove(this);
+        }
         if (!IsOffScreen())
         {
             GameObject explosion;

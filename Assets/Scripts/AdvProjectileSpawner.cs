@@ -40,6 +40,7 @@ public class AdvProjectileSpawner : MonoBehaviour
     public bool isFiring;
     public bool disconnected;
     public bool lead;
+    public bool isAlly;
     public float distanceToActive = 200f;
     private Vector3 aim;
     public int type = 0;
@@ -81,6 +82,11 @@ public class AdvProjectileSpawner : MonoBehaviour
 
     private bool isPooled;
 
+    public bool targetBoss;
+    private bool findingTargets;
+    Vector3 toTarget;
+    public int allyIndex;
+
     private void Start()
     {
         player = FindAnyObjectByType<FlightBehavior>();
@@ -90,7 +96,81 @@ public class AdvProjectileSpawner : MonoBehaviour
             isPooled = true;
         }
     }
+    private void OnDisable()
+    {
+        findingTargets = false;
+        StopAllCoroutines();
+    }
+    private void OnEnable()
+    {
+        if (fireRate > 3)
+        {
+            fireRate = 0.5f;
+        }
+    }
+    public Transform targetedBullet;
 
+    IEnumerator CycleFireModes()
+    {
+        findingTargets = true;
+        AllyController ally = FindFirstObjectByType<AllyController>();
+            while (findingTargets)
+            {
+                for(int i = 0; i<3; i++)
+                {
+                    yield return new WaitForSeconds(1f);
+                    ally.shootBoss = false;
+                    fireRate = 0.1f;
+                    patternIndex = 0;
+                    yield return new WaitForSeconds(0.5f);
+                    ally.shootBoss = true;
+                    fireRate = 0.3f;
+                    patternIndex = 1;
+                    yield return new WaitForSeconds(1f);
+                    fireRate = 5f;
+                }
+                yield return new WaitForSeconds(1f);
+                ally.shootBoss = true;
+                fireRate = 0.25f;
+                patternIndex = 2;
+                yield return new WaitForSeconds(0.5f);
+                ally.shootBoss = true;
+                fireRate = 1f;
+                patternIndex = 3;
+                yield return new WaitForSeconds(1f);
+                fireRate = 5f;
+                yield return new WaitForSeconds(1f);
+            }
+
+        Debug.LogError("Exited Bullet Targeting!");
+        yield return new WaitForSeconds(1f);
+    }
+
+    public void DebugBulletColor(Bullet bullet, float value, float minValue, float maxValue)
+    {
+        if (bullet == null) return;
+
+        // Clamp the value between minValue and maxValue
+        float clampedValue = Mathf.Clamp01((value - minValue) / (maxValue - minValue));
+
+        // Lerp between red and green based on the clamped value
+        Color debugColor = Color.Lerp(Color.red, Color.green, clampedValue);
+
+        // Create a new instance of the material to avoid modifying the original
+        Material tempMaterial = new Material(bullet.mr.material);
+        tempMaterial.color = debugColor;
+        tempMaterial.EnableKeyword("_EMISSION"); // Enable emission if not already active
+        tempMaterial.SetColor("_EmissionColor", debugColor * 1);
+
+        // Assign the temporary material to the bullet's renderer
+        if (bullet.mr != null)
+        {
+            bullet.mr.material = tempMaterial;
+        }
+    }
+
+    Transform target;
+    float targetSpeed;
     private void Update()
     {
         if (!disconnected) bulletSpeed = -boss.speed + speed;
@@ -101,10 +181,28 @@ public class AdvProjectileSpawner : MonoBehaviour
             transform.LookAt(player.transform.position);
         if (lead)
         {
-            // Distance between the turret and the player
-            Vector3 toPlayer = player.transform.position - transform.position;
+            // Distance between the turret and the Target
+            if (isAlly)
+            {
+                bulletSpeed = player.curSpeed + speed;
+                if (targetBoss || target == null)
+                {
+                    target = boss.transform;
+                    targetSpeed = boss.speed;
+                }
+                else if(!findingTargets)
+                {
+                    StartCoroutine(CycleFireModes());
+                }
+            }
+            else
+            {
+                target = player.transform;
+                targetSpeed = player.curSpeed;
+            }
 
-            if(toPlayer.magnitude > distanceToActive || player.immunity)
+            toTarget = target.transform.position - transform.position;
+            if (toTarget.magnitude > distanceToActive || player.immunity)
             {
                 isFiring = false;
                 return;
@@ -115,7 +213,7 @@ public class AdvProjectileSpawner : MonoBehaviour
             }
 
             // Estimate the player's current speed and direction
-            Vector3 playerVelocity = player.rb.velocity;
+            Vector3 targetVelocity = target.forward * targetSpeed;
 
             // Use iterative approach to refine the target position estimate
             float t = 0;
@@ -125,17 +223,17 @@ public class AdvProjectileSpawner : MonoBehaviour
             for (int i = 0; i < maxIterations; i++)
             {
                 // Estimate the time it would take the projectile to reach the player's estimated position
-                t = toPlayer.magnitude / (bulletSpeed);
+                t = toTarget.magnitude / (bulletSpeed);
 
                 // Calculate a new future position based on time of flight
-                Vector3 futurePos = player.transform.position + playerVelocity * t;
+                Vector3 futurePos = target.position + targetVelocity * t;
 
                 // Recalculate the distance and update `toPlayer` for the next iteration
-                toPlayer = futurePos - transform.position;
+                toTarget = futurePos - transform.position;
             }
 
             // Base aim direction
-            Vector3 aim = toPlayer.normalized;
+            Vector3 aim = toTarget.normalized;
 
             // Calculate sweeping offset angle
             sweepTime += Time.deltaTime * sweepSpeed;
@@ -143,14 +241,21 @@ public class AdvProjectileSpawner : MonoBehaviour
 
             // Apply sweeping rotation
             Quaternion baseRotation = Quaternion.LookRotation(aim);
-            Quaternion sweepRotation = Quaternion.AngleAxis(sweepOffset, Vector3.up);
+            //if (isAlly)
+            //{
+                transform.rotation = baseRotation;
+            //}
+            //else
+            //{
+                Quaternion sweepRotation = Quaternion.AngleAxis(sweepOffset, Vector3.up);
 
-            // Apply inaccuracy rotation
-            float randomAngle = Random.Range(-inaccuracyAngle, inaccuracyAngle);
-            Quaternion inaccuracyRotation = Quaternion.AngleAxis(randomAngle, Vector3.up);
+                // Apply inaccuracy rotation
+                float randomAngle = Random.Range(-inaccuracyAngle, inaccuracyAngle);
+                Quaternion inaccuracyRotation = Quaternion.AngleAxis(randomAngle, Vector3.up);
 
-            // Combine rotations
-            transform.rotation = baseRotation * sweepRotation * inaccuracyRotation;
+                // Combine rotations
+                transform.rotation = baseRotation * sweepRotation * inaccuracyRotation;
+            //}
         }
 
 
@@ -214,11 +319,12 @@ public class AdvProjectileSpawner : MonoBehaviour
         // Get bullet script and initialize it
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
         //alternate mats
+        bulletScript.allyBullet = isAlly;
         MeshRenderer bulletRenderer = bulletScript.mr;
         bulletRenderer.material = material2;
         // initialize it and set the velocity
         if (isSpdTime) bulletScript.Initialize(dmg, speedDmg, finalSpeed);
-        else bulletScript.Initialize(dmg, speedDmg);
+        else bulletScript.Initialize(dmg, speedDmg, isAlly);
         SetSettings(bulletScript);
         bulletScript.rb.velocity = dir * bulletSpeed;
         bulletScript.initialSpeed = bulletSpeed;
@@ -238,6 +344,7 @@ public class AdvProjectileSpawner : MonoBehaviour
         bulletObj.transform.forward = dir;
         // Get bullet script and initialize it
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+        bulletScript.allyBullet = isAlly;
         //alternate mats
         MeshRenderer bulletRenderer = bulletScript.mr;
         if(projectileSettings.mat1 != null) bulletRenderer.material = projectileSettings.mat1;
@@ -275,13 +382,14 @@ public class AdvProjectileSpawner : MonoBehaviour
 
             // Get bullet script and initialize it
             Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+            bulletScript.allyBullet = isAlly;
             //alternate mats
             MeshRenderer bulletRenderer = bulletScript.mr;
             bulletRenderer.material = material2;
 
             // initialize it and set the velocity
             if (isSpdTime) bulletScript.Initialize(dmg, speedDmg, finalSpeed);
-            else bulletScript.Initialize(dmg, speedDmg);
+            else bulletScript.Initialize(dmg, speedDmg, isAlly);
             SetSettings(bulletScript);
             bulletScript.rb.velocity = combinedDir * bulletSpeed;
             bulletScript.initialSpeed = bulletSpeed;
@@ -313,6 +421,7 @@ public class AdvProjectileSpawner : MonoBehaviour
 
             // Get bullet script and initialize it
             Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+            bulletScript.allyBullet = isAlly;
             //alternate mats
             MeshRenderer bulletRenderer = bulletScript.mr;
             if (projectileSettings.mat1 != null) bulletRenderer.material = projectileSettings.mat1;
@@ -361,6 +470,7 @@ public class AdvProjectileSpawner : MonoBehaviour
                 bulletObj.transform.position = pos;
                 // Get bullet script and initialize it
                 Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+                bulletScript.allyBullet = isAlly;
                 //alternate mats
                 MeshRenderer bulletRenderer = bulletScript.mr;
                 bulletRenderer.material = material2;
@@ -374,7 +484,7 @@ public class AdvProjectileSpawner : MonoBehaviour
                 
                 // initialize it and set the velocity
                 if (isSpdTime) bulletScript.Initialize(dmg, speedDmg, finalSpeed);
-                else bulletScript.Initialize(dmg, speedDmg);
+                else bulletScript.Initialize(dmg, speedDmg, isAlly);
                 SetSettings(bulletScript);
                 bulletScript.rb.velocity = combinedDir * bulletSpeed;
                 bulletScript.initialSpeed = bulletSpeed;
@@ -415,6 +525,7 @@ public class AdvProjectileSpawner : MonoBehaviour
                 bulletObj.transform.position = pos;
                 // Get bullet script and initialize it
                 Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+                bulletScript.allyBullet = isAlly;
                 //alternate mats
                 MeshRenderer bulletRenderer = bulletScript.mr;
                 if (projectileSettings.mat1 != null) bulletRenderer.material = projectileSettings.mat1;
@@ -469,6 +580,7 @@ public class AdvProjectileSpawner : MonoBehaviour
 
             // Get bullet script and initialize it
             Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+            bulletScript.allyBullet = isAlly;
             //alternate mats
             MeshRenderer bulletRenderer = bulletScript.mr;
             if (bulletRenderer != null)
@@ -484,7 +596,7 @@ public class AdvProjectileSpawner : MonoBehaviour
 
             // Initialize it and set the velocity
             if (isSpdTime) bulletScript.Initialize(dmg, speedDmg, finalSpeed);
-            else bulletScript.Initialize(dmg, speedDmg);
+            else bulletScript.Initialize(dmg, speedDmg, isAlly);
             SetSettings(bulletScript);
             bulletScript.rb.velocity = combinedDir * bulletSpeed;
             bulletScript.initialSpeed = bulletSpeed;
@@ -523,6 +635,7 @@ public class AdvProjectileSpawner : MonoBehaviour
 
             // Get bullet script and initialize it
             Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+            bulletScript.allyBullet = isAlly;
             //alternate mats
             MeshRenderer bulletRenderer = bulletScript.mr;
             if (bulletRenderer != null)

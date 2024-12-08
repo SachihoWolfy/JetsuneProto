@@ -29,7 +29,6 @@ public class DestroyAfterTime : MonoBehaviour
     public IEnumerator ReturnExplosionAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
-        Debug.Log("Trying to Pool");
         ReturnBullet();
     }
     public void ReturnBullet()

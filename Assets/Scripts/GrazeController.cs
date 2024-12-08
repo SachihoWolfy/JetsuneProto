@@ -28,17 +28,21 @@ public class GrazeController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Enemy") && canGraze && !player.immunity)
+        if (other.CompareTag("EnemyBullet") && canGraze && !player.immunity)
         {
-            StartCoroutine(grazeOnCooldown());
-            bulletsGrazed++;
-            player.AddScore(grazeAmountToReward);
-            if (player.curSpeed >= 60)
+            if (!other.gameObject.transform.parent.GetComponent<Bullet>().allyBullet)
             {
-                player.AddScore(machBonus);
+                StartCoroutine(grazeOnCooldown());
+                bulletsGrazed++;
+                player.AddScore(grazeAmountToReward);
+                if (player.curSpeed >= 60)
+                {
+                    player.AddScore(machBonus);
+                }
+                PlaySound(0);
             }
-            PlaySound(0);
         }
+                
     }
     IEnumerator grazeOnCooldown()
     {

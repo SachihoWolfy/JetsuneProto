@@ -3242,7 +3242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 1668857415454636519, guid: 904c8c725aa5f1540aea966fc543f0a2, type: 3}
-  poolSize: 30
+  poolSize: 100
 --- !u!4 &2076616596
 Transform:
   m_ObjectHideFlags: 0
@@ -3359,6 +3359,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 40028321888352265, guid: 9c489c944ff18424096f59be99db7df4, type: 3}
+      propertyPath: indicatorPrefab
+      value: 
+      objectReference: {fileID: 5398942404416692640, guid: ba5ec745337abf749894f19096d17c93, type: 3}
     - target: {fileID: 664911618192804309, guid: 9c489c944ff18424096f59be99db7df4, type: 3}
       propertyPath: m_Volume
       value: 0.251
@@ -3490,6 +3494,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 355479881407559243, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
+      propertyPath: activeAlly
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355479881407559243, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
+      propertyPath: isAllyLevel
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 451271951648998146, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3926,11 +3938,11 @@ PrefabInstance:
     - target: {fileID: 1367829379861689725, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       propertyPath: material1
       value: 
-      objectReference: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+      objectReference: {fileID: 2100000, guid: 8342a18581389b14d99346dec7b766e9, type: 2}
     - target: {fileID: 1367829379861689725, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       propertyPath: material2
       value: 
-      objectReference: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+      objectReference: {fileID: 2100000, guid: 8342a18581389b14d99346dec7b766e9, type: 2}
     - target: {fileID: 1367829379861689725, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       propertyPath: inwardSpeed
       value: 0.3
@@ -3998,11 +4010,11 @@ PrefabInstance:
     - target: {fileID: 5362739520786126834, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       propertyPath: material1
       value: 
-      objectReference: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+      objectReference: {fileID: 2100000, guid: 8342a18581389b14d99346dec7b766e9, type: 2}
     - target: {fileID: 5362739520786126834, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       propertyPath: material2
       value: 
-      objectReference: {fileID: 2100000, guid: c44e5d52cfaa2e5428e23ee374a9e38a, type: 2}
+      objectReference: {fileID: 2100000, guid: 8342a18581389b14d99346dec7b766e9, type: 2}
     - target: {fileID: 5362739520786126834, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       propertyPath: inwardSpeed
       value: 0.3
@@ -4047,6 +4059,18 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 6.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8359093232387881857, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      propertyPath: patterns.Array.data[1].patternLayers.Array.data[0].settings.mat1
+      value: 
+      objectReference: {fileID: 2100000, guid: 8342a18581389b14d99346dec7b766e9, type: 2}
+    - target: {fileID: 8359093232387881857, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      propertyPath: patterns.Array.data[1].patternLayers.Array.data[1].settings.mat1
+      value: 
+      objectReference: {fileID: 2100000, guid: 8342a18581389b14d99346dec7b766e9, type: 2}
+    - target: {fileID: 8359093232387881857, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      propertyPath: patterns.Array.data[3].patternLayers.Array.data[2].settings.mat1
+      value: 
+      objectReference: {fileID: 2100000, guid: 8342a18581389b14d99346dec7b766e9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

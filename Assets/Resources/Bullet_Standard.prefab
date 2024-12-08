@@ -99,6 +99,8 @@ MonoBehaviour:
   finalSpd: 0
   curSpeed: 0
   initialSpeed: 0
+  tracker: {fileID: 0}
+  allyBullet: 0
 --- !u!1 &4070334886966501412
 GameObject:
   m_ObjectHideFlags: 0
