@@ -9,22 +9,32 @@ public class DestroyAfterTime : MonoBehaviour
     public AudioClip [] audioClips;
     bool pooledExplosion;
     bool isPooled;
-    
+    private static ExplosionPoolManager explosionPool;
+    private float timeAlive;
+
+
+    private void Awake()
+    {
+        if (explosionPool == null)
+        {
+            explosionPool = FindFirstObjectByType<ExplosionPoolManager>();
+        }
+        if (explosionPool != null)
+        {
+            isPooled = true;
+        }
+    }
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         int rando = Random.Range(0, audioClips.Length);
         audioSource.clip = audioClips[rando];
         audioSource.Play();
-        if (FindAnyObjectByType<ExplosionPoolManager>())
-        {
-            isPooled = true;
-        }
     }
     public void Initialize(bool fromPool)
     {
         pooledExplosion = fromPool;
-        StartCoroutine(ReturnExplosionAfterTime(timeDestroy));
+        timeAlive = 0f;
     }
     public IEnumerator ReturnExplosionAfterTime(float time)
     {
@@ -45,5 +55,13 @@ public class DestroyAfterTime : MonoBehaviour
     void ForceDestroy()
     {
         Destroy(gameObject);
+    }
+    private void Update()
+    {
+        timeAlive += Time.deltaTime;
+        if (timeAlive >= timeDestroy)
+        {
+            ReturnBullet();
+        }
     }
 }

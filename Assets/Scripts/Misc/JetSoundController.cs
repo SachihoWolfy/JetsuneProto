@@ -46,14 +46,6 @@ public class JetSoundController : MonoBehaviour
             // Map the speed to the pitch range
             jetAudioSource.pitch = Mathf.Lerp(minPitch, maxPitch, currentSpeed / maxSpeed);
         }
-        else
-        {
-            // Fade out and stop the audio when below the threshold
-            if (jetAudioSource.isPlaying)
-            {
-                StartCoroutine(FadeOutAndStop(jetAudioSource, 1.0f)); // 1-second fade-out
-            }
-        }
     }
 
     // Coroutine for fading out audio

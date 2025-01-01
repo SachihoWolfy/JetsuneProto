@@ -176,9 +176,6 @@ public class AdvProjectileSpawner : MonoBehaviour
         if (!disconnected) bulletSpeed = -boss.speed + speed;
         else bulletSpeed = speed/(speed/player.curSpeed);
         fireTimer += Time.deltaTime;
-
-        if (lookAtPlayer)
-            transform.LookAt(player.transform.position);
         if (lead)
         {
             // Distance between the turret and the Target
@@ -292,9 +289,6 @@ public class AdvProjectileSpawner : MonoBehaviour
     void SetSettings(Bullet bullet)
     {
         bullet.isHoming = isHoming;
-        bullet.isOscillate = isOscillate;
-        bullet.isPause = isPause;
-        bullet.isbulletExplode = isbulletExplode;
 
         if (isHoming)
         {
@@ -305,7 +299,7 @@ public class AdvProjectileSpawner : MonoBehaviour
         //implement other things later.
     }
 
-    // Spawns bullets in a line pattern (single direction)
+    // Spawns single bullets
     private void SpawnLinePattern()
     {
         Vector3 dir = spawnLocation.transform.forward;
@@ -332,6 +326,7 @@ public class AdvProjectileSpawner : MonoBehaviour
         shootSound[rando].Play();
     }
 
+    // Spawns single bullets from other sources
     public void SpawnLinePattern(Transform customSpawn, ProjectileSettings projectileSettings)
     {
         Vector3 dir = customSpawn.forward;

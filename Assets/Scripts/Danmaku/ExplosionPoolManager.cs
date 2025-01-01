@@ -23,28 +23,31 @@ public class ExplosionPoolManager : MonoBehaviour
         explosionPool = new Queue<GameObject>();
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject bullet = Instantiate(explosionPrefab);
-            bullet.SetActive(false);
-            explosionPool.Enqueue(bullet);
+            GameObject explosion = Instantiate(explosionPrefab);
+            explosion.SetActive(false);
+            explosionPool.Enqueue(explosion);
         }
     }
     public GameObject GetBullet()
     {
         if (explosionPool.Count > 0)
         {
-            GameObject bullet = explosionPool.Dequeue();
-            bullet.SetActive(true);
-            var bulletScript = bullet.GetComponent<DestroyAfterTime>();
-            bulletScript.Initialize(true);
-            return bullet;
+            GameObject explosion = explosionPool.Dequeue();
+            if(explosion != null)
+            {
+                explosion.SetActive(true);
+                var bulletScript = explosion.GetComponent<DestroyAfterTime>();
+                bulletScript.Initialize(true);
+            }
+            return explosion;
         }
         else
         {
             // Optional: Instantiate more bullets if pool is empty
-            GameObject bullet = Instantiate(explosionPrefab);
-            var bulletScript = bullet.GetComponent<DestroyAfterTime>();
+            GameObject explosion = Instantiate(explosionPrefab);
+            var bulletScript = explosion.GetComponent<DestroyAfterTime>();
             bulletScript.Initialize(false);
-            return bullet;
+            return explosion;
         }
     }
 

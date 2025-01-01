@@ -10,6 +10,7 @@ public class FlightBehavior : MonoBehaviour
 {
     public GameObject visualObj;
     public Transform sachiVisual;
+    public GameObject bulletDeleter;
     public bool isNight;
     private bool navLightsEnabled;
     public ParticleSystem[] wingTips;
@@ -21,10 +22,15 @@ public class FlightBehavior : MonoBehaviour
     public Animator anim;
     public AudioSource audioSource;
     public AudioSource[] deathAudio;
+    public AudioSource spinAudio;
+    public AudioSource attackAudio;
     public CinemachineCamera deathCam;
+    public CinemachineCamera hitCam;
     public GameObject deathExplosion;
     public ParticleSystem smoke;
     public ParticleSystem fire;
+    public ParticleSystem sonicBoom;
+    public ParticleSystem nearSonicBoom;
     public AudioClip[] audioClips;
     public CinemachineCamera[] cameras;
     public bool simpleControls = true;
@@ -41,7 +47,7 @@ public class FlightBehavior : MonoBehaviour
     public float leanSpeed = 5f;
     public float yawSpeed = 40f;
     public float thrustSpeed;
-    private float MINSPEED = 3f;
+    private float MINSPEED = 0f;
 
     public float maxSpeed = 100f;
     public float lookSens = 20f;
@@ -62,9 +68,11 @@ public class FlightBehavior : MonoBehaviour
 
     float oldSpeed;
 
+    private HUDController hud;
+
     public Slider speedGauge;
     public Image fillImage;
-    LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
     public Color c1 = Color.yellow;
     public Color c2 = Color.red;
 
@@ -115,6 +123,12 @@ public class FlightBehavior : MonoBehaviour
     public GameObject backupSettings;
     public AllyController ally;
 
+    bool speedLock;
+    public void LockSpeed(bool value)
+    {
+        speedLock = value;
+    }
+
     private void Start()
     {
         if (!Settings.instance)
@@ -130,6 +144,7 @@ public class FlightBehavior : MonoBehaviour
         scoreDisplay = FindAnyObjectByType<ScoreDisplay>();
         boss = FindFirstObjectByType<BossMovement>();
         ally = GetComponentInChildren<AllyController>();
+        hud = FindFirstObjectByType<HUDController>();
         lineRenderer.widthMultiplier = 0.2f;
         lineRenderer.positionCount = 2;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
@@ -203,16 +218,16 @@ public class FlightBehavior : MonoBehaviour
     IEnumerator DoSachiPowerUp()
     {
         anim.Play("Sachi_Javilin");
-        audioSource.PlayOneShot(audioClips[0]);
+        spinAudio.Play();
+        PlaySound(0);
         curPowerAmount--;
         powerupText.text = ">>P>>";
         immunity = true;
         isPowerup = true;
         anim.SetBool("IsPowerup", true);
         gameObject.GetComponent<Animator>().SetBool("IsPowerup", true);
-        PlaySound(4);
         yield return new WaitForSeconds(7);
-        audioSource.Stop();
+        spinAudio.Stop();
         anim.SetBool("IsPowerup", false);
         gameObject.GetComponent<Animator>().SetBool("IsPowerup", false);
         StartCoroutine(ImmunityReset(2));
@@ -223,6 +238,7 @@ public class FlightBehavior : MonoBehaviour
     public void StopPowerup()
     {
         StopCoroutine(DoSachiPowerUp());
+        spinAudio.Stop();
         anim.SetBool("IsPowerup", false);
         GetComponent<Animator>().SetBool("IsPowerup", false);
         StartCoroutine(ImmunityReset(2));
@@ -375,9 +391,13 @@ public class FlightBehavior : MonoBehaviour
             oldYaw = yaw;
         }
 
-        if (curSpeed > 40)
+        if (curSpeed > 60)
         {
             pitch = Input.GetAxis("Vertical") * (Time.fixedDeltaTime * pitchSpeedMach);
+        }
+        else if (curSpeed > 40)
+        {
+            pitch = Input.GetAxis("Vertical") * (Time.fixedDeltaTime * (pitchSpeedMach + 10));
         }
         else
         {
@@ -462,7 +482,7 @@ public class FlightBehavior : MonoBehaviour
         pitchInvert = Settings.invertPitch;
         if (lookAtEnemy)
         {
-            targetLook.position = FindObjectOfType<BossMovement>().gameObject.transform.position;
+            targetLook.position = boss.enemyVisual.transform.position;
         }
         else
         {
@@ -488,7 +508,10 @@ public class FlightBehavior : MonoBehaviour
             if (!isPowerup)
             {
                 DoRotate();
-                DoSpeedThings();
+                if (!speedLock)
+                {
+                    DoSpeedThings();
+                }
             }
         }
         else
@@ -501,7 +524,8 @@ public class FlightBehavior : MonoBehaviour
             isDead = true;
             Restart();
         }*/
-        updateUI();
+        //updateUI();
+        hud.UpdateUI();
     }
     void DoCutsceneThings()
     {
@@ -579,25 +603,61 @@ public class FlightBehavior : MonoBehaviour
     void DoSpeedThings()
     {
         curSpeed = rb.velocity.magnitude;
-        if (curSpeed < 2f) { curSpeed = 3f; }
+
+        // Handle smooth acceleration from near-zero speed
+        if (curSpeed < 3f && Mathf.Abs(thrust) > 0.01f)
+        {
+            curSpeed += thrust * Time.deltaTime * 5; // Gradually accelerate based on thrust
+        }
+        else if (curSpeed < 3f)
+        {
+            curSpeed = Mathf.Max(0f, curSpeed - 0.1f * Time.deltaTime *5); // Gradually decelerate to hover
+        }
+
         oldSpeed = curSpeed;
-        float adjustedThrust = (thrust);
-        curSpeed = Mathf.Clamp(curSpeed + adjustedThrust / curSpeed, MINSPEED, maxSpeed);
-        if (oldSpeed > curSpeed)
+
+        // Adjust thrust impact on speed
+        float adjustedThrust = thrust;
+        if (curSpeed > 3)
+        {
+            curSpeed = Mathf.Clamp(curSpeed + adjustedThrust / Mathf.Max(curSpeed, 0.1f), MINSPEED, maxSpeed);
+        }
+
+        // Handle deceleration
+        if (oldSpeed > curSpeed && curSpeed > 3)
         {
             curSpeed = Mathf.Clamp(curSpeed + adjustedThrust / 5f, MINSPEED, maxSpeed);
         }
+        // Handle acceleration boost for specific ranges
         else if (curSpeed > 40 && curSpeed < 60)
         {
-            if (!sonicBoomHappened) PlaySound(0);
+            if (!sonicBoomHappened)
+            {
+                if (!sonicBoom.IsAlive())
+                    sonicBoom.Play();
+                PlaySound(0);
+            }
             curSpeed = Mathf.Clamp(curSpeed + adjustedThrust * 2, MINSPEED, maxSpeed);
         }
 
+        // Handle near-sonic boom effects
+        if (oldSpeed <= curSpeed && curSpeed > 38 && curSpeed < 40 && !nearSonicBoom.isPlaying)
+        {
+            nearSonicBoom.Play();
+        }
+        else if (nearSonicBoom.isPlaying)
+        {
+            nearSonicBoom.Stop();
+        }
+
+        // Apply the updated velocity
         rb.velocity = transform.forward * curSpeed;
 
+        // Update animation parameters
         anim.SetFloat("CurSpeed", curSpeed);
         anim.SetBool("Decelerating", oldSpeed > curSpeed);
 
+        // Update animation triggers based on speed
         if (curSpeed < 10)
         {
             anim.ResetTrigger("Fly");
@@ -609,6 +669,7 @@ public class FlightBehavior : MonoBehaviour
             anim.SetTrigger("Fly");
         }
     }
+
 
     void Restart()
     {

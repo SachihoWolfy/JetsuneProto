@@ -16,6 +16,8 @@ public class Settings : MonoBehaviour
     [SerializeField]
     public static bool doTips;
 
+    public static bool doBulletBossRelativity;
+
     public static bool seenGPS;
     public static bool seenBoss;
 
@@ -62,6 +64,10 @@ public class Settings : MonoBehaviour
         else
         {
             PauseMenu.instance.SetPauseActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            doBulletBossRelativity = !doBulletBossRelativity;
         }
     }
 

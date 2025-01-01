@@ -23,12 +23,7 @@ public class TipsHandler : MonoBehaviour
     private bool isBossOffScreen = false;
     private float offScreenTimer = 0f;
 
-    // Oscillation tracking variables
-    private int offScreenCount = 0; // Count how many times the boss goes off-screen
-    private float timeSinceLastOffScreen = 0f; // Time since the last time the boss went off-screen
-    private bool wasPitchUp = false; // Track if the last pitch was up
     private float oscillationTipTimer = 0f; // Timer for showing the oscillation tip
-    private float flashTimer = 0f; // Timer for controlling the flashing effect
     private float lerpTime = 0f; // Time used to interpolate between colors
 
     public AudioSource audioSource;

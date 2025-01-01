@@ -10,7 +10,7 @@ public class BossMovement : MonoBehaviour
     public int charID = 0;
     public bool isCutscene = false;
     public bool isWaypoint = false;
-    private int gpsProgress;
+    public int gpsProgress;
     public int cutsceneID = 0;
     public float distanceToMaintain = 300f;
     public int hp = 5;
@@ -35,7 +35,7 @@ public class BossMovement : MonoBehaviour
     public float awayScale = 20f;
     public float enemyScale;
 
-    public bool attackSequence = false;
+    public bool stickPlayerToOffset = false;
     public bool wonGame = false;
 
     public ProjectileSpawner[] spawners;
@@ -75,15 +75,27 @@ public class BossMovement : MonoBehaviour
             waypointVisual.SetActive(false);
         }
     }
-
+    bool rotatePlayerToFaceBoss = false;
     private void Update()
     {
-        if (attackSequence)
+        if (stickPlayerToOffset)
         {
+            // Update player position
             player.transform.position = playerOffset.position;
-            player.transform.LookAt(transform.position);
+        }
+        if (rotatePlayerToFaceBoss)
+        {
+            // Make the player look at the target while maintaining an upright orientation
+            Vector3 lookDirection = enemyVisual.transform.position - player.transform.position;
+            if (lookDirection.sqrMagnitude > 0.001f) // Ensure lookDirection is non-zero
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection.normalized, Vector3.up);
+                player.transform.rotation = targetRotation;
+            }
+            player.rb.velocity = player.transform.forward * player.rb.velocity.magnitude;
         }
     }
+
     private void FixedUpdate()
     {
         var autodolly = cart.AutomaticDolly.Method as SplineAutoDolly.FixedSpeed;
@@ -156,32 +168,10 @@ public class BossMovement : MonoBehaviour
             player.AddScore(2000);
             preventAttack = true;
             player.transform.position = playerOffset.position;
-            if (!player.isPowerup)
-            {
-                player.anim.Play("Sachi_Attack");
-                if (player.GetComponentInChildren<AllyController>())
-                {
-                    AllyController ally = player.GetComponentInChildren<AllyController>();
-                    ally.characterAnim.Play("Ally_Attack");
-                }
-            }
-            else player.anim.Play("JavAttack");
+            hp += -1;
             StartCoroutine(SlowPlayer());
             StartCoroutine(ResetAttack());
-            hp += -1;
             winText.text = "Boss HP: " + hp.ToString();
-        }
-        if(hp == 0 && !wonGame)
-        {
-            wonGame = true;
-            player.cameras[0].Priority = 100;
-            anim.SetBool("Died", wonGame);
-            PlaySound(4);
-            if (FindAnyObjectByType<LevelManager>())
-            {
-                StartCoroutine(AdvancedEndGame());
-            }
-            else StartCoroutine(EndGame());
         }
     }
     IEnumerator ResetAttack()
@@ -191,35 +181,116 @@ public class BossMovement : MonoBehaviour
     }
     IEnumerator SlowPlayer()
     {
-        player.StopPowerup();
+        player.LockSpeed(true);
         player.disablePower = true;
-        attackSequence = true;
+        stickPlayerToOffset = true;
+        rotatePlayerToFaceBoss = true;
         player.immunity = true;
+
         if (player.ally)
         {
             player.ally.shootBoss = true;
         }
-        StartCoroutine(player.ImmunityReset(3f));
-        player.cameras[1].Priority = 30;
+
+        StartCoroutine(player.ImmunityReset(5f));
+        FindObjectOfType<CinemachineBrain>().DefaultBlend.Time = 0.7f;
+        if (hp != 0)
+        {
+            visualAnim.Play("Hurt");
+            player.hitCam.Priority = 30;
+            yield return new WaitForSeconds(0.7f);
+        }
+        if (!player.isPowerup)
+        {
+            player.anim.Play("Sachi_Attack");
+            if (player.GetComponentInChildren<AllyController>())
+            {
+                AllyController ally = player.GetComponentInChildren<AllyController>();
+                ally.characterAnim.Play("Ally_Attack");
+            }
+        }
+        else
+        {
+            player.anim.Play("JavAttack");
+        }
+
+        player.StopPowerup();
         yield return new WaitForSeconds(0.3f);
         player.PlaySound(1);
-        attackSequence = false;
-        player.rb.velocity = new Vector3(0, 0, 0);
-        player.curSpeed = 3f;
-        yield return new WaitForSeconds(2f);
-        FindObjectOfType<CinemachineBrain>().DefaultBlend.Time = 0.7f;
-        player.cameras[1].Priority = 10;
-        player.cameras[0].Priority = 20;
+        player.sonicBoom.Play();
+        if (hp <= 0)
+        {
+            player.LockSpeed(false);
+            ResetPlayerSpeed();
+            player.hitCam.Priority = 0;
+        }
+        else
+        {
+            player.attackAudio.Play();
+            player.rb.velocity *= 0.6f;
+        }
+        if (hp == 0 && !wonGame)
+        {
+            wonGame = true;
+            anim.SetBool("Died", wonGame);
+            PlaySound(4);
+            if (FindAnyObjectByType<LevelManager>())
+            {
+                StartCoroutine(AdvancedEndGame());
+            }
+            else
+            {
+                StartCoroutine(EndGame());
+            }
+        }
+
+        yield return new WaitForSeconds(0.2f);
+        stickPlayerToOffset = false;
+        player.bulletDeleter.SetActive(true);
+        yield return new WaitForFixedUpdate();
+        player.bulletDeleter.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        if(hp > 0)
+        {
+            player.LockSpeed(false);
+            ResetPlayerSpeed();
+            player.hitCam.Priority = 0;
+        }
+        yield return new WaitForSeconds(1f);
+
+        rotatePlayerToFaceBoss = false;
         player.lookAtEnemy = false;
         yield return new WaitForSeconds(1f);
+
         if (player.ally)
         {
             player.ally.shootBoss = false;
         }
+
         player.disablePower = false;
         FindObjectOfType<CinemachineBrain>().DefaultBlend.Time = 0.2f;
     }
+    IEnumerator GradualDeceleration(FlightBehavior player)
+    {
+        const float decelerationRate = 0.9f; // How much the velocity decreases per step
+        const float decelerationDuration = 0.5f; // Total duration of deceleration
+        const int steps = 3; // Number of deceleration steps
 
+        float timePerStep = decelerationDuration / steps;
+
+        for (int i = 0; i < steps; i++)
+        {
+            player.rb.velocity *= decelerationRate;
+            yield return new WaitForSeconds(timePerStep);
+        }
+    }
+
+
+    void ResetPlayerSpeed()
+    {
+        player.rb.velocity = new Vector3(0, 0, 0);
+        player.curSpeed = 3f;
+    }
     IEnumerator RestartGame()
     {
         int i = 5;
@@ -296,6 +367,14 @@ public class BossMovement : MonoBehaviour
     public void ToggleLookAtPlayer(int index = 0)
     {
         spawners[index].lookAtPlayer = !spawners[index].lookAtPlayer;
+    }
+
+    public void DisableLookAtPlayer()
+    {
+        foreach(ProjectileSpawner spawner in spawners)
+        {
+            spawner.lookAtPlayer = false;
+        }
     }
     public void FireAllBullets()
     {

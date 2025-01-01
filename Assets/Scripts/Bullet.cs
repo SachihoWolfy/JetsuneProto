@@ -11,7 +11,8 @@ public class Bullet : MonoBehaviour
     public MeshRenderer mr;
     private int damage;
     private Vector3 oldPosition;
-    ProjectileSettings ps;
+    public ProjectileSettings ps;
+    public Spawner spawnedFrom;
 
     public float speedDamage = 40f;
     public float projectileTime = 5f;
@@ -19,24 +20,10 @@ public class Bullet : MonoBehaviour
     private static BossMovement boss;
 
     public bool isHoming = false;
-    private bool activeHoming = false;
     public float homingArmTime = 2f;
     public float damping = 3f;
     public float speedDamping = 3f;
     public float homingSpeed = 50f;
-
-    public bool isOscillate = false;
-    private bool activeOscillate = false;
-    public float oscillateArmTime = 0.5f;
-    public bool isPause = false;
-    private bool activePause = false;
-    public float pauseArmTime = 0.5f;
-    public float pauseDisarmTime = 1f;
-    public bool isbulletExplode = false;
-    private bool activeExplode = false;
-    public float explodeArmTime = 1f;
-    public float explodeCooldownTime = 0.3f;
-    public int explosionAmount = 1;
 
     public bool isSpdTime;
     private float oldSpeed;
@@ -45,6 +32,9 @@ public class Bullet : MonoBehaviour
     public float initialSpeed;
     private float startTime;
     private Vector3 dir;
+    Vector3 playerForwardVelocity;
+    private bool foundBossVelocity;
+    private int timesChecked;
 
     private bool isPooled;
     public ProximityIndicator tracker;
@@ -53,11 +43,14 @@ public class Bullet : MonoBehaviour
     public bool observed;
     public float dangerWeight;
 
+    public bool isSet;
+
+    private float timeAlive;
+
     public void Initialize(int damage, float spdDamage, bool isAlly = false)
     {
         this.damage = damage;
         speedDamage = spdDamage;
-        StartCoroutine(ReturnBulletAfterTime(projectileTime));
         col = GetComponentInChildren<SphereCollider>();
         if (isAlly)
         {
@@ -72,6 +65,8 @@ public class Bullet : MonoBehaviour
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
         observed = false;
+        behaviorsEnabled = true;
+        timeAlive = 0f;
     }
     public void Initialize(int damage, float spdDamage, float spdTime, bool isAlly = false)
     {
@@ -80,7 +75,6 @@ public class Bullet : MonoBehaviour
         finalSpd = spdTime;
         isSpdTime = true;
         startTime = Time.time;
-        StartCoroutine(ReturnBulletAfterTime(projectileTime));
         col = GetComponentInChildren<SphereCollider>();
         if (isAlly)
         {
@@ -95,19 +89,31 @@ public class Bullet : MonoBehaviour
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
         observed = false;
+        behaviorsEnabled = true;
+        timeAlive = 0f;
     }
-    private AllyBulletCollector collector;
-    private void Start()
+    private static AllyBulletCollector collector;
+    private static DebugSpeedSlider debugSpeedSlider;
+    private static ExplosionPoolManager explosionPool;
+    private void Awake()
     {
+        if (debugSpeedSlider == null)
+        {
+            debugSpeedSlider = FindFirstObjectByType<DebugSpeedSlider>();
+        }
         if (player == null)
         {
             player = FindAnyObjectByType<FlightBehavior>();
         }
-        if(boss == null)
+        if (boss == null)
         {
             boss = FindObjectOfType<BossMovement>();
         }
-        if (FindAnyObjectByType<ExplosionPoolManager>())
+        if(explosionPool == null)
+        {
+            explosionPool = FindFirstObjectByType<ExplosionPoolManager>();
+        }
+        if (explosionPool != null)
         {
             isPooled = true;
         }
@@ -117,59 +123,58 @@ public class Bullet : MonoBehaviour
         }
         col = GetComponentInChildren<SphereCollider>();
         oldPosition = transform.position;
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
     }
     public float GetDistanceToPlayer()
     {
         return (player.transform.position - transform.position).magnitude;
     }
+    private static Camera mainCamera;
     private void Update()
     {
-        // Get the player's forward velocity component
-        Vector3 playerForwardVelocity = player.transform.forward * player.curSpeed;
+        timeAlive += Time.deltaTime;
 
-        // Calculate the bullet's velocity relative to the player's forward movement
-        Vector3 relativeVelocity = rb.velocity - playerForwardVelocity;
-
-        // Check if the relative velocity has a significant magnitude
-        if (relativeVelocity.sqrMagnitude > 0.001f)
+        if (timeAlive >= projectileTime)
         {
-            // Set the bullet's rotation based on the calculated relative direction
-            visual.transform.rotation = Quaternion.LookRotation(relativeVelocity.normalized);
+            ReturnBullet();
+            return;
         }
+
+        if (Settings.doBulletBossRelativity)
+            playerForwardVelocity = boss.transform.forward * boss.speed;
         else
-        {
-            // If relative velocity is too small, fallback to the bullet's own velocity direction
-            visual.transform.rotation = Quaternion.LookRotation(rb.velocity.normalized);
-        }
+            playerForwardVelocity = debugSpeedSlider != null
+                ? debugSpeedSlider.curSpeed * Camera.main.transform.forward
+                : player.transform.forward * player.curSpeed;
+
+        // Cache bullet velocity values
+        Vector3 rbNormalizedVelocity = rb.velocity.normalized;
+        Vector3 relativeVelocity = rb.velocity - playerForwardVelocity;
+        Vector3 relativeDirection = relativeVelocity.sqrMagnitude > 0.001f
+            ? relativeVelocity.normalized
+            : rbNormalizedVelocity;
+
+        // Update visual rotation
+        visual.transform.rotation = Quaternion.LookRotation(relativeDirection);
+
         if (isSpdTime)
         {
-            oldSpeed = curSpeed;
-            curSpeed = Mathf.Lerp(curSpeed, finalSpd, ((Time.time-startTime) / (projectileTime*projectileTime*2)));
-            if(curSpeed < 0 && oldSpeed > 0)
-            {
-                dir = -rb.velocity.normalized;
-            }
-            else
-            {
-                dir = rb.velocity.normalized;
-            }
+            float lerpFactor = (Time.time - startTime) / projectileTime;
+            curSpeed = Mathf.Lerp(oldSpeed, finalSpd, lerpFactor);
+
+            dir = rb.velocity.normalized * (curSpeed < 0 ? -1 : 1);
             rb.velocity = dir * Mathf.Abs(curSpeed);
         }
-        if (activeHoming)
+
+        if (isSet)
         {
-            Debug.Log("Activating Homing");
-            Vector3 playerPos = player.gameObject.transform.position;
-            var lookPos = playerPos - transform.position;
-            var rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
-            rb.velocity = transform.forward * Mathf.Abs(-boss.speed + homingSpeed);
-        }
-        if (isHoming)
-        {
-            StartCoroutine(ArmHoming());
-            isHoming = false;
+            TriggerAllBehaviors();
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (allyBullet)
@@ -206,56 +211,20 @@ public class Bullet : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        curSpeed = rb.velocity.magnitude;
         oldPosition = transform.position;
-    }
-
-    public IEnumerator ArmHoming()
-    {
-        Debug.Log("Activating Homing");
-        yield return new WaitForSeconds(homingArmTime);
-        transform.forward = -transform.forward;
-        activeHoming = true;
-    }
-
-    public IEnumerator ArmPause()
-    {
-        yield return new WaitForSeconds(pauseArmTime);
-        activePause = true;
-        yield return new WaitForSeconds(pauseDisarmTime);
-        activePause = false;
-    }
-
-    public IEnumerator ArmOscillate()
-    {
-        yield return new WaitForSeconds(oscillateArmTime);
-        activeOscillate = true;
-    }
-
-    public IEnumerator ArmExplode()
-    {
-        yield return new WaitForSeconds(explodeArmTime);
-        while(explosionAmount > 0)
-        {
-            FindAnyObjectByType<AdvProjectileSpawner>().SpawnCirclePattern(transform, ps);
-            explosionAmount--;
-            yield return new WaitForSeconds(explodeCooldownTime);
-        }
-    }
-
-    public void ForceHoming()
-    {
-        isHoming = true;
-        activeHoming = true;
-    }
-    public IEnumerator ReturnBulletAfterTime(float time)
-    {
-        yield return new WaitForSeconds(time);
-        ReturnBullet();
     }
     public bool IsOffScreen()
     {
-        Vector3 bossViewportPos = Camera.main.WorldToViewportPoint(transform.position);
-        return bossViewportPos.x < 0 || bossViewportPos.x > 1 || bossViewportPos.y < 0 || bossViewportPos.y > 1;
+        if (transform != null)
+        {
+            Vector3 bossViewportPos = Camera.main.WorldToViewportPoint(transform.position);
+            return bossViewportPos.x < 0 || bossViewportPos.x > 1 || bossViewportPos.y < 0 || bossViewportPos.y > 1;
+        }
+        else
+        {
+            return true;
+        }
     }
     public float GetDangerWeight()
     {
@@ -294,90 +263,120 @@ public class Bullet : MonoBehaviour
 
         return weight;
     }
+    public Layer parentLayer;
 
     public void ReturnBullet()
     {
-        if(tracker != null)
+        transform.parent = null;
+        isSet = false;
+        bonusScripts.Clear();
+        if (tracker != null)
         {
             tracker.ReturnIndicator();
         }
         tracker = null;
+        if (parentLayer != null)
+        {
+            parentLayer.UnregisterBullet(this);
+        }
         if (observed)
         {
             collector.bullets.Remove(this);
         }
         if (!IsOffScreen())
         {
-            GameObject explosion;
-            // spawn and orientate it
-            if (isPooled) explosion = ExplosionPoolManager.Instance.GetBullet();
-            else explosion = Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity);
-            explosion.transform.position = transform.position;
-            // Set Partical Color
-            Material bulletMaterial = mr.material;
-            ParticleSystem explosionParticles = explosion.GetComponentInChildren<ParticleSystem>();
-            if (bulletMaterial.HasProperty("_Color"))
-            {
-                Color bulletColor = bulletMaterial.color;
-                var mainModule = explosionParticles.main;
-                mainModule.startColor = bulletColor;
-
-
-
-                // Get all particle systems under the parent, including the parent itself
-                ParticleSystem[] particleSystems = explosionParticles.gameObject.GetComponentsInChildren<ParticleSystem>();
-
-                // Loop through each particle system and set the start color
-                foreach (ParticleSystem ps in particleSystems)
-                {
-                    mainModule = ps.main;
-                    mainModule.startColor = bulletColor;
-
-                }
-                // Get the emissive color from the bullet material
-                Color emissiveColor = bulletMaterial.color;
-
-                // Loop through each particle system
-                foreach (ParticleSystem ps in particleSystems)
-                {
-                    // Access the renderer for this particle system
-                    ParticleSystemRenderer renderer = ps.GetComponent<ParticleSystemRenderer>();
-
-                    // Ensure the renderer has a material
-                    if (renderer != null && renderer.material != null)
-                    {
-                        // Create an instance of the material to avoid affecting the original
-                        Material instanceMaterial = renderer.material;
-
-                        // Check if the material supports emissive color changes
-                        if (instanceMaterial.HasProperty("_EmissionColor"))
-                        {
-                            // Enable emission keyword if necessary (for Standard shaders)
-                            instanceMaterial.EnableKeyword("_EMISSION");
-
-                            // Set the emissive color
-                            instanceMaterial.SetColor("_EmissionColor", emissiveColor);
-
-                            // Assign the instanced material back to the renderer
-                            renderer.material = instanceMaterial;
-                        }
-                    }
-                }
-
-            }
-
-            else
-            {
-                Debug.LogWarning("The bullet material does not have a _Color property.");
-            }
+            Explode();
         }
         if (FindAnyObjectByType<BulletPoolManager>())
         {
+            rb.velocity = new Vector3(0,0,0);
             BulletPoolManager.Instance.ReturnBullet(gameObject);
         }
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Explode()
+    {
+        GameObject explosion;
+        // spawn and orientate it
+        if (isPooled) explosion = ExplosionPoolManager.Instance.GetBullet();
+        else explosion = Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity);
+        explosion.transform.position = transform.position;
+        // Set Partical Color
+        Material bulletMaterial = mr.material;
+        ParticleSystem explosionParticles = explosion.GetComponentInChildren<ParticleSystem>();
+        if (bulletMaterial.HasProperty("_Color"))
+        {
+            Color bulletColor = bulletMaterial.color;
+            var mainModule = explosionParticles.main;
+            mainModule.startColor = bulletColor;
+
+
+
+            // Get all particle systems under the parent, including the parent itself
+            ParticleSystem[] particleSystems = explosionParticles.gameObject.GetComponentsInChildren<ParticleSystem>();
+
+            // Loop through each particle system and set the start color
+            foreach (ParticleSystem ps in particleSystems)
+            {
+                mainModule = ps.main;
+                mainModule.startColor = bulletColor;
+
+            }
+            // Get the emissive color from the bullet material
+            Color emissiveColor = bulletMaterial.color;
+
+            // Loop through each particle system
+            foreach (ParticleSystem ps in particleSystems)
+            {
+                // Access the renderer for this particle system
+                ParticleSystemRenderer renderer = ps.GetComponent<ParticleSystemRenderer>();
+
+                // Ensure the renderer has a material
+                if (renderer != null && renderer.material != null)
+                {
+                    // Create an instance of the material to avoid affecting the original
+                    Material instanceMaterial = renderer.material;
+
+                    // Check if the material supports emissive color changes
+                    if (instanceMaterial.HasProperty("_EmissionColor"))
+                    {
+                        // Enable emission keyword if necessary (for Standard shaders)
+                        instanceMaterial.EnableKeyword("_EMISSION");
+
+                        // Set the emissive color
+                        instanceMaterial.SetColor("_EmissionColor", emissiveColor);
+
+                        // Assign the instanced material back to the renderer
+                        renderer.material = instanceMaterial;
+                    }
+                }
+            }
+
+        }
+
+        else
+        {
+            Debug.LogWarning("The bullet material does not have a _Color property.");
+        }
+    }
+
+    private List<IBonusScript> bonusScripts = new List<IBonusScript>();
+
+    public void AddBonusBehavior(IBonusScript behavior)
+    {
+        bonusScripts.Add(behavior);
+        behavior.AttachToBullet(this);
+    }
+    public bool behaviorsEnabled = true;
+    public void TriggerAllBehaviors()
+    {
+        foreach (var script in bonusScripts)
+        {
+            script.Trigger();
         }
     }
 }

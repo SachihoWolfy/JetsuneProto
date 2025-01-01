@@ -57,6 +57,7 @@ MonoBehaviour:
   enemyVis: {fileID: 0}
   Music: {fileID: 0}
   levelIndex: 1
+  isEnding: 0
   endCam: {fileID: 8105466790434390050}
 --- !u!1 &1525081569482534695
 GameObject:
@@ -463,7 +464,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6251283385080310958}
-  - {fileID: 7271864407974630995}
+  - {fileID: 5810417547603268785}
   - {fileID: 313249911563260723}
   - {fileID: 5225979710884101380}
   - {fileID: 7050256303291319945}
@@ -1550,6 +1551,38 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &9023503569424063719
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5810417547603268785}
+  m_Layer: 0
+  m_Name: Poulma
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5810417547603268785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9023503569424063719}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5956326, y: -0.35944948, z: 0.37587854, w: 0.61215454}
+  m_LocalPosition: {x: -2.9799943, y: -3.42, z: -5.609996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 7271864407974630995}
+  m_Father: {fileID: 7714817594967646124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9042903955383398045
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,39 +1683,51 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7714817594967646124}
+    m_TransformParent: {fileID: 5810417547603268785}
     m_Modifications:
     - target: {fileID: 5078008225810409875, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
       propertyPath: m_Name
       value: Poulma
       objectReference: {fileID: 0}
     - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 11.260001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 11.260001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 11.260002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.98
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.42
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.61
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.61215454
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5956326
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.35944948
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.3758785
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6039723683624415358, guid: c159fbd79ded4a349a409e372e035a54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
