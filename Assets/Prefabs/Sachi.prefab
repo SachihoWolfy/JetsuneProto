@@ -1606,7 +1606,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 158454158956580509, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
+  - {fileID: 2100000, guid: f69cac70297b1ad4185e2e95dcd7c008, type: 2}
   - {fileID: 4835078630258379571, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -7021,7 +7021,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 2f49211ed77058946a95df0f19956ea5, type: 2}
-  - {fileID: -7252593629180819765, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
+  - {fileID: 2100000, guid: bf050a1b12509e94fb228a85a41b4ac3, type: 2}
   - {fileID: 1585245502356829148, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -12089,7 +12089,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 158454158956580509, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
+  - {fileID: 2100000, guid: f69cac70297b1ad4185e2e95dcd7c008, type: 2}
   - {fileID: 2100000, guid: d35fa49705ba90a4c85f7151a0b00575, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -13320,7 +13320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boneShape: 1
-  drawBones: 0
+  drawBones: 1
   drawTripods: 0
   boneSize: 1
   tripodSize: 1

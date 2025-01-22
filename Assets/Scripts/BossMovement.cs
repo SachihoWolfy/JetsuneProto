@@ -10,7 +10,7 @@ public class BossMovement : MonoBehaviour
     public int charID = 0;
     public bool isCutscene = false;
     public bool isWaypoint = false;
-    public int gpsProgress;
+    public float gpsProgress;
     public int cutsceneID = 0;
     public float distanceToMaintain = 300f;
     public int hp = 5;
@@ -104,16 +104,6 @@ public class BossMovement : MonoBehaviour
         targetLook.transform.position = player.transform.position;
         if (isWaypoint)
         {
-            if (Vector3.Distance(player.transform.position, transform.position) < distanceToMaintain * 2 || !FindAnyObjectByType<SplineRenderer>())
-            {
-                gpsProgress = (int)(cart.SplinePosition / cart.Spline.Spline.GetLength() * 100);
-                winText.text = "Follow GPS: " + gpsProgress + "%";
-            }
-            else
-            {
-                Debug.Log("GPS TOO FAR!");
-                winText.text = "<!>GPS ERROR<!>";
-            }
             if (FindAnyObjectByType<SplineRenderer>())
             {
                 if (!FindAnyObjectByType<SplineRenderer>().isShowing)
@@ -171,7 +161,6 @@ public class BossMovement : MonoBehaviour
             hp += -1;
             StartCoroutine(SlowPlayer());
             StartCoroutine(ResetAttack());
-            winText.text = "Boss HP: " + hp.ToString();
         }
     }
     IEnumerator ResetAttack()

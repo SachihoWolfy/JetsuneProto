@@ -17,6 +17,8 @@ public class HUDController : MonoBehaviour
     public TMP_Text bossDistanceText;
     public TMP_Text gpsProgressText;
     public TMP_Text winText;
+    public Slider bossHPSlider;
+    public Image bossHPSliderFillImage;
     private LineRenderer lineRenderer;
     public Image[] cosmetics;
     public Image[] proxCosmetics;
@@ -46,6 +48,10 @@ public class HUDController : MonoBehaviour
     public Color healthColor3;
     public Color healthColor2;
     public Color healthColor1;
+
+    [Header("Boss Info")]
+    public string bossName;
+    public Color bossColor;
     // Internal state
     private float currentAlpha = 1f;
     private float previousDistance = float.MaxValue;
@@ -60,6 +66,15 @@ public class HUDController : MonoBehaviour
         if (boss == null)
         {
             boss = FindFirstObjectByType<BossMovement>();
+            if (boss.isWaypoint)
+            {
+                bossHPSlider.maxValue = 100;
+            }
+            else
+            {
+                bossHPSlider.maxValue = boss.hp;
+            }
+            bossHPSliderFillImage.color = bossColor;
         }
         if (lineRenderer == null && player != null)
         {
@@ -228,8 +243,9 @@ public class HUDController : MonoBehaviour
         {
             if (Vector3.Distance(player.transform.position, boss.transform.position) < boss.distanceToMaintain * 2 || !FindAnyObjectByType<SplineRenderer>())
             {
-                boss.gpsProgress = (int)(boss.cart.SplinePosition / boss.cart.Spline.Spline.GetLength() * 100);
-                winText.text = "Follow GPS: " + boss.gpsProgress + "%";
+                boss.gpsProgress = (boss.cart.SplinePosition / boss.cart.Spline.Spline.GetLength() * 100);
+                winText.text = "Follow GPS: " + boss.gpsProgress.ToString("F0") + "%";
+                bossHPSlider.value = boss.gpsProgress;
             }
             else
             {
@@ -238,7 +254,8 @@ public class HUDController : MonoBehaviour
         }
         else
         {
-            winText.text = "Boss HP: " + boss.hp;
+            winText.text = bossName;
+            bossHPSlider.value = boss.hp;
         }
     }
 

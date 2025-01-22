@@ -5249,6 +5249,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 15.075012
       objectReference: {fileID: 0}
+    - target: {fileID: 4491841939884205738, guid: b451848bda4ffbf4888c26e6dd5e5066, type: 3}
+      propertyPath: bossName
+      value: Poulma Yakinatori
+      objectReference: {fileID: 0}
+    - target: {fileID: 4491841939884205738, guid: b451848bda4ffbf4888c26e6dd5e5066, type: 3}
+      propertyPath: bossColor.b
+      value: 0.14117646
+      objectReference: {fileID: 0}
+    - target: {fileID: 4491841939884205738, guid: b451848bda4ffbf4888c26e6dd5e5066, type: 3}
+      propertyPath: bossColor.g
+      value: 0.22214943
+      objectReference: {fileID: 0}
+    - target: {fileID: 4491841939884205738, guid: b451848bda4ffbf4888c26e6dd5e5066, type: 3}
+      propertyPath: bossColor.r
+      value: 0.8666667
+      objectReference: {fileID: 0}
     - target: {fileID: 5845804367234609629, guid: b451848bda4ffbf4888c26e6dd5e5066, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5351,6 +5367,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053163789075800672, guid: b451848bda4ffbf4888c26e6dd5e5066, type: 3}
       propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109327562485661803, guid: b451848bda4ffbf4888c26e6dd5e5066, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475835756302671157, guid: b451848bda4ffbf4888c26e6dd5e5066, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7725957223923324983, guid: b451848bda4ffbf4888c26e6dd5e5066, type: 3}
