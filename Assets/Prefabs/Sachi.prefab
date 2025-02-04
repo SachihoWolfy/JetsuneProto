@@ -416,7 +416,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4835078630258379571, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
+  - {fileID: 2100000, guid: d35fa49705ba90a4c85f7151a0b00575, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1023,7 +1023,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 8214333394354215739, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
-  - {fileID: 85023145354639275, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
+  - {fileID: 2100000, guid: 04f1069dab9e380429715f67f53e02f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1172,7 +1172,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 65f07e5cbd676ff4291bc0909db445f5, type: 2}
-  - {fileID: 4835078630258379571, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
+  - {fileID: 2100000, guid: d35fa49705ba90a4c85f7151a0b00575, type: 2}
   - {fileID: 2100000, guid: 57e50afd28c3f3a4a961c85b9e70c97d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1607,7 +1607,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f69cac70297b1ad4185e2e95dcd7c008, type: 2}
-  - {fileID: 4835078630258379571, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
+  - {fileID: 2100000, guid: d35fa49705ba90a4c85f7151a0b00575, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7022,7 +7022,7 @@ MeshRenderer:
   m_Materials:
   - {fileID: 2100000, guid: 2f49211ed77058946a95df0f19956ea5, type: 2}
   - {fileID: 2100000, guid: bf050a1b12509e94fb228a85a41b4ac3, type: 2}
-  - {fileID: 1585245502356829148, guid: d09feff91dc5736459ba37e7dca2c8c5, type: 3}
+  - {fileID: 2100000, guid: ae38646c1a1fc164e972291b5eda2a1f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13320,7 +13320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boneShape: 1
-  drawBones: 1
+  drawBones: 0
   drawTripods: 0
   boneSize: 1
   tripodSize: 1
