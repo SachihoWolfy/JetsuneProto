@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
     public AudioSource Music;
     public int levelIndex;
     public bool isEnding = false;
+    public bool forceBackToMenu = false;
 
     public CinemachineCamera endCam;
 
@@ -146,7 +147,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(15f);
         Settings.gpsTimes[levelIndex] = 0f;
         Settings.bossTimes[levelIndex] = 0f;
-        if (SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
+        if (SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings && !forceBackToMenu)
             NextLevel();
         else
             ToMenu();

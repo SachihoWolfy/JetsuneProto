@@ -42,7 +42,21 @@ public class GrazeController : MonoBehaviour
                 PlaySound(0);
             }
         }
-                
+
+    }
+    public void Graze()
+    {
+        if(canGraze && !player.immunity)
+        {
+            StartCoroutine(grazeOnCooldown());
+            bulletsGrazed++;
+            player.AddScore(grazeAmountToReward);
+            if (player.curSpeed >= 60)
+            {
+                player.AddScore(machBonus);
+            }
+            PlaySound(0);
+        }
     }
     IEnumerator grazeOnCooldown()
     {

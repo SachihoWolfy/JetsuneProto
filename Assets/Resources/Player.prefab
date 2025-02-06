@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 2740362427342862854}
   - component: {fileID: 5048682220133529324}
   - component: {fileID: 8537990959087422612}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1261,7 +1261,7 @@ GameObject:
   - component: {fileID: 8371593499643600905}
   - component: {fileID: 4489780974489059087}
   - component: {fileID: 4463707943693107366}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BulletDeleter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
