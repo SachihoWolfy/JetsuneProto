@@ -1337,6 +1337,11 @@ MonoBehaviour:
     Weight: 1
     Radius: 1
   m_LegacyTargets: []
+--- !u!4 &340539005 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4358330386311490261, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+  m_PrefabInstance: {fileID: 8273166017825025753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &342348055
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,6 +1986,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!4 &799996213 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+  m_PrefabInstance: {fileID: 1764143761}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &854827690 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5597771481856812248, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
@@ -4137,6 +4147,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1738961620}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1764143761
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 340539005}
+    m_Modifications:
+    - target: {fileID: 293958840344107063, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_Name
+      value: Flying Phoenix v1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 293958840344107063, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.057
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394875216556197866, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3c9b48e74b8ad274cb9bff9d31e341ac, type: 3}
 --- !u!82 &1792542250 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6764416055636648861, guid: cc15a8ddbacce2c439d3ef3846bdf8d4, type: 3}
@@ -7266,6 +7337,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4358330386311490261, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 799996213}
     - targetCorrespondingSourceObject: {fileID: 6649158849830955144, guid: 5901ae950ce3e494793bdc13ee2978ca, type: 3}
       insertIndex: 0
       addedObject: {fileID: 1495905591}
