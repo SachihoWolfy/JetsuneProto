@@ -15427,7 +15427,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5739786230201917276}
-  - component: {fileID: 8216815779930123106}
   m_Layer: 8
   m_Name: SC_Breathing_Moon
   m_TagString: Untagged
@@ -15453,27 +15452,6 @@ Transform:
   - {fileID: 4732448750170639154}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8216815779930123106
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5060816837690915930}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e1445b384651da944842c948b45ff792, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6460623743342215673
 GameObject:
   m_ObjectHideFlags: 0

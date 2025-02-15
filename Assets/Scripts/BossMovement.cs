@@ -43,6 +43,7 @@ public class BossMovement : MonoBehaviour
 
     public bool engaging = false;
     private bool preventAttack = false;
+    public bool isTest;
 
     private void Start()
     {
@@ -53,6 +54,7 @@ public class BossMovement : MonoBehaviour
         anim.SetBool("IsWaypoint", isWaypoint);
         anim.SetInteger("HP", hp);
         anim.SetInteger("CharID", charID);
+        anim.SetBool("ComposerTest", isTest);
         visualAnim.SetInteger("HP", hp);
         if (isWaypoint)
         {
