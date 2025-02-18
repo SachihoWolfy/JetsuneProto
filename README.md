@@ -15,27 +15,19 @@ Dodge bullets and chase down the enemy! Build up speed and hit Mach to gain on t
 - Space to Change Camera
 
 
-**Changelog v0.10:**
+**Changelog v0.14.1:**
 
-- GPS fallback has been implemented so if players fly past the GPS, they will have a path to follow.
-- Freelook has been implemented. You can use it with holding space or using side mouse buttons.
-- Bullets now have sounds and colored impact effects, so that it feels better to dodge.
-- Various minor improvements and Bug Fixes
-
-
-
-Known Issues
-
-- Player acceleration is sluggish above the intended 60FPS..
-- First Time load is increasingly sluggish as the game gets more complex.
-  - Might start considering individual platform builds.
+- Secret Ayana Test World for creating patterns
+- Extras menu for assignments
+- More
 
 Credits
 
+- Bullet Patterns
+  - Some Bullet patterns made by Ayana2192 on discord. (Ayana Gaming on [Youtube](https://www.youtube.com/channel/UC8xt660FmpkDgnslA7KnZgw))
 - Sound effects
   - Touhou sound effects by ZUN/Team Shanghai Alice
 - Skybox created on [https://www.manyworlds.run](https://www.manyworlds.run) courtesy of Rosebud.ai
-- Missile code from [Tutorial](https://youtu.be/Z6qBeuN-H1M?si=wmq64OtvQFFeijn3) by Tarodev.
 - Aces04 font (inspired by fonts from Project Aces) is created by Roach Typographics
   - [Font page](https://www.moddb.com/mods/aces-typografics/addons/aces04-true-type-font-family)
 - "Post apocalyptic building - Lowpoly" (https://skfb.ly/ovpXC) by arca_done is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
