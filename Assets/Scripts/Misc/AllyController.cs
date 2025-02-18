@@ -37,6 +37,10 @@ public class AllyController : MonoBehaviour
         {
             ActivateAlly();
         }
+        if(boss.hp == 1 && hasBeenActivated)
+        {
+            activeAlly = false;
+        }
         allyAnim.SetBool("Active", activeAlly);
         if (activeAlly)
         {

@@ -9,13 +9,28 @@ public class ParticleGraze : MonoBehaviour
     int damage = 1;
     float speedDamage = 40f;
     public List<ParticleCollisionEvent> collisionEvents;
-    public ParticleSystem part;
+    public float colliderSize = 0.007f;
+    private ParticleSystem ps;
     private void Start()
     {
         grazer = FindAnyObjectByType<GrazeController>();
         player = FindAnyObjectByType<FlightBehavior>();
-        part = GetComponent<ParticleSystem>();
+        ps = GetComponent<ParticleSystem>();
         collisionEvents = new List<ParticleCollisionEvent>();
+        var collider = ps.collision;
+        collider.enabled = true;
+        collider.radiusScale = colliderSize;
+        collider.collidesWith = LayerMask.GetMask("Ground", "Player", "BulletColliders");
+        collider.sendCollisionMessages = true;
+        var trigger = ps.trigger;
+        trigger.enabled = true;
+        trigger.inside = ParticleSystemOverlapAction.Callback;
+        trigger.outside = ParticleSystemOverlapAction.Ignore;
+        trigger.enter = ParticleSystemOverlapAction.Ignore;
+        trigger.exit = ParticleSystemOverlapAction.Ignore;
+        trigger.colliderQueryMode = ParticleSystemColliderQueryMode.One;
+        trigger.SetCollider(0, grazer.GetComponent<Collider>());
+        trigger.radiusScale = colliderSize;
     }
     private void OnParticleTrigger()
     {

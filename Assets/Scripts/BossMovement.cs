@@ -34,6 +34,7 @@ public class BossMovement : MonoBehaviour
     private float defaultScale = 11.26f;
     public float awayScale = 20f;
     public float enemyScale;
+    public GameObject summonCircle;
 
     public bool stickPlayerToOffset = false;
     public bool wonGame = false;
@@ -97,12 +98,14 @@ public class BossMovement : MonoBehaviour
             player.rb.velocity = player.transform.forward * player.rb.velocity.magnitude;
         }
     }
-
     private void FixedUpdate()
     {
         var autodolly = cart.AutomaticDolly.Method as SplineAutoDolly.FixedSpeed;
         enemyScale = Mathf.Clamp(Vector3.Distance(player.transform.position, transform.position) + pursuitMod, defaultScale, awayScale);
         enemyVisual.transform.localScale = new Vector3(enemyScale, enemyScale, enemyScale);
+        float relativescale = enemyScale / defaultScale;
+        float scaleOffset = 1f;
+        summonCircle.transform.localScale = new Vector3(relativescale + scaleOffset, relativescale + scaleOffset, relativescale + scaleOffset);
         targetLook.transform.position = player.transform.position;
         if (isWaypoint)
         {

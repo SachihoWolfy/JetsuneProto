@@ -95,6 +95,7 @@ MonoBehaviour:
   invertPub: 0
   tutorialPub: 0
   tipPub: 0
+  explosion: {fileID: 1668857415454636519, guid: 904c8c725aa5f1540aea966fc543f0a2, type: 3}
 --- !u!1001 &7350371341746076874
 PrefabInstance:
   m_ObjectHideFlags: 0

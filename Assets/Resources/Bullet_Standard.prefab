@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 1017656741908855488}
   - component: {fileID: 250869808752495013}
   - component: {fileID: 8644992911052605960}
+  - component: {fileID: 3333553986349229458}
   m_Layer: 0
   m_Name: Bullet_Standard
   m_TagString: Enemy
@@ -137,8 +138,23 @@ MonoBehaviour:
   observed: 0
   dangerWeight: 0
   isSet: 0
+  scaleOverTime: {fileID: 3333553986349229458}
   parentLayer: {fileID: 0}
   behaviorsEnabled: 1
+--- !u!114 &3333553986349229458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3785140168161339376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb1c6a9fdc081a94da184e14a3c3ed7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.15
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!1 &4070334886966501412
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,7 +399,7 @@ GameObject:
   - component: {fileID: 5433132835343472863}
   - component: {fileID: 4064566417139667513}
   - component: {fileID: 7666392830370315354}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere
   m_TagString: Enemy
   m_Icon: {fileID: 0}

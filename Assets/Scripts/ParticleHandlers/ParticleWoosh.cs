@@ -1,33 +1,54 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic; // Required for List<T>
+using System.Collections.Generic;
+using Unity.VisualScripting; // Required for List<T>
 
 public class ParticleWoosh : MonoBehaviour
 {
-    public AudioClip[] audioClips;
+    public List<AudioClip> audioClips;
     public AudioSource audioSource;
-    public float wooshRadius;
-    public float volume;
+    private float wooshRadius = 15f;
+    private float volume = 0.6f;
     private FlightBehavior player;
     private bool canPlaySound = true;
-    [SerializeField] private float cooldownDuration;
+    [SerializeField] private float cooldownDuration = 0.2f;
 
     private ParticleSystem ps;
     private List<ParticleSystem.Particle> enterParticles = new List<ParticleSystem.Particle>(); // Fix: Use List instead of array
+    private BulletWoosh woosher;
+    public float colliderSize = 0.007f;
+    public ParticleCard card;
 
     void Start()
     {
         player = FindObjectOfType<FlightBehavior>();
         ps = GetComponent<ParticleSystem>();
+        woosher = FindObjectOfType<BulletWoosh>();
+        if (woosher)
+        {
+            audioClips = new List<AudioClip>();
+            audioClips.AddRange(woosher.audioClips);
+            wooshRadius = woosher.wooshRadius;
+            volume = woosher.volume;
+        }
 
         if (ps == null)
         {
             Debug.LogError("BulletWoosh: No Particle System found! Attach this script to a GameObject with a Particle System.");
         }
-
+        var collider = ps.collision;
+        collider.enabled = true;
+        collider.radiusScale = colliderSize;
+        collider.collidesWith = LayerMask.GetMask("Ground", "Player");
         // Ensure particle system has trigger module enabled
         var trigger = ps.trigger;
         trigger.enabled = true;
+        trigger.radiusScale = colliderSize;
+        trigger.inside = ParticleSystemOverlapAction.Ignore;
+        trigger.outside = ParticleSystemOverlapAction.Ignore;
+        trigger.enter = ParticleSystemOverlapAction.Callback;
+        trigger.exit = ParticleSystemOverlapAction.Ignore;
+        trigger.SetCollider(0, woosher.GetComponent<Collider>());
     }
 
     void Update()
@@ -37,6 +58,13 @@ public class ParticleWoosh : MonoBehaviour
         if (audioSource != null)
         {
             audioSource.transform.position = player.transform.position;
+        }
+        if(woosher == null)
+        {
+            woosher = FindObjectOfType<BulletWoosh>();
+            audioClips.AddRange(woosher.audioClips);
+            wooshRadius = woosher.wooshRadius;
+            volume = woosher.volume;
         }
     }
 
@@ -56,7 +84,7 @@ public class ParticleWoosh : MonoBehaviour
 
     private void PlayRandomWooshSound()
     {
-        if (audioClips.Length == 0 || audioSource == null || audioSource.isPlaying) return;
+        if (audioClips.Count == 0 || audioSource == null || audioSource.isPlaying) return;
 
         audioSource.volume = volume;
         audioSource.spatialBlend = 1;
@@ -64,7 +92,7 @@ public class ParticleWoosh : MonoBehaviour
         audioSource.maxDistance = wooshRadius;
         audioSource.dopplerLevel = 1;
 
-        int randomIndex = Random.Range(0, audioClips.Length);
+        int randomIndex = Random.Range(0, audioClips.Count);
         audioSource.clip = audioClips[randomIndex];
         audioSource.Play();
     }

@@ -46,6 +46,7 @@ public class Bullet : MonoBehaviour
     public bool isSet;
 
     private float timeAlive;
+    public ScaleOverTime scaleOverTime;
 
     public void Initialize(int damage, float spdDamage, bool isAlly = false)
     {
@@ -55,15 +56,18 @@ public class Bullet : MonoBehaviour
         if (isAlly)
         {
             col.tag = "AllyBullet";
+            //transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            scaleOverTime.targetScale = new Vector3(0.4f, 0.4f, 0.4f);
             allyBullet = true;
-            transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         }
         else
         {
             col.tag = "EnemyBullet";
             allyBullet = false;
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            //transform.localScale = new Vector3(1f, 1f, 1f);
+            scaleOverTime.targetScale = new Vector3(1f, 1f, 1f);
         }
+        scaleOverTime.Activate();
         observed = false;
         behaviorsEnabled = true;
         timeAlive = 0f;
@@ -79,15 +83,18 @@ public class Bullet : MonoBehaviour
         if (isAlly)
         {
             col.tag = "AllyBullet";
-            transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            //transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            scaleOverTime.targetScale = new Vector3(0.4f, 0.4f, 0.4f);
             allyBullet = true;
         }
         else
         {
             col.tag = "EnemyBullet";
             allyBullet = false;
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            //transform.localScale = new Vector3(1f, 1f, 1f);
+            scaleOverTime.targetScale = new Vector3(1f, 1f, 1f);
         }
+        scaleOverTime.Activate();
         observed = false;
         behaviorsEnabled = true;
         timeAlive = 0f;
@@ -120,6 +127,10 @@ public class Bullet : MonoBehaviour
         if(collector == null)
         {
             collector = FindObjectOfType<AllyBulletCollector>();
+        }
+        if(scaleOverTime == null)
+        {
+            scaleOverTime = GetComponent<ScaleOverTime>();
         }
         col = GetComponentInChildren<SphereCollider>();
         oldPosition = transform.position;

@@ -6,9 +6,29 @@ public class ParticleBullets : MonoBehaviour
     public bool isPooled = false; // If using an object pool
     private ParticleSystem ps;
 
+    private BulletWoosh woosher;
+    public float colliderSize = 0.007f;
+    public ParticleCard card;
+    bool updated = false;
+
     void Start()
     {
         ps = GetComponent<ParticleSystem>();
+        woosher = FindObjectOfType<BulletWoosh>();
+        var collider = ps.collision;
+        collider.enabled = true;
+        collider.radiusScale = colliderSize;
+        collider.collidesWith = LayerMask.GetMask("Ground", "Player","BulletColliders");
+        collider.sendCollisionMessages = true;
+        // Ensure particle system has trigger module enabled
+        var trigger = ps.trigger;
+        trigger.enabled = true;
+        trigger.radiusScale = colliderSize;
+        trigger.inside = ParticleSystemOverlapAction.Ignore;
+        trigger.outside = ParticleSystemOverlapAction.Ignore;
+        trigger.enter = ParticleSystemOverlapAction.Callback;
+        trigger.exit = ParticleSystemOverlapAction.Ignore;
+        trigger.SetCollider(0, woosher.GetComponent<Collider>());
     }
 
     void OnParticleCollision(GameObject other)
@@ -20,7 +40,9 @@ public class ParticleBullets : MonoBehaviour
         for (int i = 0; i < collisionCount; i++)
         {
             Vector3 collisionPoint = collisionEvents[i].intersection;
-            Explode(collisionPoint);
+            if (Settings.m_lastFramerate > 27 || other.gameObject.CompareTag("Player")) { 
+                Explode(collisionPoint); 
+            }
         }
     }
 

@@ -28,6 +28,10 @@ public class Settings : MonoBehaviour
     public bool tutorialPub;
     public bool tipPub;
 
+    [Header("OtherObjects")]
+    public GameObject explosion;
+    public static GameObject explosionPrefab;
+
     void Start()
     {
         if(!instance)
@@ -38,6 +42,7 @@ public class Settings : MonoBehaviour
             invertPitch = false;
             doTutorials = true;
             doTips = true;
+            explosionPrefab = explosion;
         }
         filePath = Path.Combine(Application.persistentDataPath, "bestTimes.json");
         LoadBestTimes();
@@ -52,6 +57,7 @@ public class Settings : MonoBehaviour
         tutorialPub = doTutorials;
         if (SceneManager.GetActiveScene().buildIndex > 2)
         {
+            UpdateFrameRate();
             if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
             {
                 PauseMenu.instance.ToggleActive();
@@ -70,7 +76,27 @@ public class Settings : MonoBehaviour
             doBulletBossRelativity = !doBulletBossRelativity;
         }
     }
+    //Declare these in your class
+    int m_frameCounter = 0;
+    float m_timeCounter = 0.0f;
+    public static float m_lastFramerate = 0.0f;
+    public float m_refreshTime = 0.5f;
 
+    void UpdateFrameRate()
+    {
+        if (m_timeCounter < m_refreshTime)
+        {
+            m_timeCounter += Time.deltaTime;
+            m_frameCounter++;
+        }
+        else
+        {
+            //This code will break if you set your m_refreshTime to 0, which makes no sense.
+            m_lastFramerate = (float)m_frameCounter / m_timeCounter;
+            m_frameCounter = 0;
+            m_timeCounter = 0.0f;
+        }
+    }
     // Lets seperate this stuff so I don't get confused. This is for times!
 
     public static float[] gpsTimes = new float[14];  // GPS part times for 7 levels.

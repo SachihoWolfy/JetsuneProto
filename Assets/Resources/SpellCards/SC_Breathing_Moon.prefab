@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 14261433961048946}
   - component: {fileID: 8232050626649365952}
   m_Layer: 8
-  m_Name: BulletSystem (3)
+  m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5014,9 +5014,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 739079a815096214e9238366cf71385b, type: 3}
   - {fileID: 8300000, guid: 65efa9d9fae0f654da9a5228b0743e47, type: 3}
   audioSource: {fileID: 6216376341201519520}
-  wooshRadius: 15
-  volume: 0.6
   cooldownDuration: 0.2
+  colliderSize: 0.007
+  card: {fileID: 0}
 --- !u!199 &14261433961048946
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -5105,6 +5105,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 1668857415454636519, guid: 904c8c725aa5f1540aea966fc543f0a2, type: 3}
   isPooled: 1
+  colliderSize: 0.007
+  card: {fileID: 0}
 --- !u!1 &2125093604176918575
 GameObject:
   m_ObjectHideFlags: 0
@@ -5119,7 +5121,7 @@ GameObject:
   - component: {fileID: 2413881590343805826}
   - component: {fileID: 1661824810118039602}
   m_Layer: 8
-  m_Name: BulletSystem (2)
+  m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10184,9 +10186,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 739079a815096214e9238366cf71385b, type: 3}
   - {fileID: 8300000, guid: 65efa9d9fae0f654da9a5228b0743e47, type: 3}
   audioSource: {fileID: 6216376341201519520}
-  wooshRadius: 15
-  volume: 0.6
   cooldownDuration: 0.2
+  colliderSize: 0.007
+  card: {fileID: 0}
 --- !u!199 &2413881590343805826
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -10275,6 +10277,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 1668857415454636519, guid: 904c8c725aa5f1540aea966fc543f0a2, type: 3}
   isPooled: 1
+  colliderSize: 0.007
+  card: {fileID: 0}
 --- !u!1 &3608961480199309984
 GameObject:
   m_ObjectHideFlags: 0
@@ -10288,7 +10292,7 @@ GameObject:
   - component: {fileID: 9193020131595874875}
   - component: {fileID: 6633608516829826408}
   m_Layer: 8
-  m_Name: BulletSystem (2)
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15417,7 +15421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 0}
+  colliderSize: 0.007
 --- !u!1 &5060816837690915930
 GameObject:
   m_ObjectHideFlags: 0
@@ -15427,6 +15431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5739786230201917276}
+  - component: {fileID: 7980480997509765196}
   m_Layer: 8
   m_Name: SC_Breathing_Moon
   m_TagString: Untagged
@@ -15452,6 +15457,31 @@ Transform:
   - {fileID: 4732448750170639154}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7980480997509765196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5060816837690915930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2467b2e83524224f9d242f41861bdf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wooshSource: {fileID: 6216376341201519520}
+  explosionPrefab: {fileID: 1668857415454636519, guid: 904c8c725aa5f1540aea966fc543f0a2, type: 3}
+  Notes: 'This script will add the needed scripts at runtime, unless you add them
+    manually.
+
+
+    This system uses names to assign scripts.
+
+    - For the white
+    inside part of the bullet, include ''Core'' in the name
+
+    - For the colored
+    outside part of the bullet, include ''Shell'' in the name'
 --- !u!1 &6460623743342215673
 GameObject:
   m_ObjectHideFlags: 0
@@ -15593,7 +15623,7 @@ GameObject:
   - component: {fileID: 6865220651236384736}
   - component: {fileID: 1391873895160195911}
   m_Layer: 8
-  m_Name: BulletSystem (3)
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20659,7 +20689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 0}
+  colliderSize: 0.007
 --- !u!1 &8245337839338414639
 GameObject:
   m_ObjectHideFlags: 0
@@ -20673,7 +20703,7 @@ GameObject:
   - component: {fileID: 2460894848542301792}
   - component: {fileID: 2378773142195937621}
   m_Layer: 8
-  m_Name: BulletSystem (1)
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25804,7 +25834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 0}
+  colliderSize: 0.007
 --- !u!1 &8561461322724568982
 GameObject:
   m_ObjectHideFlags: 0
@@ -25819,7 +25849,7 @@ GameObject:
   - component: {fileID: 3761390390929491600}
   - component: {fileID: 726872360736520442}
   m_Layer: 8
-  m_Name: BulletSystem (2)
+  m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30882,9 +30912,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 739079a815096214e9238366cf71385b, type: 3}
   - {fileID: 8300000, guid: 65efa9d9fae0f654da9a5228b0743e47, type: 3}
   audioSource: {fileID: 6216376341201519520}
-  wooshRadius: 15
-  volume: 0.6
   cooldownDuration: 0.2
+  colliderSize: 0.007
+  card: {fileID: 0}
 --- !u!199 &3761390390929491600
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -30973,3 +31003,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 1668857415454636519, guid: 904c8c725aa5f1540aea966fc543f0a2, type: 3}
   isPooled: 1
+  colliderSize: 0.007
+  card: {fileID: 0}

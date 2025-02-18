@@ -4979,7 +4979,7 @@ GameObject:
   - component: {fileID: 4037478988208865026}
   - component: {fileID: 571562718685172782}
   m_Layer: 0
-  m_Name: BulletSystem (5)
+  m_Name: Spin_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9869,7 +9869,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9aea5c435004b32468ee8029576d47ec, type: 2}
+  - {fileID: 2100000, guid: 8c509951eece9e742a3229cdf9522eb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9931,6 +9931,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8394875216556197866}
+  - component: {fileID: 8676571223746772566}
   m_Layer: 0
   m_Name: Flying Phoenix v1.2
   m_TagString: Untagged
@@ -9951,6 +9952,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8694176591222724171}
   - {fileID: 1865484494318629826}
   - {fileID: 2551362105775319385}
   - {fileID: 992904625672089179}
@@ -9965,6 +9967,29 @@ Transform:
   - {fileID: 3216582909804435225}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8676571223746772566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293958840344107063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2467b2e83524224f9d242f41861bdf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Notes: 'This script will add the needed scripts at runtime, unless you add them
+    manually.
+
+
+    This system uses names to assign scripts.
+
+    - For the white
+    inside part of the bullet, include ''Core'' in the name
+
+    - For the colored
+    outside part of the bullet, include ''Shell'' in the name'
 --- !u!1 &605995369702360318
 GameObject:
   m_ObjectHideFlags: 0
@@ -9977,7 +10002,7 @@ GameObject:
   - component: {fileID: 2702948360332750476}
   - component: {fileID: 7691560119399569562}
   m_Layer: 0
-  m_Name: bullet spawner (1)
+  m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14932,7 +14957,7 @@ GameObject:
   - component: {fileID: 781411139249283911}
   - component: {fileID: 3325675084153352630}
   m_Layer: 0
-  m_Name: bullet spawner (1)
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19886,8 +19911,9 @@ GameObject:
   - component: {fileID: 9017331008449639674}
   - component: {fileID: 3349787081504598587}
   - component: {fileID: 2914172535348195115}
+  - component: {fileID: 798037463439236025}
   m_Layer: 0
-  m_Name: BulletSystem (19)
+  m_Name: Spin_Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24830,6 +24856,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &798037463439236025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306063550069662810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderSize: 0.007
 --- !u!1 &1415443319092878349
 GameObject:
   m_ObjectHideFlags: 0
@@ -24912,7 +24951,7 @@ GameObject:
   - component: {fileID: 6025813625881221735}
   - component: {fileID: 7014025992834200041}
   m_Layer: 0
-  m_Name: bullet spawner top (6)
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29858,7 +29897,7 @@ GameObject:
   - component: {fileID: 7386273317217258208}
   - component: {fileID: 6148682929947226781}
   m_Layer: 0
-  m_Name: bullet spawner top (1)
+  m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34804,7 +34843,7 @@ GameObject:
   - component: {fileID: 2077725110048441487}
   - component: {fileID: 5022293877612221495}
   m_Layer: 0
-  m_Name: bullet spawner top (5)
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39750,7 +39789,7 @@ GameObject:
   - component: {fileID: 576937717485948653}
   - component: {fileID: 3832021429029632928}
   m_Layer: 0
-  m_Name: BulletSystem (3)
+  m_Name: Spin_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44640,7 +44679,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9aea5c435004b32468ee8029576d47ec, type: 2}
+  - {fileID: 2100000, guid: c61bc7c00f24e5743a8ca8d33a437ad9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -44704,8 +44743,9 @@ GameObject:
   - component: {fileID: 2184836079664946068}
   - component: {fileID: 3943052066502909451}
   - component: {fileID: 1503271185524258393}
+  - component: {fileID: 5167192316301777566}
   m_Layer: 0
-  m_Name: BulletSystem (13)
+  m_Name: Spin_Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49648,6 +49688,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &5167192316301777566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230272902887211752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderSize: 0.007
 --- !u!1 &2522834463605195924
 GameObject:
   m_ObjectHideFlags: 0
@@ -49659,8 +49712,9 @@ GameObject:
   - component: {fileID: 9111923595990436276}
   - component: {fileID: 8318332851306063097}
   - component: {fileID: 4275230675336448594}
+  - component: {fileID: 5125576915405497736}
   m_Layer: 0
-  m_Name: BulletSystem (12)
+  m_Name: Spin_Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54603,6 +54657,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &5125576915405497736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2522834463605195924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderSize: 0.007
 --- !u!1 &2795151140949042722
 GameObject:
   m_ObjectHideFlags: 0
@@ -54615,7 +54682,7 @@ GameObject:
   - component: {fileID: 5822830979297349473}
   - component: {fileID: 3644448965291378712}
   m_Layer: 0
-  m_Name: bullet spawner (2)
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59570,7 +59637,7 @@ GameObject:
   - component: {fileID: 8690670521430560923}
   - component: {fileID: 8757464764330776442}
   m_Layer: 0
-  m_Name: bullet spawner top (7)
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64515,8 +64582,9 @@ GameObject:
   - component: {fileID: 1487029129419631534}
   - component: {fileID: 4112545609981174458}
   - component: {fileID: 7947850596332788798}
+  - component: {fileID: 8220742586817907301}
   m_Layer: 0
-  m_Name: BulletSystem (15)
+  m_Name: Spin_Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69459,6 +69527,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8220742586817907301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3087431070491524285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderSize: 0.007
 --- !u!1 &3343754759679185080
 GameObject:
   m_ObjectHideFlags: 0
@@ -69470,8 +69551,9 @@ GameObject:
   - component: {fileID: 7490226753794550368}
   - component: {fileID: 2794190801607984906}
   - component: {fileID: 2778196329036927564}
+  - component: {fileID: 2487078016475721564}
   m_Layer: 0
-  m_Name: BulletSystem (16)
+  m_Name: Spin_Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74414,6 +74496,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &2487078016475721564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3343754759679185080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderSize: 0.007
 --- !u!1 &3519997912120157407
 GameObject:
   m_ObjectHideFlags: 0
@@ -74426,7 +74521,7 @@ GameObject:
   - component: {fileID: 1118291730008824404}
   - component: {fileID: 6669318291257806952}
   m_Layer: 0
-  m_Name: BulletSystem (8)
+  m_Name: Spin_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79316,7 +79411,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9aea5c435004b32468ee8029576d47ec, type: 2}
+  - {fileID: 2100000, guid: 8c509951eece9e742a3229cdf9522eb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79434,8 +79529,9 @@ GameObject:
   - component: {fileID: 8749900733295313238}
   - component: {fileID: 5695170771341968013}
   - component: {fileID: 9178332510771476358}
+  - component: {fileID: 1932703972887066150}
   m_Layer: 0
-  m_Name: BulletSystem (11)
+  m_Name: Spin_Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84378,6 +84474,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1932703972887066150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4313014737840690613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderSize: 0.007
 --- !u!1 &4415952617292826381
 GameObject:
   m_ObjectHideFlags: 0
@@ -84390,7 +84499,7 @@ GameObject:
   - component: {fileID: 8988417370651209484}
   - component: {fileID: 3159918761694130882}
   m_Layer: 0
-  m_Name: BulletSystem (10)
+  m_Name: Spin_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89280,7 +89389,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9aea5c435004b32468ee8029576d47ec, type: 2}
+  - {fileID: 2100000, guid: 3d1a70959de6b5c4099325f90fd9da66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89344,8 +89453,9 @@ GameObject:
   - component: {fileID: 435103872494100079}
   - component: {fileID: 5865382315468460741}
   - component: {fileID: 144110622317364910}
+  - component: {fileID: 7011541705201081970}
   m_Layer: 0
-  m_Name: BulletSystem (18)
+  m_Name: Spin_Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94288,6 +94398,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &7011541705201081970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639870215675061217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderSize: 0.007
 --- !u!1 &4921633260701081371
 GameObject:
   m_ObjectHideFlags: 0
@@ -94299,8 +94422,9 @@ GameObject:
   - component: {fileID: 1977448253543842236}
   - component: {fileID: 533743053798704779}
   - component: {fileID: 5950658876689197111}
+  - component: {fileID: 2992881846061885746}
   m_Layer: 0
-  m_Name: BulletSystem (14)
+  m_Name: Spin_Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99243,6 +99367,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &2992881846061885746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4921633260701081371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderSize: 0.007
 --- !u!1 &5580139154653077929
 GameObject:
   m_ObjectHideFlags: 0
@@ -99255,7 +99392,7 @@ GameObject:
   - component: {fileID: 6477522060292436034}
   - component: {fileID: 3085534208971796563}
   m_Layer: 0
-  m_Name: BulletSystem (2)
+  m_Name: Spin_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104145,7 +104282,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9aea5c435004b32468ee8029576d47ec, type: 2}
+  - {fileID: 2100000, guid: 8c509951eece9e742a3229cdf9522eb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104210,7 +104347,7 @@ GameObject:
   - component: {fileID: 2108734069317808932}
   - component: {fileID: 6722614302941452054}
   m_Layer: 0
-  m_Name: BulletSystem (7)
+  m_Name: Spin_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109100,7 +109237,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9aea5c435004b32468ee8029576d47ec, type: 2}
+  - {fileID: 2100000, guid: 3d1a70959de6b5c4099325f90fd9da66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109165,7 +109302,7 @@ GameObject:
   - component: {fileID: 1275664286835757126}
   - component: {fileID: 5421741252523779747}
   m_Layer: 0
-  m_Name: BulletSystem (9)
+  m_Name: Spin_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114055,7 +114192,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9aea5c435004b32468ee8029576d47ec, type: 2}
+  - {fileID: 2100000, guid: c61bc7c00f24e5743a8ca8d33a437ad9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114108,6 +114245,134 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &6110892760289820130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8694176591222724171}
+  - component: {fileID: 6968463796034027199}
+  m_Layer: 0
+  m_Name: Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8694176591222724171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110892760289820130}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8394875216556197866}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &6968463796034027199
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110892760289820130}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6157757297246057159
 GameObject:
   m_ObjectHideFlags: 0
@@ -114120,7 +114385,7 @@ GameObject:
   - component: {fileID: 7630376882231308585}
   - component: {fileID: 4241404800966985730}
   m_Layer: 0
-  m_Name: BulletSystem (4)
+  m_Name: Spin_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119010,7 +119275,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9aea5c435004b32468ee8029576d47ec, type: 2}
+  - {fileID: 2100000, guid: 3d1a70959de6b5c4099325f90fd9da66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119075,7 +119340,7 @@ GameObject:
   - component: {fileID: 7911214035483427361}
   - component: {fileID: 6727686273325311659}
   m_Layer: 0
-  m_Name: bullet spawner top (3)
+  m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124021,7 +124286,7 @@ GameObject:
   - component: {fileID: 8498124216024029358}
   - component: {fileID: 4308042311415122747}
   m_Layer: 0
-  m_Name: BulletSystem (6)
+  m_Name: Spin_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128911,7 +129176,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9aea5c435004b32468ee8029576d47ec, type: 2}
+  - {fileID: 2100000, guid: c61bc7c00f24e5743a8ca8d33a437ad9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -133943,7 +134208,7 @@ GameObject:
   - component: {fileID: 7468343945720418765}
   - component: {fileID: 2014902942863780067}
   m_Layer: 0
-  m_Name: bullet spawner top (2)
+  m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138888,8 +139153,9 @@ GameObject:
   - component: {fileID: 9133833158481396091}
   - component: {fileID: 4427075973384330576}
   - component: {fileID: 1345374414945476049}
+  - component: {fileID: 4175137505990033929}
   m_Layer: 0
-  m_Name: BulletSystem (17)
+  m_Name: Spin_Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143832,6 +144098,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4175137505990033929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7885824122403349425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702521899d7d284392dc2318b44f636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderSize: 0.007
 --- !u!1 &7935307432093476345
 GameObject:
   m_ObjectHideFlags: 0
@@ -143844,7 +144123,7 @@ GameObject:
   - component: {fileID: 7917950300913748144}
   - component: {fileID: 8752395610061891152}
   m_Layer: 0
-  m_Name: bullet spawner top (4)
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148821,7 +149100,7 @@ GameObject:
   - component: {fileID: 4622811429176103667}
   - component: {fileID: 5494225600287301145}
   m_Layer: 0
-  m_Name: bullet spawner top
+  m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153767,7 +154046,7 @@ GameObject:
   - component: {fileID: 3363038075082457115}
   - component: {fileID: 2316396454423153966}
   m_Layer: 0
-  m_Name: bullet spawner (2)
+  m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
