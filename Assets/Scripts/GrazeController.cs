@@ -12,11 +12,13 @@ public class GrazeController : MonoBehaviour
 
     public AudioClip[] audioClips;
     FlightBehavior player;
+    ScaleActivator grazeCircle;
     bool canGraze = true;
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<FlightBehavior>();
+        grazeCircle = FindObjectOfType<ScaleActivator>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,10 @@ public class GrazeController : MonoBehaviour
                     player.AddScore(machBonus);
                 }
                 PlaySound(0);
+                if (grazeCircle)
+                {
+                    grazeCircle.Activate();
+                }
             }
         }
 
