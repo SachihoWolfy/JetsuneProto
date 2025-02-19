@@ -62,6 +62,10 @@ public class GrazeController : MonoBehaviour
                 player.AddScore(machBonus);
             }
             PlaySound(0);
+            if (grazeCircle)
+            {
+                grazeCircle.Activate();
+            }
         }
     }
     IEnumerator grazeOnCooldown()
