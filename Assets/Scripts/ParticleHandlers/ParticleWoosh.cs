@@ -8,10 +8,10 @@ public class ParticleWoosh : MonoBehaviour
     public List<AudioClip> audioClips;
     public AudioSource audioSource;
     private float wooshRadius = 15f;
-    private float volume = 0.6f;
+    private float volume = 0.4f;
     private FlightBehavior player;
-    private bool canPlaySound = true;
-    [SerializeField] private float cooldownDuration = 0.2f;
+    private static bool canPlaySound = true;
+    private float cooldownDuration = 0.3f;
 
     private ParticleSystem ps;
     private List<ParticleSystem.Particle> enterParticles = new List<ParticleSystem.Particle>(); // Fix: Use List instead of array
@@ -84,7 +84,7 @@ public class ParticleWoosh : MonoBehaviour
 
     private void PlayRandomWooshSound()
     {
-        if (audioClips.Count == 0 || audioSource == null || audioSource.isPlaying) return;
+        if (audioClips.Count == 0 || audioSource == null) return;
 
         audioSource.volume = volume;
         audioSource.spatialBlend = 1;
@@ -94,7 +94,7 @@ public class ParticleWoosh : MonoBehaviour
 
         int randomIndex = Random.Range(0, audioClips.Count);
         audioSource.clip = audioClips[randomIndex];
-        audioSource.Play();
+        audioSource.PlayOneShot(audioClips[randomIndex]);
     }
 
     private void TriggerCooldown(float duration)
