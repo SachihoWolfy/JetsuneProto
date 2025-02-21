@@ -694,6 +694,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f91f3a02b0deb7141a276d145f809f1e, type: 3}
   - {fileID: 8300000, guid: 692f23f304175544e96404f423ead455, type: 3}
   - {fileID: 8300000, guid: 60406b881104a2e4e9928510120a6649, type: 3}
+  - {fileID: 8300000, guid: 3fe590ec1ffb89045a9341259102d403, type: 3}
   audioSource: {fileID: 629755670410742982}
   anim: {fileID: 4283209396633010025}
   visualAnim: {fileID: 8403560840428967079}

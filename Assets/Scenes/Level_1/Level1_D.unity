@@ -3910,7 +3910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 1668857415454636519, guid: 904c8c725aa5f1540aea966fc543f0a2, type: 3}
-  poolSize: 300
+  poolSize: 10000
 --- !u!4 &1624152619
 Transform:
   m_ObjectHideFlags: 0
