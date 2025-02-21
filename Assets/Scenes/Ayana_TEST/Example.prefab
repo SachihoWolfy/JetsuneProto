@@ -50,17 +50,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2467b2e83524224f9d242f41861bdf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: 'This script will add the needed scripts at runtime, unless you add them
-    manually.
-
-
-    This system uses names to assign scripts.
-
-    - For the white
-    inside part of the bullet, include ''Core'' in the name
-
-    - For the colored
-    outside part of the bullet, include ''Shell'' in the name'
+  Notes: "This script will add the needed scripts at runtime, unless you add them
+    manually.\n\nThis system uses names to assign scripts.\n- For the white inside
+    part of the bullet, include 'Core' in the name\n- For the colored outside part
+    of the bullet, include 'Shell' in the name\n\nDefault Core 3D start size: \n   
+    x: 100    y: 100    z:130\nDefault Shell 3D start size:\n    x: 150    y:150   
+    z:150"
 --- !u!198 &5444577093511854958
 ParticleSystem:
   m_ObjectHideFlags: 0

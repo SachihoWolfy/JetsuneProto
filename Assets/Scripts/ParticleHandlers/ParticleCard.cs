@@ -5,13 +5,17 @@ public class ParticleCard : MonoBehaviour
 {
     private AudioSource wooshSource;
     private GameObject explosionPrefab;
-    [TextArea(10,20)]
+    [TextArea(10, 20)]
     public string Notes =
         "This script will add the needed scripts at runtime, unless you add them manually.\n" +
         "\n" +
         "This system uses names to assign scripts.\n" +
         "- For the white inside part of the bullet, include 'Core' in the name\n" +
-        "- For the colored outside part of the bullet, include 'Shell' in the name";
+        "- For the colored outside part of the bullet, include 'Shell' in the name\n\n" +
+        "Default Core 3D start size: \n" +
+        "    x: 100    y: 100    z:130\n" +
+        "Default Shell 3D start size:\n" +
+        "    x: 150    y:150    z:150";
     void Start()
     {
         var audioHolder = new GameObject("wooshSource");
