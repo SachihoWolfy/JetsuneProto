@@ -32,6 +32,9 @@ public class Settings : MonoBehaviour
     public GameObject explosion;
     public static GameObject explosionPrefab;
 
+    [Header("Flags and vars")]
+    public static int playerHP = 5;
+
     void Start()
     {
         if(!instance)
@@ -70,6 +73,7 @@ public class Settings : MonoBehaviour
         else
         {
             PauseMenu.instance.SetPauseActive(false);
+            playerHP = 5;
         }
         if (Input.GetKeyDown(KeyCode.B))
         {

@@ -307,7 +307,14 @@ public class BossMovement : MonoBehaviour
         winText.text = "Restarting in: " + i;
         PlaySound(6);
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (player.hp < 1)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
     IEnumerator EndGame()
     {
@@ -339,6 +346,10 @@ public class BossMovement : MonoBehaviour
         FindAnyObjectByType<LevelTimer>().StopTimer();
         FindAnyObjectByType<LevelManager>().HideHud();
         FindAnyObjectByType<LevelManager>().StopMusic();
+        if (player.hp < 1)
+        {
+            player.hp = 1;
+        }
         yield return new WaitForSeconds(3f);
         FindAnyObjectByType<LevelManager>().EndLevel();
         yield return new WaitForSeconds(1f);

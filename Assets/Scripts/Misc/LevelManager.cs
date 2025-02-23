@@ -131,6 +131,7 @@ public class LevelManager : MonoBehaviour
     }
     private void NextLevel()
     {
+        Settings.playerHP = FindAnyObjectByType<FlightBehavior>().hp;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     private void Restart()

@@ -135,6 +135,11 @@ public class FlightBehavior : MonoBehaviour
         {
             Instantiate(backupSettings);
         }
+        if(Settings.playerHP < 1)
+        {
+            Settings.playerHP = 1;
+        }
+        hp = Settings.playerHP;
         if (curPowerAmount >= 1)
         {
             scoreP = powerScore;
@@ -214,7 +219,6 @@ public class FlightBehavior : MonoBehaviour
             navLight.SetActive(value);
         }
     }
-
     IEnumerator DoSachiPowerUp()
     {
         anim.Play("Sachi_Javilin");
@@ -901,6 +905,7 @@ public class FlightBehavior : MonoBehaviour
         //Explode and Spawn explosion, stop smoke, and do death cam.
         if (hp < 1)
         {
+            immunity = true;
             isDie = true;
             lineRenderer.enabled = false;
             fire.Stop();
@@ -955,7 +960,7 @@ public class FlightBehavior : MonoBehaviour
         }
         immunity = true;
         StartCoroutine(ImmunityReset());
-        hp -= dmg;
+        hp = Mathf.Clamp(hp-dmg,0,7);
         curSpeed = Mathf.Clamp(curSpeed - spdDamage,MINSPEED,maxSpeed);
         rb.velocity = transform.forward * curSpeed;
         anim.Play("Damaged");
