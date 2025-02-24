@@ -134,6 +134,10 @@ public class BossMovement : MonoBehaviour
         if (Vector3.Distance(player.transform.position, transform.position) != distanceToMaintain && (!engaging||isWaypoint))
         {
             speed = player.curSpeed * distanceToMaintain / Vector3.Distance(player.transform.position, transform.position);
+            if (player.curSpeed < 1 && distanceToMaintain > Vector3.Distance(player.transform.position, transform.position))
+            {
+                speed = 1 * distanceToMaintain / Vector3.Distance(player.transform.position, transform.position);
+            }
         }
 
         if (engaging && !isWaypoint)
