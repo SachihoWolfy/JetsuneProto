@@ -20,7 +20,7 @@ public class ParticleBirthSound : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = volume;
         audioSource.rolloffMode = AudioRolloffMode.Linear;
-        audioSource.minDistance = 40;
+        audioSource.minDistance = 1;
         audioSource.dopplerLevel = 0;
         audioSource.spatialBlend = 1;
         ps = GetComponent<ParticleSystem>();

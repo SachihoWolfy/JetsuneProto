@@ -26,7 +26,13 @@ public class SpellCardController : MonoBehaviour
         {
             spellCard.DeactivateSpellCard();
         }
-        spellCards[index].ActivateSpellCard();
+        try
+        {
+            spellCards[index].ActivateSpellCard();
+        }
+        catch
+        {
+        }
         activeSpellCard = index;
     }
     public void DisableAllCards()
