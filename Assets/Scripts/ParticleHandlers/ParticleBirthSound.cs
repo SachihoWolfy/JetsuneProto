@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(ParticleSystem))]

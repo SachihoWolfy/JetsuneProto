@@ -29,7 +29,8 @@ public class DialogueScript : MonoBehaviour
     public AudioClip titleCardSound;
     public GameObject titleCard;             
     public float textSpeed = 0.05f;          
-    public float sceneTransitionDelay = 2f;  
+    public float sceneTransitionDelay = 2f;
+    public bool isCredits = false;
 
     private int index = 0;                   
     private bool isTyping = false;           
@@ -141,7 +142,14 @@ public class DialogueScript : MonoBehaviour
     {
         PlaySound(nextSceneSound);
         yield return new WaitForSeconds(sceneTransitionDelay);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (isCredits)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     private void PlaySound(AudioClip clip)

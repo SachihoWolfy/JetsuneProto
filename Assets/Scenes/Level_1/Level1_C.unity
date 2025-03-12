@@ -1959,9 +1959,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
+  m_Sprite: {fileID: -196200115, guid: 854111e6cf4ebde4d9b5d7b635eed726, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2680,73 +2680,123 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialoguePanels:
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
-    showLeftPortrait: 0
-    rightPortrait: {fileID: 21300000, guid: 1106cac18f433e94a8efed2bbabb2ea6, type: 3}
-    showRightPortrait: 0
-    dialogueText: 'Ugh.
-
-      Looks like this part is incomplete.'
-    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
-    showLeftPortrait: 0
-    rightPortrait: {fileID: 21300000, guid: 1106cac18f433e94a8efed2bbabb2ea6, type: 3}
-    showRightPortrait: 0
-    dialogueText: 'Don''t worry.
-
-      I''ll give you the rundown on what happens.'
-    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
+  - speakerName: <<???>>
     leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
     showLeftPortrait: 1
-    rightPortrait: {fileID: 21300000, guid: 1106cac18f433e94a8efed2bbabb2ea6, type: 3}
-    showRightPortrait: 0
-    dialogueText: "After flying around for a bit\nSachi discovers a little house
-      belonging to someone known as \nPoulma Yakinatori."
+    rightPortrait: {fileID: -1916939562, guid: 854111e6cf4ebde4d9b5d7b635eed726, type: 3}
+    showRightPortrait: 1
+    dialogueText: "Hey!\nWho are you? \nI've been trying to keep people out!"
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
+  - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: 36a0bd207d67f8748ad10b4f5eacc47d, type: 3}
     showLeftPortrait: 1
-    rightPortrait: {fileID: 21300000, guid: 1106cac18f433e94a8efed2bbabb2ea6, type: 3}
+    rightPortrait: {fileID: -1916939562, guid: 854111e6cf4ebde4d9b5d7b635eed726, type: 3}
+    showRightPortrait: 1
+    dialogueText: 'My name is Sachi!
+
+      Who are you, and what are you doing?'
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
+  - speakerName: <<Poulma>>
+    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: -196200115, guid: 854111e6cf4ebde4d9b5d7b635eed726, type: 3}
+    showRightPortrait: 1
+    dialogueText: 'Name''s Poulma! I build houses!
+
+      And... I''m building my
+      own house finally!'
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
+  - speakerName: <<Poulma>>
+    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: -196200115, guid: 854111e6cf4ebde4d9b5d7b635eed726, type: 3}
+    showRightPortrait: 1
+    dialogueText: "I guess I don't need to worry about\nPeople coming now. \nI'm
+      just finishing!"
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
+  - speakerName: <<Poulma>>
+    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: -1916939562, guid: 854111e6cf4ebde4d9b5d7b635eed726, type: 3}
     showRightPortrait: 0
-    dialogueText: 'Poulma was constructing a house on a minefield.
-
-      Sachi being
-      curious, decides to talk to Poulma.
-
-      Poulma finishes up her house and
-      brags...'
+    dialogueText: Just need to put this board in the floor and...!
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   - speakerName: 
     leftPortrait: {fileID: 21300000, guid: 52ff04dd17d22d546950591e978ba3d4, type: 3}
     showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 1106cac18f433e94a8efed2bbabb2ea6, type: 3}
     showRightPortrait: 0
-    dialogueText: Poulma's house gets blown up by a landmine.
-    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
+    dialogueText: ...
+    soundEffect: {fileID: 8300000, guid: 6a56ffda3600d9846a1ee2e6a02586d2, type: 3}
+  - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: 52ff04dd17d22d546950591e978ba3d4, type: 3}
     showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 1106cac18f433e94a8efed2bbabb2ea6, type: 3}
     showRightPortrait: 0
-    dialogueText: 'Poulma gets angry and starts to burn the field.
+    dialogueText: 'Are you ok?
 
-      She hopes
-      to reveal landmines and uproot them.'
+      I think there was something explosive there...'
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
+  - speakerName: <<Poulma>>
+    leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: 21300000, guid: 09c1cf422eed40247aa744034b0a7108, type: 3}
+    showRightPortrait: 1
+    dialogueText: 'I HATE THESE MINES!
+
+      EVERYTIME I TRY TO BUILD IT JUST...
+
+      BOOOOOOM!
+      GONE!'
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: 36a0bd207d67f8748ad10b4f5eacc47d, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: 21300000, guid: 09c1cf422eed40247aa744034b0a7108, type: 3}
+    showRightPortrait: 1
+    dialogueText: 'Noted...
+
+      So what are you going to do now?'
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
+  - speakerName: <<Poulma>>
+    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: 21300000, guid: 09c1cf422eed40247aa744034b0a7108, type: 3}
+    showRightPortrait: 1
+    dialogueText: 'I''M GOING TO BURN THIS FIELD.
+
+      That way, no mines can stop
+      me building!'
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: 36a0bd207d67f8748ad10b4f5eacc47d, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: 21300000, guid: 09c1cf422eed40247aa744034b0a7108, type: 3}
+    showRightPortrait: 0
+    dialogueText: Cool! And how are you going to do that?
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: 52ff04dd17d22d546950591e978ba3d4, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: 21300000, guid: 1106cac18f433e94a8efed2bbabb2ea6, type: 3}
+    showRightPortrait: 0
+    dialogueText: <!> <!?> <!>
+    soundEffect: {fileID: 8300000, guid: 8b7851493fe651447b5d0fad0cb94348, type: 3}
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: b4fa1f138bfafc9418c27c067c7c8f01, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: 21300000, guid: 1106cac18f433e94a8efed2bbabb2ea6, type: 3}
+    showRightPortrait: 0
+    dialogueText: 'THAT ALMOST HIT ME!
+
+      She''s turned hostile...'
+    soundEffect: {fileID: 8300000, guid: b2bebfb77fff65e49aa76baead3e629b, type: 3}
+  - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
     showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 1106cac18f433e94a8efed2bbabb2ea6, type: 3}
     showRightPortrait: 0
-    dialogueText: 'Sachi takes this as hostility towards her.
-
-      Even if it wasn''t
-      directed at her.
-
-      She decides to fight Poulma.'
+    dialogueText: "The first thing that comes to mind\nright now... \nTake her down."
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   leftPortraitImage: {fileID: 454665246}
   rightPortraitImage: {fileID: 1119838804}
@@ -2754,10 +2804,11 @@ MonoBehaviour:
   dialogueText: {fileID: 1232480120}
   audioSource: {fileID: 549310431}
   nextSceneSound: {fileID: 8300000, guid: 692f23f304175544e96404f423ead455, type: 3}
-  titleCardSound: {fileID: 0}
+  titleCardSound: {fileID: 8300000, guid: f91f3a02b0deb7141a276d145f809f1e, type: 3}
   titleCard: {fileID: 757559226}
   textSpeed: 0.02
   sceneTransitionDelay: 2
+  isCredits: 0
 --- !u!4 &2018076367
 Transform:
   m_ObjectHideFlags: 0
