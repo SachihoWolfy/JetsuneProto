@@ -230,6 +230,10 @@ public class FlightBehavior : MonoBehaviour
         isPowerup = true;
         anim.SetBool("IsPowerup", true);
         gameObject.GetComponent<Animator>().SetBool("IsPowerup", true);
+        if(hp < 1)
+        {
+            hp = 1;
+        }
         yield return new WaitForSeconds(7);
         spinAudio.Stop();
         anim.SetBool("IsPowerup", false);

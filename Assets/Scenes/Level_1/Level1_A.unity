@@ -96,8 +96,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: a3c3eb200a73ff846bffaafec27c9b15, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 91b0aeb05f08ed84baa25188773c711b, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -226,6 +226,251 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &328953049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 328953050}
+  - component: {fileID: 328953053}
+  - component: {fileID: 328953052}
+  - component: {fileID: 328953051}
+  m_Layer: 7
+  m_Name: Floor
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 1
+  m_IsActive: 1
+--- !u!4 &328953050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328953049}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5097405, y: -0.490066, z: -0.49006692, w: 0.5097395}
+  m_LocalPosition: {x: -0, y: 3.5, z: 0}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 344140641}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &328953051
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328953049}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -629719859055844128, guid: ce6b2582f3da44c4eac2945a68be3c0d, type: 3}
+--- !u!23 &328953052
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328953049}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 3348802439492627667, guid: ce6b2582f3da44c4eac2945a68be3c0d, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &328953053
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328953049}
+  m_Mesh: {fileID: -629719859055844128, guid: ce6b2582f3da44c4eac2945a68be3c0d, type: 3}
+--- !u!1 &344140640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 344140641}
+  m_Layer: 7
+  m_Name: ExampleBuilding (8)
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &344140641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344140640}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.016512664, y: 0.34472954, z: -0.019142805, w: 0.9383616}
+  m_LocalPosition: {x: 0.04, y: -3.46, z: -15.78}
+  m_LocalScale: {x: 2.0628161, y: 1.8722234, z: 2.0628161}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 369435845}
+  - {fileID: 328953050}
+  - {fileID: 815036771}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -1.019, y: 40.368, z: -2.712}
+--- !u!1 &369435844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 369435845}
+  - component: {fileID: 369435848}
+  - component: {fileID: 369435847}
+  - component: {fileID: 369435846}
+  m_Layer: 7
+  m_Name: BuildingMain
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 1
+  m_IsActive: 1
+--- !u!4 &369435845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369435844}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5097405, y: -0.490066, z: -0.49006692, w: 0.5097395}
+  m_LocalPosition: {x: -0, y: 3.5, z: 0}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 344140641}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &369435846
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369435844}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.050395817, y: 0.05598654, z: 0.07758895}
+  m_Center: {x: 0.0049837474, y: 0.005940892, z: 0.005173389}
+--- !u!23 &369435847
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369435844}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -3846018093981099296, guid: ce6b2582f3da44c4eac2945a68be3c0d, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &369435848
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369435844}
+  m_Mesh: {fileID: -1836941913867646317, guid: ce6b2582f3da44c4eac2945a68be3c0d, type: 3}
 --- !u!1 &454665243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1136,6 +1381,89 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 789409422}
   m_CullTransparentMesh: 1
+--- !u!1 &815036770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 815036771}
+  - component: {fileID: 815036773}
+  - component: {fileID: 815036772}
+  m_Layer: 7
+  m_Name: rusted_metal
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 1
+  m_IsActive: 1
+--- !u!4 &815036771
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815036770}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5097405, y: -0.490066, z: -0.49006692, w: 0.5097395}
+  m_LocalPosition: {x: -0, y: 3.5, z: 0}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 344140641}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &815036772
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815036770}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -4221493082053954527, guid: ce6b2582f3da44c4eac2945a68be3c0d, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &815036773
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815036770}
+  m_Mesh: {fileID: -496502019723344701, guid: ce6b2582f3da44c4eac2945a68be3c0d, type: 3}
 --- !u!1 &898998755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,7 +2249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1119838803
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2682,168 +3010,107 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialoguePanels:
-  - speakerName: 
+  - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
     showLeftPortrait: 0
     rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
     showRightPortrait: 0
-    dialogueText: 'Here''s a story.
-
-      Once, long ago, the world of Kenai was
-      ruled by humankind.
-
-      As was every place on earth.'
+    dialogueText: As a machine I got used to waking up, my days were always the same.
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
+  - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
     showLeftPortrait: 0
     rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
     showRightPortrait: 0
-    dialogueText: 'Their technological civilizations reached across the land,
-
-      Their
-      ambitions were limitless,
-
-      Their power was checked only amongst themselves.'
+    dialogueText: Maintenance, drills, tests, you name it. I had a routine in Kenai,
+      and that's all there was to it.
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
-    rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
-    showRightPortrait: 0
-    dialogueText: 'But in their quest for dominance,
-
-      humans everywhere turned
-      their greatest minds toward weapons of unimaginable force.'
-    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
+  - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
-    showLeftPortrait: 0
+    showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
     showRightPortrait: 0
-    dialogueText: These weapons were capable of tearing apart not only their enemies
-      but the very fabric of reality itself.
+    dialogueText: So it came as a surprise when I awoke one day to some fairly drastic
+      changes.
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
+    showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
     showRightPortrait: 0
-    dialogueText: And so, they did.
+    dialogueText: For one, the usually bustling building I resided in was so silent
+      it seemed abandoned.
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
+    showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
     showRightPortrait: 0
-    dialogueText: "A final, all-consuming war brought about their end, \nleaving
-      behind only ruins and echoes."
+    dialogueText: Because it was.
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
+    showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
     showRightPortrait: 0
-    dialogueText: "In the wake of humanity\u2019s self-destruction, \nA new force
-      emerged: \nMagic"
+    dialogueText: I seems like I had been asleep for the past... who knows how long
+      really.
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
+    showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
     showRightPortrait: 0
-    dialogueText: "Through this magic, a new order arose\u2014beings born from the
-      chaos of a world reshaped by forgotten dreams and ashes."
+    dialogueText: Through a hole in this now dilapidated building I could see a sprawling
+      and ruined city-scape, shiny windows smashed, vibrant colors dulled.
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
-    rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
-    showRightPortrait: 0
-    dialogueText: "They're probably... Youkai... \nMythical creatures or something...
-      \nNo... \nhold on..."
-    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
-    rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
-    showRightPortrait: 0
-    dialogueText: "The Kenans, \ncreatures of mystery and power, came into existence,
-      \nfilling the lands with life and spirit once more."
-    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
-    rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
-    showRightPortrait: 0
-    dialogueText: "In this new world, \nKenai flourishes as a land of wild beauty
-      and magic, \nwhere legends live and ancient forces lie dormant. "
-    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
-    rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
-    showRightPortrait: 0
-    dialogueText: "These beings roam Kenai now, \nunaware of the forgotten world
-      buried beneath their feet."
-    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
-    rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
-    showRightPortrait: 0
-    dialogueText: "Yet, as magic thrives, so too do dangers, \nhidden in the shadows
-      of a broken past, \nawaiting the moment to rise once again."
-    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
-    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
-    showLeftPortrait: 0
-    rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
-    showRightPortrait: 0
-    dialogueText: 'Speaking of Dormant Dangers
-
-      Here comes one of those little
-      things.
-
-      I''ve been watching her for a bit now.'
-    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
+  - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
     showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
     showRightPortrait: 0
-    dialogueText: 'She calls herself a Jetsune.
-
-      She also calls herself Sachi.
-
-      A
-      fox with blazing hot wind from her ears...
-
-      And large metal wings...'
+    dialogueText: "\rI'm not one to hesitate though. Upon seeing this my mind was
+      set on one thing: I must explore."
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
+    showRightPortrait: 0
+    dialogueText: Before leaving to get my bearings, I rummaged around the building
+      for anything that seemed useful and found a crystal.
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
+    showRightPortrait: 0
+    dialogueText: "It was affixed to some device, and a notepad nearby seemed to
+      describe it in detail.\r"
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
+  - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
     showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
     showRightPortrait: 0
-    dialogueText: 'It''s impressive, honestly.
-
-      She''s been flying around for
-      hours.
-
-      Looking for something.
-
-      She looks like she''s looking for
-      a fight.'
+    dialogueText: It said something about absorbing strange energy found around Kenai
+      for later use, and that I could use it.
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
-  - speakerName: 
+  - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
     showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
     showRightPortrait: 0
-    dialogueText: 'Or perhaps taking a joyride...
-
-      Looking for anything interesting...'
+    dialogueText: Most of the technical stuff flew over my head, I just took it because
+      it looked nice on my tail.
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
+  - speakerName: <<Sachi>>
+    leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
+    showLeftPortrait: 1
+    rightPortrait: {fileID: 21300000, guid: 01a1d1dd8c9e7434d883f56df6c645f6, type: 3}
+    showRightPortrait: 0
+    dialogueText: With nothing else to find, I decided to head out and explore this
+      changed world. Maybe I could find someone who knows what happened?
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   leftPortraitImage: {fileID: 454665246}
   rightPortraitImage: {fileID: 1119838804}
@@ -2855,6 +3122,7 @@ MonoBehaviour:
   titleCard: {fileID: 757559226}
   textSpeed: 0.02
   sceneTransitionDelay: 2
+  isCredits: 0
 --- !u!4 &2018076367
 Transform:
   m_ObjectHideFlags: 0
@@ -3020,3 +3288,4 @@ SceneRoots:
   - {fileID: 616277975}
   - {fileID: 2018076367}
   - {fileID: 1603526471}
+  - {fileID: 344140641}

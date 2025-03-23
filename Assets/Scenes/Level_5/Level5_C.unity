@@ -2753,14 +2753,14 @@ MonoBehaviour:
     showRightPortrait: 0
     dialogueText: "Despite the traps Polaris set up, \nSachi has arrived in the Moonlight
       Mountains,\nA land of eternal warm moonlight and Polaris's home."
-    soundEffect: {fileID: 8300000, guid: 06c83074d85158d48860a8b50e77444f, type: 3}
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: 52ff04dd17d22d546950591e978ba3d4, type: 3}
     showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 816848e9535e47147916246dca852200, type: 3}
     showRightPortrait: 1
     dialogueText: How'd you get here so quickly?
-    soundEffect: {fileID: 8300000, guid: 06c83074d85158d48860a8b50e77444f, type: 3}
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   - speakerName: <<Polaris>>
     leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
     showLeftPortrait: 1
@@ -2770,14 +2770,14 @@ MonoBehaviour:
 
       Anything you say right now
       is besides the point.'
-    soundEffect: {fileID: 8300000, guid: 06c83074d85158d48860a8b50e77444f, type: 3}
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: b4fa1f138bfafc9418c27c067c7c8f01, type: 3}
     showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 816848e9535e47147916246dca852200, type: 3}
     showRightPortrait: 1
     dialogueText: Jeez, when did you become the rude one?
-    soundEffect: {fileID: 8300000, guid: 06c83074d85158d48860a8b50e77444f, type: 3}
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   - speakerName: <<Polaris>>
     leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
     showLeftPortrait: 1
@@ -2790,14 +2790,14 @@ MonoBehaviour:
       I
       won''t let you take the Moonchill Crystal and ruin the Eternal Moonlight of
       the Moonlight mountains!'
-    soundEffect: {fileID: 8300000, guid: 06c83074d85158d48860a8b50e77444f, type: 3}
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: b4fa1f138bfafc9418c27c067c7c8f01, type: 3}
     showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 816848e9535e47147916246dca852200, type: 3}
     showRightPortrait: 1
     dialogueText: I was going to give it back after...
-    soundEffect: {fileID: 8300000, guid: 06c83074d85158d48860a8b50e77444f, type: 3}
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   - speakerName: <<Polaris>>
     leftPortrait: {fileID: 21300000, guid: 67e3b30d2e64c1f4d9c112fd2beb061a, type: 3}
     showLeftPortrait: 1
@@ -2805,7 +2805,7 @@ MonoBehaviour:
     showRightPortrait: 1
     dialogueText: "That's not the point. I'm not willing to let anyone touch the
       Moonlight Crystal, \nfriend nor foe.\nEspecially not you."
-    soundEffect: {fileID: 8300000, guid: 06c83074d85158d48860a8b50e77444f, type: 3}
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: 52ff04dd17d22d546950591e978ba3d4, type: 3}
     showLeftPortrait: 1
@@ -2814,7 +2814,7 @@ MonoBehaviour:
     dialogueText: "I was hoping you'd see my logic, since we can control the freezing
       of the fire better than that Ice girl. \nBut I guess \nI'll just have to convince
       you with my boot too."
-    soundEffect: {fileID: 8300000, guid: 06c83074d85158d48860a8b50e77444f, type: 3}
+    soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   leftPortraitImage: {fileID: 1460031805}
   rightPortraitImage: {fileID: 128910995}
   nameText: {fileID: 2028021159}
@@ -2825,6 +2825,7 @@ MonoBehaviour:
   titleCard: {fileID: 757559226}
   textSpeed: 0.02
   sceneTransitionDelay: 2
+  isCredits: 0
 --- !u!4 &2018076367
 Transform:
   m_ObjectHideFlags: 0

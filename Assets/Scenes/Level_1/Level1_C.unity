@@ -2683,14 +2683,14 @@ MonoBehaviour:
   - speakerName: <<???>>
     leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
     showLeftPortrait: 1
-    rightPortrait: {fileID: -1916939562, guid: 854111e6cf4ebde4d9b5d7b635eed726, type: 3}
+    rightPortrait: {fileID: -661313787, guid: 632232330bb12ed4bbd4de053d1867ca, type: 3}
     showRightPortrait: 1
     dialogueText: "Hey!\nWho are you? \nI've been trying to keep people out!"
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   - speakerName: <<Sachi>>
     leftPortrait: {fileID: 21300000, guid: 36a0bd207d67f8748ad10b4f5eacc47d, type: 3}
     showLeftPortrait: 1
-    rightPortrait: {fileID: -1916939562, guid: 854111e6cf4ebde4d9b5d7b635eed726, type: 3}
+    rightPortrait: {fileID: -661313787, guid: 632232330bb12ed4bbd4de053d1867ca, type: 3}
     showRightPortrait: 1
     dialogueText: 'My name is Sachi!
 
@@ -2717,7 +2717,7 @@ MonoBehaviour:
   - speakerName: <<Poulma>>
     leftPortrait: {fileID: 21300000, guid: b53686307a1767b459c09af5b762df09, type: 3}
     showLeftPortrait: 1
-    rightPortrait: {fileID: -1916939562, guid: 854111e6cf4ebde4d9b5d7b635eed726, type: 3}
+    rightPortrait: {fileID: -661313787, guid: 632232330bb12ed4bbd4de053d1867ca, type: 3}
     showRightPortrait: 0
     dialogueText: Just need to put this board in the floor and...!
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
@@ -2796,7 +2796,7 @@ MonoBehaviour:
     showLeftPortrait: 1
     rightPortrait: {fileID: 21300000, guid: 1106cac18f433e94a8efed2bbabb2ea6, type: 3}
     showRightPortrait: 0
-    dialogueText: "The first thing that comes to mind\nright now... \nTake her down."
+    dialogueText: I need to take her down.
     soundEffect: {fileID: 8300000, guid: e70d88c1e8a41f740b3e9f03674fd1a5, type: 3}
   leftPortraitImage: {fileID: 454665246}
   rightPortraitImage: {fileID: 1119838804}
