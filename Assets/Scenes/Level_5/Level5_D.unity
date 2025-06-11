@@ -3960,6 +3960,10 @@ PrefabInstance:
       propertyPath: grazeAmountToReward
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 5615137570863765434, guid: 9c489c944ff18424096f59be99db7df4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7576287028608239600, guid: 9c489c944ff18424096f59be99db7df4, type: 3}
       propertyPath: m_Name
       value: GrazerColider

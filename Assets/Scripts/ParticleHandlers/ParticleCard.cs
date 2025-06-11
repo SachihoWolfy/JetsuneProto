@@ -55,6 +55,21 @@ public class ParticleCard : MonoBehaviour
                         pwoosh.audioSource = wooshSource;
                     }
                 }
+                // Single Bullet System
+                if (objName.Contains("SBS_"))
+                {
+                    if (!child.gameObject.GetComponent<ParticleBullets>())
+                    {
+                        var exploder = child.gameObject.AddComponent<ParticleBullets>();
+                        exploder.explosionPrefab = explosionPrefab;
+                        exploder.isPooled = true;
+                    }
+                    if (!child.gameObject.GetComponent<PSTriggerHandler>())
+                    {
+                        var TH = child.gameObject.AddComponent<PSTriggerHandler>();
+                        TH.audioSource = wooshSource;
+                    }
+                }
             }
 
             // Recursively check children
