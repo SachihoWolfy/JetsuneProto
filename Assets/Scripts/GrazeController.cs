@@ -76,6 +76,7 @@ public class GrazeController : MonoBehaviour
     }
     public void PlaySound(int index = 0)
     {
+        if (player.NOWOOSH) { return; }
         audioSource.PlayOneShot(audioClips[index]);
     }
 }

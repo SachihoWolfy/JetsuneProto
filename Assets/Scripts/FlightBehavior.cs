@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using Unity.Cinemachine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEditor.Build;
+using UnityEngine.Splines;
 
 public class FlightBehavior : MonoBehaviour
 {
@@ -124,6 +126,10 @@ public class FlightBehavior : MonoBehaviour
     public AllyController ally;
 
     bool speedLock;
+    private bool GODMODE = false;
+    public bool devSachi = false;
+    public GameObject devTerrain;
+    public bool NOWOOSH = false;
     public void LockSpeed(bool value)
     {
         speedLock = value;
@@ -421,6 +427,26 @@ public class FlightBehavior : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.Mouse1) && !isPowerup && curPowerAmount > 0)
         {
             StartCoroutine(DoSachiPowerUp());
+        }
+        if(devSachi)
+        {
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                GODMODE = !GODMODE;
+            }
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                devTerrain.SetActive(!devTerrain.activeSelf);
+                FindAnyObjectByType<SplineContainer>().gameObject.GetComponent<LineRenderer>().enabled = !devTerrain.activeSelf;
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                PauseMenu.instance.RestartGame();
+            }
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                NOWOOSH = !NOWOOSH;
+            }
         }
        
         /* if(Input.GetKeyDown(KeyCode.Mouse1) && !Input.GetKey(KeyCode.Mouse0) && curSpeed > 40 && canParry)
@@ -951,7 +977,7 @@ public class FlightBehavior : MonoBehaviour
 
     public void TakeDamage(int dmg, float spdDamage, bool isGround = false)
     {
-        
+        if (GODMODE) { return; }
         if (immunity) 
         { 
             if (canPointDestroy)

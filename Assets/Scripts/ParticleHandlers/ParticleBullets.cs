@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ParticleBullets : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class ParticleBullets : MonoBehaviour
     public float colliderSize = 0.007f;
     public ParticleCard card;
     bool updated = false;
+    public bool isSBS = false;
+    public PSTriggerHandler SBS;
 
     void Start()
     {
@@ -29,6 +32,10 @@ public class ParticleBullets : MonoBehaviour
         trigger.enter = ParticleSystemOverlapAction.Callback;
         trigger.exit = ParticleSystemOverlapAction.Ignore;
         trigger.SetCollider(0, woosher.GetComponent<Collider>());
+        if (isSBS)
+        {
+            SBS = GetComponent<PSTriggerHandler>();
+        }
     }
 
     void OnParticleCollision(GameObject other)
@@ -40,8 +47,15 @@ public class ParticleBullets : MonoBehaviour
         for (int i = 0; i < collisionCount; i++)
         {
             Vector3 collisionPoint = collisionEvents[i].intersection;
-            if (Settings.m_lastFramerate > 27 || other.gameObject.CompareTag("Player")) { 
-                Explode(collisionPoint); 
+            if (Settings.m_lastFramerate > 27 || other.gameObject.CompareTag("Player")) {
+                if (isSBS)
+                {
+                    Explode(collisionPoint, SBS.defaultSBSColor);
+                }
+                else
+                {
+                    Explode(collisionPoint);
+                }
             }
         }
     }
@@ -92,6 +106,47 @@ public class ParticleBullets : MonoBehaviour
                             renderer.material = instanceMaterial;
                         }
                     }
+                }
+            }
+        }
+    }
+    public void Explode(Vector3 position, Color colorOverride)
+    {
+        GameObject explosion;
+
+        // Spawn from pool or instantiate
+        if (isPooled)
+            explosion = ExplosionPoolManager.Instance.GetBullet();
+        else
+            explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
+
+        explosion.transform.position = position;
+
+        // Set Particle Color from provided colorOverride
+        ParticleSystem explosionParticles = explosion.GetComponentInChildren<ParticleSystem>();
+        if (explosionParticles != null)
+        {
+            var mainModule = explosionParticles.main;
+            mainModule.startColor = colorOverride;
+
+            // Set colors for all child particle systems
+            ParticleSystem[] particleSystems = explosion.GetComponentsInChildren<ParticleSystem>();
+            foreach (ParticleSystem ps in particleSystems)
+            {
+                var psMain = ps.main;
+                psMain.startColor = colorOverride;
+            }
+
+            // Set emissive color
+            foreach (ParticleSystem ps in particleSystems)
+            {
+                ParticleSystemRenderer renderer = ps.GetComponent<ParticleSystemRenderer>();
+                if (renderer != null && renderer.material != null && renderer.material.HasProperty("_EmissionColor"))
+                {
+                    Material mat = renderer.material;
+                    mat.EnableKeyword("_EMISSION");
+                    mat.SetColor("_EmissionColor", colorOverride);
+                    renderer.material = mat;
                 }
             }
         }

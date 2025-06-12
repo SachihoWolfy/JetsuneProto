@@ -63,11 +63,13 @@ public class ParticleCard : MonoBehaviour
                         var exploder = child.gameObject.AddComponent<ParticleBullets>();
                         exploder.explosionPrefab = explosionPrefab;
                         exploder.isPooled = true;
+                        exploder.isSBS = true;
                     }
                     if (!child.gameObject.GetComponent<PSTriggerHandler>())
                     {
                         var TH = child.gameObject.AddComponent<PSTriggerHandler>();
                         TH.audioSource = wooshSource;
+                        TH.bulletScript = child.gameObject.GetComponent<ParticleBullets>();
                     }
                 }
             }

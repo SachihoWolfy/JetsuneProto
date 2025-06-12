@@ -37,6 +37,8 @@ public class PSTriggerHandler : MonoBehaviour
 
     int damage = 1;
     float speedDamage = 40f;
+    public ParticleBullets bulletScript;
+    public Color defaultSBSColor;
 
     void Start()
     {
@@ -71,6 +73,8 @@ public class PSTriggerHandler : MonoBehaviour
             }
         }
         trigger.SetCollider(0, broadTriggerZone);
+        //SBS Explosion Color
+        defaultSBSColor = GetColorFromColorOverLifetime(1f);
     }
     void LateUpdate()
     {
@@ -137,7 +141,7 @@ public class PSTriggerHandler : MonoBehaviour
     }
     private void PlayRandomWooshSound()
     {
-        if (audioClips.Count == 0 || audioSource == null) return;
+        if (audioClips.Count == 0 || audioSource == null || player.NOWOOSH) return;
 
         audioSource.volume = volume;
         audioSource.spatialBlend = 1;
@@ -187,6 +191,37 @@ public class PSTriggerHandler : MonoBehaviour
                 return particle.position;
         }
     }
+    private Color GetParticleColor(ParticleSystem.Particle particle)
+    {
+        return particle.GetCurrentColor(ps);
+    }
+    private Color GetColorFromColorOverLifetime(float time = 1f)
+    {
+        if (!ps.colorOverLifetime.enabled)
+            return Color.white;
+
+        var colOverLifetime = ps.colorOverLifetime.color;
+
+        if (colOverLifetime.mode == ParticleSystemGradientMode.Gradient && colOverLifetime.gradient != null)
+        {
+            return colOverLifetime.gradient.Evaluate(time);
+        }
+        else if (colOverLifetime.mode == ParticleSystemGradientMode.TwoGradients && colOverLifetime.gradientMax != null)
+        {
+            return colOverLifetime.gradientMax.Evaluate(time);
+        }
+        else if (colOverLifetime.mode == ParticleSystemGradientMode.Color)
+        {
+            return colOverLifetime.colorMin;
+        }
+        else if (colOverLifetime.mode == ParticleSystemGradientMode.TwoColors)
+        {
+            return colOverLifetime.colorMax;
+        }
+
+        return Color.white;
+    }
+
     private void OnParticleCollision(GameObject other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -194,5 +229,4 @@ public class PSTriggerHandler : MonoBehaviour
             player.TakeDamage(damage, speedDamage);
         }
     }
-
 }
