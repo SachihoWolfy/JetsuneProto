@@ -24,7 +24,7 @@ public class ParticleBirthSound : MonoBehaviour
         audioSource.spatialBlend = 1;
         ps = GetComponent<ParticleSystem>();
         colliderTrigger = GetComponent<SphereCollider>();
-        colliderTrigger.radius = 200f;
+        colliderTrigger.radius = 600f;
         colliderTrigger.center = new Vector3(0,0,0);
         var main = ps.main;
         main.startLifetime = 0.1f;
