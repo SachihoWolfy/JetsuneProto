@@ -20,7 +20,7 @@ public class ParticleBullets : MonoBehaviour
         woosher = FindObjectOfType<BulletWoosh>();
         var collider = ps.collision;
         collider.enabled = true;
-        collider.radiusScale = colliderSize;
+        colliderSize = collider.radiusScale;
         collider.collidesWith = LayerMask.GetMask("Ground", "Player","BulletColliders");
         collider.sendCollisionMessages = true;
         // Ensure particle system has trigger module enabled

@@ -1595,14 +1595,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1138841852}
     m_Modifications:
-    - target: {fileID: 1919732876920314898, guid: e7cb23f003091e84a99158b798222ada, type: 3}
-      propertyPath: CollisionModule.m_EnergyLossOnCollision.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4113966087063576026, guid: e7cb23f003091e84a99158b798222ada, type: 3}
-      propertyPath: CollisionModule.m_EnergyLossOnCollision.scalar
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5498456311348707304, guid: e7cb23f003091e84a99158b798222ada, type: 3}
       propertyPath: m_Name
       value: Flower Sign _Pettles in the wind~_
