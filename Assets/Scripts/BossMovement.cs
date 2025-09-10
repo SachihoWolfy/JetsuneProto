@@ -219,7 +219,7 @@ public class BossMovement : MonoBehaviour
         if (hp <= 0)
         {
             player.LockSpeed(false);
-            ResetPlayerSpeed();
+            ResetPlayerSpeed(3f);
             player.hitCam.Priority = 0;
         }
         else
@@ -284,10 +284,11 @@ public class BossMovement : MonoBehaviour
     }
 
 
-    void ResetPlayerSpeed()
+    void ResetPlayerSpeed(float newSpeed = 35f)
     {
-        player.rb.velocity = new Vector3(0, 0, 0);
-        player.curSpeed = 3f;
+        player.curSpeed = newSpeed;
+        player.rb.velocity = player.transform.forward * player.curSpeed;
+        //player.rb.velocity = new Vector3(0, 0, 0);
     }
     IEnumerator RestartGame()
     {

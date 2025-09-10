@@ -130,6 +130,8 @@ public class FlightBehavior : MonoBehaviour
     public bool devSachi = false;
     public GameObject devTerrain;
     public bool NOWOOSH = false;
+    public MultiSoundPlayer scraper;
+    public ParticleSystem sparks;
     public void LockSpeed(bool value)
     {
         speedLock = value;
@@ -975,6 +977,34 @@ public class FlightBehavior : MonoBehaviour
         pitchInvert = !pitchInvert;
     }
 
+    void AlignWithCollision()
+    {
+        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 5f))
+        {
+            Vector3 normal = hit.normal;
+
+            // Skip if surface is almost flat to avoid gimbal issues
+            if (Vector3.Angle(normal, Vector3.up) > 1f)
+            {
+                Vector3 forwardProjected = Vector3.ProjectOnPlane(transform.forward, normal).normalized;
+
+                if (forwardProjected.sqrMagnitude > 0.1f)
+                {
+                    // Get the target rotation
+                    Quaternion targetRotation = Quaternion.LookRotation(forwardProjected, normal);
+
+                    // Extract only yaw and pitch by converting to Euler, and zeroing Z
+                    Vector3 euler = targetRotation.eulerAngles;
+                    euler.z = 0f;
+
+                    // Apply rotation without roll
+                    transform.rotation = Quaternion.Euler(euler);
+                }
+            }
+        }
+    }
+
+
     public void TakeDamage(int dmg, float spdDamage, bool isGround = false)
     {
         if (GODMODE) { return; }
@@ -1037,11 +1067,24 @@ public class FlightBehavior : MonoBehaviour
         canPointDestroy = true;
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            AlignWithCollision();
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.CompareTag("Ground") && curSpeed > 40)
+        if(collision.collider.CompareTag("Ground"))
         {
-            TakeDamage(1, 37, true);
+            AlignWithCollision();
+            scraper.PlayRandomSound();
+            sparks.Play();
+            if (curSpeed > 40)
+            {
+                //TakeDamage(1, 37, true);
+            }
         }
     }
 }
