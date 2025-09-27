@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ParticleCard : MonoBehaviour
@@ -76,6 +77,36 @@ public class ParticleCard : MonoBehaviour
 
             // Recursively check children
             AttachComponentsRecursively(child);
+        }
+    }
+    public void StopCard()
+    {
+        StopCardRecursively(transform);
+    }
+    void StopCardRecursively(Transform parent)
+    {
+        foreach(Transform child in parent)
+        {
+            if (child.GetComponent<ParticleSystem>())
+            {
+                child.GetComponent<ParticleSystem>().Stop();
+            }
+            StopCardRecursively(child);
+        }
+    }
+    public void PlayCard()
+    {
+        PlayCardRecursively(transform);
+    }
+    void PlayCardRecursively(Transform parent)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.GetComponent<ParticleSystem>())
+            {
+                child.GetComponent<ParticleSystem>().Play();
+            }
+            PlayCardRecursively(child);
         }
     }
 }

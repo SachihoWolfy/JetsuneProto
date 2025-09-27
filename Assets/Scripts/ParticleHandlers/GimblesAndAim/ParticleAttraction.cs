@@ -33,7 +33,7 @@ public class ParticleAttraction : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > lerpTime)
         {
-            system.Emit(50);
+            //system.Emit(50);
             timer = 0f;
         }
 

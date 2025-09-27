@@ -132,6 +132,7 @@ public class FlightBehavior : MonoBehaviour
     public bool NOWOOSH = false;
     public MultiSoundPlayer scraper;
     public ParticleSystem sparks;
+    private bool isDrifting;
     public void LockSpeed(bool value)
     {
         speedLock = value;
@@ -317,6 +318,8 @@ public class FlightBehavior : MonoBehaviour
     private float holdTime = 0f; 
     private bool spaceHeld = false;
     private bool isLookStored = false;
+    private float minThrust;
+    private float driftInvincibilityMaxTime = 0.7f;
     void Update()
     {
         if (isCutscene)
@@ -426,11 +429,28 @@ public class FlightBehavior : MonoBehaviour
         thrust = Input.GetAxis("Thrust") * (Time.fixedDeltaTime * thrustSpeed);
         thrust = blendThrust * thrust + (1 - blendThrust) * oldThrust - 0.0004f * thrustSpeed * 2f;
         oldThrust = thrust;
-        if (Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.Mouse1) && !isPowerup && curPowerAmount > 0)
+        minThrust = -1 * (Time.fixedDeltaTime * thrustSpeed);
+        minThrust = blendThrust * minThrust + (1 - blendThrust) * oldThrust - 0.0004f * thrustSpeed * 2f;
+        oldDriftState = isDrifting;
+        if (Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.Mouse1))
         {
-            StartCoroutine(DoSachiPowerUp());
+            if(!isPowerup && curPowerAmount > 0)
+            {
+                StartCoroutine(DoSachiPowerUp());
+            }
+            else if(!isPowerup)
+            {
+                isDrifting = true;
+            }
         }
-        if(devSachi)
+        else
+        {
+            isDrifting = false;
+        }
+        UpdateDriftInvicibilityTime();
+        anim.SetBool("Invuln", driftInvincibilityTimer > 0);
+        anim.SetBool("Drifting", isDrifting);
+        if (devSachi)
         {
             if (Input.GetKeyDown(KeyCode.G))
             {
@@ -456,6 +476,21 @@ public class FlightBehavior : MonoBehaviour
             DoParry();
         } */
         
+    }
+    private float driftInvincibilityTimer;
+    private bool driftInvuln;
+    private void UpdateDriftInvicibilityTime()
+    {
+        if(driftInvincibilityTimer > 0)
+        {
+            driftInvincibilityTimer -= Time.deltaTime;
+            driftInvuln = true;
+        }
+        else
+        {
+            driftInvincibilityTimer = 0;
+            driftInvuln = false;
+        }
     }
     /*
     private bool isParrying;
@@ -586,6 +621,10 @@ public class FlightBehavior : MonoBehaviour
         Quaternion AddRot = Quaternion.identity;
         AddRot.eulerAngles = new Vector3(pitch, yaw, -roll);
         transform.rotation *= AddRot;
+        if (isDrifting)
+        {
+            transform.rotation *= AddRot;
+        }
 
         if (simpleControls)
         {
@@ -636,6 +675,7 @@ public class FlightBehavior : MonoBehaviour
             sachiVisual.localRotation = pitchRotation * yawRotation * rollRotation;
         }
     }
+    bool oldDriftState;
     void DoSpeedThings()
     {
         curSpeed = rb.velocity.magnitude;
@@ -665,7 +705,7 @@ public class FlightBehavior : MonoBehaviour
             curSpeed = Mathf.Clamp(curSpeed + adjustedThrust / 5f, MINSPEED, maxSpeed);
         }
         // Handle acceleration boost for specific ranges
-        else if (curSpeed > 40 && curSpeed < 60)
+        else if (curSpeed > 40 && curSpeed < 60 && !isDrifting)
         {
             if (!sonicBoomHappened)
             {
@@ -687,7 +727,30 @@ public class FlightBehavior : MonoBehaviour
         }
 
         // Apply the updated velocity
-        rb.velocity = transform.forward * curSpeed;
+        if (oldDriftState && !isDrifting)
+        {
+            if (scoreP > powerScore / 10)
+            {
+                rb.velocity = transform.forward * maxSpeed;
+                if (!sonicBoom.IsAlive())
+                    sonicBoom.Play();
+                PlaySound(0);
+                driftInvincibilityTimer = driftInvincibilityMaxTime;
+                scoreP = Mathf.Clamp(scoreP - (powerScore / 10), 0, powerScore);
+            }
+            else
+            {
+                rb.velocity = transform.forward * curSpeed;
+            }
+        }
+        else if (isDrifting)
+        {
+            rb.velocity = rb.velocity.normalized * Mathf.Clamp(curSpeed + minThrust / 5f, MINSPEED, maxSpeed);
+        }
+        else
+        {
+            rb.velocity = transform.forward * curSpeed;
+        }
 
         // Update animation parameters
         anim.SetFloat("CurSpeed", curSpeed);
@@ -1008,13 +1071,17 @@ public class FlightBehavior : MonoBehaviour
     public void TakeDamage(int dmg, float spdDamage, bool isGround = false)
     {
         if (GODMODE) { return; }
-        if (immunity) 
+        if (immunity || driftInvuln) 
         { 
             if (canPointDestroy)
             {
                 audioSource.PlayOneShot(audioClips[5]);
                 AddScore(500);
                 StartCoroutine(pointDestroyOnCooldown());
+            }
+            if (driftInvuln)
+            {
+                AddScore(1000);
             }
             return; 
         }
